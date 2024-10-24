@@ -81,10 +81,10 @@
   <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="1" title="音量調整">
 
   <!-- 写真撮影ボタン -->
-  <button id="take-photo" class="top-right-button" style="right: 280px;">写真を撮る</button>
+  <button id="take-photo" class="top-right-button" style="right: 200px;">写真を撮る</button>
 
   <!-- 字幕表示・非表示切替ボタン -->
-  <button id="toggle-subtitle" class="top-right-button" style="right: 360px;">字幕OFF</button>
+  <button id="toggle-subtitle" class="top-right-button" style="right: 320px;">字幕OFF</button>
   <a href="japanese.html"><button class="top-right-button">戻る</button></a>
 
   <script>
@@ -172,20 +172,12 @@
 
     // 写真撮影ボタンのクリックイベント
     takePhotoButton.addEventListener('click', function () {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
+      const scene = document.querySelector('a-scene');
+      const renderer = scene.renderer;
 
-      // スクリーンのサイズを取得
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-
-      // スクリーンの映像を描画
-      context.drawImage(document.querySelector('video'), 0, 0, width, height);
-
-      // データURLを取得してダウンロード
-      canvas.toBlob((blob) => {
+      // WebGLからレンダリング内容をキャプチャ
+      const canvas = renderer.domElement;
+      canvas.toBlob(function (blob) {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = 'photo.png'; // 保存する画像ファイル名
