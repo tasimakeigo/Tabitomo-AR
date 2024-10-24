@@ -84,7 +84,7 @@
   <button id="take-photo" class="top-right-button" style="right: 280px;">写真を撮る</button>
 
   <!-- 字幕表示・非表示切替ボタン -->
-  <button id="toggle-subtitle" class="top-right-button" style="right: 380px;">字幕OFF</button>
+  <button id="toggle-subtitle" class="top-right-button" style="right: 360px;">字幕OFF</button>
   <a href="japanese.html"><button class="top-right-button">戻る</button></a>
 
   <script>
@@ -172,13 +172,25 @@
 
     // 写真撮影ボタンのクリックイベント
     takePhotoButton.addEventListener('click', function () {
-      const scene = document.querySelector('a-scene');
-      scene.toDataURL('image/png').then((dataUrl) => {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+
+      // スクリーンのサイズを取得
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+
+      // スクリーンの映像を描画
+      context.drawImage(document.querySelector('video'), 0, 0, width, height);
+
+      // データURLを取得してダウンロード
+      canvas.toBlob((blob) => {
         const link = document.createElement('a');
-        link.href = dataUrl;
+        link.href = URL.createObjectURL(blob);
         link.download = 'photo.png'; // 保存する画像ファイル名
         link.click(); // 自動的にリンクをクリックしてダウンロード
-      });
+      }, 'image/png');
     });
   </script>
 </body>
