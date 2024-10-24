@@ -23,6 +23,21 @@
     .top-right-button:hover {
       background-color: #0056b3;
     }
+
+    /* 字幕のスタイル */
+    #subtitle {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 24px;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+      /* 初めは非表示 */
+    }
   </style>
 </head>
 
@@ -31,6 +46,7 @@
     arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" id="scene" embedded gesture-detector>
     <a-assets>
       <a-asset-item id="animated-asset" src="model/glb/free_ac_unit.glb"></a-asset-item>
+      <audio id="audio" src="tanktop.mp3"></audio> <!-- 音声ファイル -->
     </a-assets>
 
     <!-- マーカーの指定 -->
@@ -46,21 +62,71 @@
     <a-entity camera position="0 0 10"></a-entity>
   </a-scene>
 
+  <!-- 字幕を表示するための要素 -->
+  <div id="subtitle">ここに字幕が表示されます</div>
+
   <!-- 右上にボタンを配置 -->
   <a href="japanese.html"><button class="top-right-button">戻る</button></a>
 
   <script>
     const marker = document.querySelector('#animated-marker');
     const model = document.querySelector('#model');
+    const audio = document.querySelector('#audio');
+    const subtitle = document.querySelector('#subtitle');
 
-    // マーカーが見つかったらモデルを表示
+    let subtitles = [];
+    let currentSubtitleIndex = 0;
+    const displayDuration = 2000; // 1行あたりの表示時間（ミリ秒）
+
+    // 字幕のテキストを読み込む関数
+    function loadSubtitles() {
+      return fetch('zimaku.txt') // テキストファイルのパスを指定
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text(); // テキストを取得
+        })
+        .then(text => {
+          subtitles = text.split('\n'); // 行ごとに分割
+        })
+        .catch(error => console.error('Error fetching subtitles:', error));
+    }
+
+    // 字幕を表示する関数
+    function showSubtitle() {
+      if (currentSubtitleIndex < subtitles.length) {
+        subtitle.textContent = subtitles[currentSubtitleIndex];
+        subtitle.style.display = 'block'; // 字幕を表示
+        currentSubtitleIndex++;
+
+        // 指定された時間後に次の字幕を表示
+        setTimeout(() => {
+          subtitle.style.display = 'none'; // 前の字幕を非表示
+          showSubtitle(); // 次の字幕を表示
+        }, displayDuration);
+      } else {
+        // 全ての字幕が表示されたら、インデックスをリセット
+        currentSubtitleIndex = 0;
+      }
+    }
+
+    // マーカーが見つかったらモデルを表示し、音声と字幕を再生
     marker.addEventListener('markerFound', function () {
       model.setAttribute('visible', true);  // モデルを表示
+      audio.play();  // 音声を再生
+      loadSubtitles().then(() => {
+        showSubtitle(); // 字幕を表示
+      });
     });
 
-    // マーカーが見えなくなったらモデルを非表示
+    // マーカーが見えなくなったらモデルを非表示、音声を停止、字幕を非表示
     marker.addEventListener('markerLost', function () {
       model.setAttribute('visible', false);
+      audio.pause(); // 音声を停止
+      audio.currentTime = 0; // 音声を最初に戻す
+      subtitle.style.display = 'none'; // 字幕を非表示
+      currentSubtitleIndex = 0; // インデックスをリセット
     });
   </script>
 </body>
