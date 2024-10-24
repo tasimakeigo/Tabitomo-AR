@@ -18,10 +18,22 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      z-index: 1;
+      /* ボタンが他の要素の上に表示されるように */
     }
 
     .top-right-button:hover {
       background-color: #0056b3;
+    }
+
+    /* 音量スライダーのスタイル */
+    .volume-slider {
+      position: absolute;
+      top: 10px;
+      right: 120px;
+      /* ボタンの左に配置 */
+      z-index: 1;
+      /* スライダーが他の要素の上に表示されるように */
     }
 
     /* 字幕のスタイル */
@@ -65,7 +77,14 @@
   <!-- 字幕を表示するための要素 -->
   <div id="subtitle">ここに字幕が表示されます</div>
 
-  <!-- 右上にボタンを配置 -->
+  <!-- 音量スライダー -->
+  <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="1" title="音量調整">
+
+  <!-- 写真撮影ボタン -->
+  <button id="take-photo" class="top-right-button" style="right: 280px;">写真を撮る</button>
+
+  <!-- 字幕表示・非表示切替ボタン -->
+  <button id="toggle-subtitle" class="top-right-button" style="right: 380px;">字幕OFF</button>
   <a href="japanese.html"><button class="top-right-button">戻る</button></a>
 
   <script>
@@ -73,10 +92,20 @@
     const model = document.querySelector('#model');
     const audio = document.querySelector('#audio');
     const subtitle = document.querySelector('#subtitle');
+    const volumeSlider = document.querySelector('#volume-slider');
+    const toggleSubtitleButton = document.querySelector('#toggle-subtitle');
+    const takePhotoButton = document.querySelector('#take-photo');
 
     let subtitles = [];
     let currentSubtitleIndex = 0;
     const displayDuration = 2000; // 1行あたりの表示時間（ミリ秒）
+    let subtitleTimeout; // 字幕表示用のタイマー
+    let subtitlesVisible = false; // 字幕の表示状態を管理
+
+    // 音量スライダーの変更イベント
+    volumeSlider.addEventListener('input', function () {
+      audio.volume = this.value; // スライダーの値を音量に反映
+    });
 
     // 字幕のテキストを読み込む関数
     function loadSubtitles() {
@@ -95,19 +124,16 @@
 
     // 字幕を表示する関数
     function showSubtitle() {
-      if (currentSubtitleIndex < subtitles.length) {
+      if (subtitlesVisible && currentSubtitleIndex < subtitles.length) {
         subtitle.textContent = subtitles[currentSubtitleIndex];
         subtitle.style.display = 'block'; // 字幕を表示
         currentSubtitleIndex++;
 
         // 指定された時間後に次の字幕を表示
-        setTimeout(() => {
+        subtitleTimeout = setTimeout(() => {
           subtitle.style.display = 'none'; // 前の字幕を非表示
           showSubtitle(); // 次の字幕を表示
         }, displayDuration);
-      } else {
-        // 全ての字幕が表示されたら、インデックスをリセット
-        currentSubtitleIndex = 0;
       }
     }
 
@@ -127,6 +153,32 @@
       audio.currentTime = 0; // 音声を最初に戻す
       subtitle.style.display = 'none'; // 字幕を非表示
       currentSubtitleIndex = 0; // インデックスをリセット
+      clearTimeout(subtitleTimeout); // 字幕のタイマーをクリア
+    });
+
+    // 字幕表示・非表示を切り替えるボタンのクリックイベント
+    toggleSubtitleButton.addEventListener('click', function () {
+      subtitlesVisible = !subtitlesVisible; // 表示状態を反転
+
+      if (subtitlesVisible) {
+        toggleSubtitleButton.textContent = '字幕ON'; // ボタンのテキストを変更
+        showSubtitle(); // 次の字幕を表示
+      } else {
+        toggleSubtitleButton.textContent = '字幕OFF'; // ボタンのテキストを変更
+        subtitle.style.display = 'none'; // 字幕を非表示
+        clearTimeout(subtitleTimeout); // タイマーをクリア
+      }
+    });
+
+    // 写真撮影ボタンのクリックイベント
+    takePhotoButton.addEventListener('click', function () {
+      const scene = document.querySelector('a-scene');
+      scene.toDataURL('image/png').then((dataUrl) => {
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'photo.png'; // 保存する画像ファイル名
+        link.click(); // 自動的にリンクをクリックしてダウンロード
+      });
     });
   </script>
 </body>
