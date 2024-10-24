@@ -175,8 +175,23 @@
       const scene = document.querySelector('a-scene');
       const renderer = scene.renderer;
 
-      // WebGLからレンダリング内容をキャプチャ
-      const canvas = renderer.domElement;
+      const video = document.querySelector('video');
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+
+      const width = video.videoWidth;
+      const height = video.videoHeight;
+      canvas.width = width;
+      canvas.height = height;
+
+      // まずビデオストリームを描画
+      context.drawImage(video, 0, 0, width, height);
+
+      // その後、WebGLのレンダリング内容をオーバーレイ
+      const webglCanvas = renderer.domElement;
+      context.drawImage(webglCanvas, 0, 0, width, height);
+
+      // キャンバスから画像としてダウンロード
       canvas.toBlob(function (blob) {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
