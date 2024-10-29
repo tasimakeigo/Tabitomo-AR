@@ -21,24 +21,19 @@
       border-radius: 5px;
       cursor: pointer;
       z-index: 1;
-      /* ボタンが他の要素の上に表示されるように */
     }
 
     .top-right-button:hover {
       background-color: #0056b3;
     }
 
-    /* 音量スライダーのスタイル */
     .volume-slider {
       position: absolute;
       top: 10px;
       right: 120px;
-      /* ボタンの左に配置 */
       z-index: 1;
-      /* スライダーが他の要素の上に表示されるように */
     }
 
-    /* 字幕のスタイル */
     #subtitle {
       position: absolute;
       bottom: 50px;
@@ -50,7 +45,6 @@
       padding: 10px;
       border-radius: 5px;
       display: none;
-      /* 初めは非表示 */
     }
   </style>
 </head>
@@ -60,34 +54,25 @@
     arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" id="scene" embedded gesture-detector>
     <a-assets>
       <a-asset-item id="animated-asset" src="model/glb/free_ac_unit.glb"></a-asset-item>
-      <audio id="audio" src="tanktop.mp3"></audio> <!-- 音声ファイル -->
+      <audio id="audio" src="tanktop.mp3"></audio>
     </a-assets>
 
-    <!-- マーカーの指定 -->
     <a-marker id="animated-marker" type="pattern" preset="custom" url="model/patt/pattern-marker.patt"
       raycaster="objects: .clickable" emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
-      <!-- Glbモデルの読み込み -->
       <a-entity id="model" scale="1 1 1" animation-mixer="loop: repeat" gltf-model="#animated-asset" class="clickable"
         animation="property: rotation; to: 0 0 0; dur: 3600; easing: linear; loop: true" gesture-handler
         visible="false"></a-entity>
     </a-marker>
 
-    <!-- カメラの設定 -->
     <a-entity camera position="0 0 10"></a-entity>
   </a-scene>
 
-  <!-- 字幕を表示するための要素 -->
   <div id="subtitle">ここに字幕が表示されます</div>
 
-  <!-- 音量スライダー -->
   <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="1" title="音量調整">
-
-  <!-- 写真撮影ボタン -->
   <canvas id="qr-canvas" style="display:none;"></canvas>
 
   <button id="take-photo" class="top-right-button" style="right: 200px;">写真を撮る</button>
-
-  <!-- 字幕表示・非表示切替ボタン -->
   <button id="toggle-subtitle" class="top-right-button" style="right: 320px;">字幕OFF</button>
   <a href="japanese.html"><button class="top-right-button">戻る</button></a>
 
@@ -102,79 +87,71 @@
 
     let subtitles = [];
     let currentSubtitleIndex = 0;
-    const displayDuration = 2000; // 1行あたりの表示時間（ミリ秒）
-    let subtitleTimeout; // 字幕表示用のタイマー
-    let subtitlesVisible = false; // 字幕の表示状態を管理
+    const displayDuration = 2000;
+    let subtitleTimeout;
+    let subtitlesVisible = false;
 
-    // 音量スライダーの変更イベント
     volumeSlider.addEventListener('input', function () {
-      audio.volume = this.value; // スライダーの値を音量に反映
+      audio.volume = this.value;
     });
 
-    // 字幕のテキストを読み込む関数
     function loadSubtitles() {
-      return fetch('zimaku.txt') // テキストファイルのパスを指定
+      return fetch('zimaku.txt')
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-          return response.text(); // テキストを取得
+          return response.text();
         })
         .then(text => {
-          subtitles = text.split('\n'); // 行ごとに分割
+          subtitles = text.split('\n');
         })
         .catch(error => console.error('Error fetching subtitles:', error));
     }
 
-    // 字幕を表示する関数
     function showSubtitle() {
       if (subtitlesVisible && currentSubtitleIndex < subtitles.length) {
         subtitle.textContent = subtitles[currentSubtitleIndex];
-        subtitle.style.display = 'block'; // 字幕を表示
+        subtitle.style.display = 'block';
         currentSubtitleIndex++;
 
-        // 指定された時間後に次の字幕を表示
         subtitleTimeout = setTimeout(() => {
-          subtitle.style.display = 'none'; // 前の字幕を非表示
-          showSubtitle(); // 次の字幕を表示
+          subtitle.style.display = 'none';
+          showSubtitle();
         }, displayDuration);
       }
     }
 
-    // マーカーが見つかったらモデルを表示し、音声と字幕を再生
     marker.addEventListener('markerFound', function () {
-      model.setAttribute('visible', true);  // モデルを表示
-      audio.play();  // 音声を再生
+      model.setAttribute('visible', true);
+      audio.play();
       loadSubtitles().then(() => {
-        showSubtitle(); // 字幕を表示
+        showSubtitle();
       });
     });
 
-    // マーカーが見えなくなったらモデルを非表示、音声を停止、字幕を非表示
     marker.addEventListener('markerLost', function () {
       model.setAttribute('visible', false);
-      audio.pause(); // 音声を停止
-      audio.currentTime = 0; // 音声を最初に戻す
-      subtitle.style.display = 'none'; // 字幕を非表示
-      currentSubtitleIndex = 0; // インデックスをリセット
-      clearTimeout(subtitleTimeout); // 字幕のタイマーをクリア
+      audio.pause();
+      audio.currentTime = 0;
+      subtitle.style.display = 'none';
+      currentSubtitleIndex = 0;
+      clearTimeout(subtitleTimeout);
     });
 
-    // 字幕表示・非表示を切り替えるボタンのクリックイベント
     toggleSubtitleButton.addEventListener('click', function () {
-      subtitlesVisible = !subtitlesVisible; // 表示状態を反転
+      subtitlesVisible = !subtitlesVisible;
 
       if (subtitlesVisible) {
-        toggleSubtitleButton.textContent = '字幕ON'; // ボタンのテキストを変更
-        showSubtitle(); // 次の字幕を表示
+        toggleSubtitleButton.textContent = '字幕ON';
+        showSubtitle();
       } else {
-        toggleSubtitleButton.textContent = '字幕OFF'; // ボタンのテキストを変更
-        subtitle.style.display = 'none'; // 字幕を非表示
-        clearTimeout(subtitleTimeout); // タイマーをクリア
+        toggleSubtitleButton.textContent = '字幕OFF';
+        subtitle.style.display = 'none';
+        clearTimeout(subtitleTimeout);
       }
     });
 
-    // 写真撮影ボタンのクリックイベント
     takePhotoButton.addEventListener('click', function () {
       const scene = document.querySelector('a-scene');
       const renderer = scene.renderer;
@@ -188,35 +165,30 @@
       canvas.width = width;
       canvas.height = height;
 
-      // まずビデオストリームを描画
       context.drawImage(video, 0, 0, width, height);
 
-      // その後、WebGLのレンダリング内容をオーバーレイ
       const webglCanvas = renderer.domElement;
       context.drawImage(webglCanvas, 0, 0, width, height);
 
-      // キャンバスから画像としてダウンロード
       canvas.toBlob(function (blob) {
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'photo.png'; // 保存する画像ファイル名
-        link.click(); // 自動的にリンクをクリックしてダウンロード
+        link.download = 'photo.png';
+        link.click();
       }, 'image/png');
     });
-    // QRコード読み取りのための設定
+
     const qrCanvasElement = document.querySelector('#qr-canvas');
     const qrCanvas = qrCanvasElement.getContext('2d');
     const qrVideo = document.createElement('video');
 
-    // カメラ映像の取得
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function (stream) {
       qrVideo.srcObject = stream;
-      qrVideo.setAttribute("playsinline", true); // iOS対応
+      qrVideo.setAttribute("playsinline", true);
       qrVideo.play();
       requestAnimationFrame(scanQRCode);
     });
 
-    // QRコードをスキャンする関数
     function scanQRCode() {
       if (qrVideo.readyState === qrVideo.HAVE_ENOUGH_DATA) {
         qrCanvasElement.height = qrVideo.videoHeight;
@@ -230,7 +202,6 @@
         if (code) {
           console.log("QRコードの内容:", code.data);
 
-          // QRコードの内容をA-Frameシーン内に表示
           const qrText = document.createElement('a-text');
           qrText.setAttribute('value', code.data);
           qrText.setAttribute('position', '0 1 -3');
@@ -241,6 +212,10 @@
       requestAnimationFrame(scanQRCode);
     }
 
+    const scene = document.querySelector('a-scene');
+    scene.addEventListener('loaded', function () {
+      requestAnimationFrame(scanQRCode);
+    });
   </script>
 </body>
 
