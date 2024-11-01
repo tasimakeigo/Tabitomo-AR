@@ -99,17 +99,17 @@ h2 {
     background-color: #0056b3;
 }
 
-.button-container {
+.button-container1 {
     display: flex;
     flex-direction: column;
     /* 縦方向に配置 */
     align-items: center;
     /* 中央揃え */
+
 }
 
 .row {
-    display: flex;
-    /* 横方向に配置 */
+
     justify-content: center;
     /* 中央揃え */
     margin: 10px 0;
