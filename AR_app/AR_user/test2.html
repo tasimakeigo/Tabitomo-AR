@@ -58,10 +58,10 @@
       audioMuted = !audioMuted;
 
       if (audioMuted) {
-        audio.pause();
+        audio.volume = 0; // 音量をゼロにする
         toggleVolumeButton.textContent = '音量OFF';
       } else {
-        audio.play();
+        audio.volume = 1; // 音量を元に戻す
         toggleVolumeButton.textContent = '音量ON';
       }
     });
