@@ -72,8 +72,8 @@ h2 {
     border-radius: 5px;
     cursor: pointer;
     z-index: 1;
-    font-size: 1px;
-    max-width: 10vw;
+    font-size: 5px;
+    max-width: 20vw;
     /* 幅が画面に収まるようにする */
 }
 
