@@ -16,7 +16,7 @@
     arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" id="scene" embedded gesture-detector>
     <a-assets>
       <a-asset-item id="animated-asset" src="model/glb/free_ac_unit.glb"></a-asset-item>
-      <audio id="audio" src="tanktop.mp3"></audio>
+      <audio id="audio" src="tanktop.mp3" preload="auto"></audio>
     </a-assets>
 
     <a-marker id="animated-marker" type="pattern" preset="custom" url="model/patt/pattern-marker.patt"
@@ -31,7 +31,7 @@
 
   <div id="subtitle">ここに字幕が表示されます</div>
 
-  <button id="toggle-volume" class="top-right-button" style="right: 200px;">音量ON</button>
+  <button id="toggle-volume" class="top-right-button">音量ON</button>
   <button id="take-photo" style="right: 200px;">写真を撮る</button>
   <button id="toggle-subtitle" class="top-right-button" style="right: 320px;">字幕OFF</button>
   <a href="japanese.html"><button class="top-right-button">戻る</button></a>
@@ -58,10 +58,10 @@
       audioMuted = !audioMuted;
 
       if (audioMuted) {
-        audio.volume = 0; // 音量をゼロにする
+        audio.muted = true; // 音声をミュート
         toggleVolumeButton.textContent = '音量OFF';
       } else {
-        audio.volume = 1; // 音量を元に戻す
+        audio.muted = false; // 音声を元に戻す
         toggleVolumeButton.textContent = '音量ON';
       }
     });
