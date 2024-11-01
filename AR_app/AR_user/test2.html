@@ -16,7 +16,7 @@
     arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" id="scene" embedded gesture-detector>
     <a-assets>
       <a-asset-item id="animated-asset" src="model/glb/free_ac_unit.glb"></a-asset-item>
-      <audio id="audio" src="tanktop.mp3" preload="auto"></audio>
+      <audio id="audio" src="tanktop.mp3"></audio>
     </a-assets>
 
     <a-marker id="animated-marker" type="pattern" preset="custom" url="model/patt/pattern-marker.patt"
@@ -31,19 +31,19 @@
 
   <div id="subtitle">ここに字幕が表示されます</div>
 
-  <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="1" title="音量調整">
-  <canvas id="qr-canvas" style="display:none;"></canvas>
-
+  <button id="toggle-volume" class="top-right-button">音量ON</button>
   <button id="take-photo" style="right: 200px;">写真を撮る</button>
   <button id="toggle-subtitle" class="top-right-button" style="right: 320px;">字幕OFF</button>
   <a href="japanese.html"><button class="top-right-button">戻る</button></a>
+
+  <canvas id="qr-canvas" style="display:none;"></canvas>
 
   <script>
     const marker = document.querySelector('#animated-marker');
     const model = document.querySelector('#model');
     const audio = document.querySelector('#audio');
     const subtitle = document.querySelector('#subtitle');
-    const volumeSlider = document.querySelector('#volume-slider');
+    const toggleVolumeButton = document.querySelector('#toggle-volume');
     const toggleSubtitleButton = document.querySelector('#toggle-subtitle');
     const takePhotoButton = document.querySelector('#take-photo');
 
@@ -52,11 +52,18 @@
     const displayDuration = 2000;
     let subtitleTimeout;
     let subtitlesVisible = false;
+    let audioMuted = false;
 
-    // 音量スライダーのイベントリスナー
-    volumeSlider.addEventListener('input', function () {
-      audio.volume = this.value; // スライダーの値で音量を設定
-      console.log('音量:', audio.volume); // デバッグ用
+    toggleVolumeButton.addEventListener('click', function () {
+      audioMuted = !audioMuted;
+
+      if (audioMuted) {
+        audio.pause();
+        toggleVolumeButton.textContent = '音量OFF';
+      } else {
+        audio.play();
+        toggleVolumeButton.textContent = '音量ON';
+      }
     });
 
     function loadSubtitles() {
@@ -88,7 +95,6 @@
 
     marker.addEventListener('markerFound', function () {
       model.setAttribute('visible', true);
-      audio.volume = volumeSlider.value; // スライダーの値を音量に設定
       audio.play();
       loadSubtitles().then(() => {
         showSubtitle();
