@@ -73,20 +73,10 @@ h2 {
     cursor: pointer;
     z-index: 1;
     font-size: 16px;
-    max-width: 90vw;
+    max-width: 10vw;
     /* 幅が画面に収まるようにする */
 }
 
 #take-photo:hover {
     background-color: #0056b3;
-}
-
-/* スマホ用スタイル */
-@media only screen and (max-width: 600px) {
-    #take-photo {
-        padding: 8px 16px;
-        /* パディングを調整 */
-        font-size: 14px;
-        /* フォントサイズを少し小さくする */
-    }
 }
