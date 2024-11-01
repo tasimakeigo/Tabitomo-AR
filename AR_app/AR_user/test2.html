@@ -2,6 +2,8 @@
 <html lang="ja">
 
 <head>
+  <link rel="stylesheet" href="static/user.css">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.3.0/jsQR.min.js"></script>
 
   <meta charset="UTF-8">
@@ -9,44 +11,6 @@
   <title>WebAR</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://ar-js-org.github.io/AR.js/aframe/build/aframe-ar.js"></script>
-  <style>
-    .top-right-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 1;
-    }
-
-    .top-right-button:hover {
-      background-color: #0056b3;
-    }
-
-    .volume-slider {
-      position: absolute;
-      top: 10px;
-      right: 120px;
-      z-index: 1;
-    }
-
-    #subtitle {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      font-size: 24px;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px;
-      border-radius: 5px;
-      display: none;
-    }
-  </style>
 </head>
 
 <body style="margin: 0px; overflow: hidden;">
