@@ -36,11 +36,11 @@ app.use(express.static(path.join(__dirname)));
 
 // /loginエンドポイントを追加
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+    const { adminname, password } = req.body;
 
     // SQLクエリを準備
     const query = 'SELECT * FROM ADMIN WHERE name = ? AND password = ?';
-    connection.query(query, [username, password], (err, results) => {
+    connection.query(query, [adminname, password], (err, results) => {
         if (err) {
             console.error('データベースエラー:', err);
             return res.status(500).send('サーバーエラー');
@@ -49,7 +49,7 @@ app.post('/login', (req, res) => {
         // 結果に応じてレスポンスを返す
         if (results.length > 0) {
             // EJSを使ってsuccess.ejsをレンダリング
-            res.render('success', { username: username, password: password });
+            res.render('success', { adminname: adminname, password: password });
         } else {
             res.status(401).send('ユーザー名またはパスワードが間違っています'); // ログイン失敗メッセージ
         }

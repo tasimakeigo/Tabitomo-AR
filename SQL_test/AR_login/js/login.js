@@ -3,7 +3,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
     event.preventDefault(); // デフォルトのフォーム送信を防ぐ
 
     // フォームデータを取得
-    const username = document.getElementById('login-name').value;
+    const adminname = document.getElementById('login-name').value;
     const password = document.getElementById('login-pass').value;
 
     // AJAXリクエストの作成
@@ -23,5 +23,5 @@ document.getElementById('login-form').addEventListener('submit', function (event
     };
 
     // リクエストを送信
-    xhr.send(`username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`);
+    xhr.send(`adminname=${encodeURIComponent(adminname)}&password=${encodeURIComponent(password)}`);
 });
