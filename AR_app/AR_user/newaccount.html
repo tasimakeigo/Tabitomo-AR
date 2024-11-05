@@ -6,14 +6,15 @@
 </head>
 
 <body>
-    <input type="password" class="login-field" value="" placeholder="password" id="login-pass">
-    <input type="text">
-    <input type="text">
-    <input type="text">
+    <form action="/register" method="POST">
+        <label for="name">名前</label>
+        <input type="text" id="name" name="name" placeholder="名前を入力してください" required>
 
-    <a href="success.html"><button>登録</button></a>
+        <label for="password">パスワード</label>
+        <input type="password" id="password" name="password" placeholder="パスワードを入力してください" required>
 
-
+        <button type="submit">登録</button>
+    </form>
 </body>
 
 </html>
