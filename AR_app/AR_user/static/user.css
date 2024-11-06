@@ -20,24 +20,38 @@ form {
     max-width: 400px;
 }
 
-/* ラベル */
-label {
-    font-size: 14px;
-    margin-top: 10px;
-    display: block;
+/* ログインタイトル */
+.app-title h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
     color: #333;
 }
 
 /* 入力フィールド */
+.control-group {
+    margin-bottom: 20px;
+}
+
 input[type="text"],
 input[type="password"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 8px 0 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
+}
+
+/* アイコンラベル */
+.login-field-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
 }
 
 /* ボタン */
@@ -54,6 +68,24 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #45a049;
+}
+
+/* ボタンリンク */
+a.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+a.btn:hover {
+    background-color: #0056b3;
 }
 
 /* ボタンエリア */
@@ -130,6 +162,26 @@ button[type="submit"]:hover {
     #take-photo {
         width: 120px;
         height: 40px;
+        font-size: 14px;
+    }
+
+    /* ログインフォーム調整 */
+    form {
+        padding: 15px;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        font-size: 14px;
+    }
+
+    button[type="submit"] {
+        font-size: 14px;
+    }
+
+    a.btn {
         font-size: 14px;
     }
 }
