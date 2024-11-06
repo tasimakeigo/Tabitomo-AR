@@ -58,10 +58,10 @@
       audioMuted = !audioMuted;
 
       if (audioMuted) {
-        audio.muted = true; // 音声をミュート
+        audio.muted = true;
         toggleVolumeButton.textContent = '音量OFF';
       } else {
-        audio.muted = false; // 音声を元に戻す
+        audio.muted = false;
         toggleVolumeButton.textContent = '音量ON';
       }
     });
@@ -123,70 +123,43 @@
       }
     });
 
+    // スクリーンショット機能
     takePhotoButton.addEventListener('click', function () {
       const scene = document.querySelector('a-scene');
       const renderer = scene.renderer;
 
-      const video = document.querySelector('video');
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
+      // 新しいキャンバスを作成し、WebGLコンテキストの内容を描画する準備
+      const captureCanvas = document.createElement('canvas');
+      const context = captureCanvas.getContext('2d');
 
-      const width = video.videoWidth;
-      const height = video.videoHeight;
-      canvas.width = width;
-      canvas.height = height;
+      // WebGLコンテキストのサイズを取得
+      captureCanvas.width = renderer.domElement.width;
+      captureCanvas.height = renderer.domElement.height;
 
-      context.drawImage(video, 0, 0, width, height);
-
-      const webglCanvas = renderer.domElement;
-      context.drawImage(webglCanvas, 0, 0, width, height);
-
-      canvas.toBlob(function (blob) {
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'photo.png';
-        link.click();
-      }, 'image/png');
-    });
-
-    const qrCanvasElement = document.querySelector('#qr-canvas');
-    const qrCanvas = qrCanvasElement.getContext('2d');
-    const qrVideo = document.createElement('video');
-
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function (stream) {
-      qrVideo.srcObject = stream;
-      qrVideo.setAttribute("playsinline", true);
-      qrVideo.play();
-      requestAnimationFrame(scanQRCode);
-    });
-
-    function scanQRCode() {
-      if (qrVideo.readyState === qrVideo.HAVE_ENOUGH_DATA) {
-        qrCanvasElement.height = qrVideo.videoHeight;
-        qrCanvasElement.width = qrVideo.videoWidth;
-        qrCanvas.drawImage(qrVideo, 0, 0, qrCanvasElement.width, qrCanvasElement.height);
-        const imageData = qrCanvas.getImageData(0, 0, qrCanvasElement.width, qrCanvasElement.height);
-        const code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: "dontInvert",
-        });
-
-        if (code) {
-          console.log("QRコードの内容:", code.data);
-
-          const qrText = document.createElement('a-text');
-          qrText.setAttribute('value', code.data);
-          qrText.setAttribute('position', '0 1 -3');
-          qrText.setAttribute('color', 'white');
-          document.querySelector('a-scene').appendChild(qrText);
+      // WebGLレンダラーがフレームを描画してからキャプチャする
+      function captureFrame() {
+        // レンダリングが完了しているか確認
+        if (renderer.domElement) {
+          context.drawImage(renderer.domElement, 0, 0);
+          // キャプチャした画像を保存
+          captureCanvas.toBlob(function (blob) {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'screenshot.png';
+            link.click();
+          }, 'image/png');
+        } else {
+          // レンダラーがまだ描画していない場合、再度試す
+          requestAnimationFrame(captureFrame);
         }
       }
-      requestAnimationFrame(scanQRCode);
-    }
 
-    const scene = document.querySelector('a-scene');
-    scene.addEventListener('loaded', function () {
-      requestAnimationFrame(scanQRCode);
+      // 最初のフレームをキャプチャする
+      captureFrame();
     });
+
+
+
   </script>
 </body>
 
