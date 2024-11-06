@@ -3,7 +3,7 @@ const path = require('path');
 const { Client } = require('pg');
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;  // RenderのPORT環境変数を使用
 
 // Use Render's environment variable for the connection string
 const client = new Client({
