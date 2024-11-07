@@ -73,6 +73,10 @@ header h1 {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.back-button button:hover{
+    background-color: #0056b3;
+}
+
 /* Footer styling */
 footer {
     position: fixed;
