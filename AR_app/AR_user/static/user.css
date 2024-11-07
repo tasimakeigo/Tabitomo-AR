@@ -1,28 +1,100 @@
+/* 共通スタイル */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
     flex-direction: column;
 }
 
+/* ログインフォーム */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+}
+
+/* ログインタイトル */
+.app-title h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* 入力フィールド */
+.control-group {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* アイコンラベル */
+.login-field-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
+}
+
+/* ボタン */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* ボタンリンク */
+a.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+a.btn:hover {
+    background-color: #0056b3;
+}
+
+/* ボタンエリア */
 .button-container {
     display: flex;
     gap: 10px;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-h2 {
-    margin-bottom: 20px;
-
-}
-
+/* 右上ボタン */
 .top-right-button {
     position: absolute;
     top: 10px;
@@ -40,6 +112,7 @@ h2 {
     background-color: #0056b3;
 }
 
+/* 音量スライダー */
 .volume-slider {
     position: absolute;
     top: 10px;
@@ -47,6 +120,7 @@ h2 {
     z-index: 1;
 }
 
+/* 字幕 */
 #subtitle {
     position: absolute;
     bottom: 50px;
@@ -60,6 +134,7 @@ h2 {
     display: none;
 }
 
+/* 写真ボタン */
 #take-photo {
     position: absolute;
     bottom: 20px;
@@ -73,97 +148,160 @@ h2 {
     cursor: pointer;
     z-index: 1;
     font-size: 16px;
-    /* 適切なフォントサイズ */
     width: 150px;
-    /* 幅を固定 */
     height: 50px;
-    /* 高さを固定 */
     text-align: center;
-    /* テキストを中央に配置 */
+}
+
+#take-photo:hover {
+    background-color: #0056b3;
 }
 
 /* スマホ用スタイル */
 @media only screen and (max-width: 600px) {
     #take-photo {
         width: 120px;
-        /* 幅を調整 */
         height: 40px;
-        /* 高さを調整 */
         font-size: 14px;
-        /* フォントサイズを少し小さくする */
+    }
+
+    /* ログインフォーム調整 */
+    form {
+        padding: 15px;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        font-size: 14px;
+    }
+
+    button[type="submit"] {
+        font-size: 14px;
+    }
+
+    a.btn {
+        font-size: 14px;
     }
 }
 
-
-#take-photo:hover {
-    background-color: #0056b3;
-}
-
+/* ボタンコンテナ1 */
 .button-container1 {
     display: flex;
     flex-direction: column;
-    /* 縦方向に配置 */
     align-items: center;
-    /* 中央揃え */
-
 }
 
+/* 行 */
 .row {
-
     justify-content: center;
-    /* 中央揃え */
     margin: 10px 0;
-    /* 行の間にマージンを追加 */
 }
 
+/* 共通スタイル */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
 }
 
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 400px;
-}
-
-label {
-    font-size: 14px;
-    margin-top: 10px;
-    display: block;
-    color: #333;
-}
-
-input[type="text"],
-input[type="password"] {
+/* ログインフォーム */
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    padding: 10px;
-    margin: 8px 0 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
+    height: 100%;
 }
 
-button[type="submit"] {
+.login-screen {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* タイトル */
+.app-title h1 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* 入力フィールド */
+.control-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.login-field {
     width: 100%;
     padding: 12px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
     font-size: 16px;
-    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
+.login-field:focus {
+    outline: none;
+    border-color: #007BFF;
+}
+
+/* アイコンラベル */
+.login-field-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #aaa;
+}
+
+/* ボタン */
+.btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.btn:active {
+    background-color: #004085;
+}
+
+/* スマホ用スタイル */
+@media only screen and (max-width: 600px) {
+    .login-screen {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .login-field {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 12px;
+    }
 }
