@@ -35,14 +35,11 @@ app.use(bodyParser.json());
 // 静的ファイルの提供
 app.use(express.static(path.join(__dirname)));  // 'AR_app'ディレクトリを静的ファイルのルートに指定
 
-// /loginエンドポイントを追加
+// /loginエンドポイントを追加 //
 app.post('/login', (req, res) => {
   const { adminname, password } = req.body;
-
   // SQLクエリを準備
   const query = 'SELECT * FROM admin WHERE name = $1 AND password = $2';  // プレースホルダーを使用
-
-  
   // PostgreSQLにクエリを実行
   client.query(query, [adminname, password])
     .then(result => {
@@ -58,6 +55,9 @@ app.post('/login', (req, res) => {
       res.status(500).send('サーバーエラー');
     });
 });
+// /loginエンドポイント終了 //
+
+
 
 // サーバー起動
 app.listen(PORT, () => {
