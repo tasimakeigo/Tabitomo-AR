@@ -1,3 +1,7 @@
+
+/*色を変えたやつです！*/
+
+
 /* Header styling */
 header {
     display: flex;
@@ -7,7 +11,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     padding: 10px 20px;
     border-bottom: 2px solid #ccc;
     z-index: 1000;
@@ -43,8 +47,8 @@ header h1 {
     width: 100%; /* 親要素の幅に合わせる */
     padding: 15px;
     font-size: 1em;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #ffffff;
+    color: #333;
     border: none;
     border-radius: 4px;
     text-align: center;
@@ -53,21 +57,28 @@ header h1 {
 }
 
 .button-container button:hover {
-    background-color: #0056b3;
+    background-color: #b9b9b9;
 }
 
 
-/* Styling for the back button */
+/* Back button styling */
 .back-button {
-    display: inline-block;
-    margin-top: 20px;
-    margin-left: 350px;
+    display: block;
+    width: 80%; /* ボタンの幅を統一 */
+    max-width: 300px; /* 最大幅を設定 */
+    margin: 20px auto 0 auto; /* 中央揃え */
     font-size: 1em;
     color: #333;
     text-decoration: none;
-    padding: 8px 12px;
-    background-color: #ddd;
+    padding: 10px 15px;
+    background-color: #ffffff;
     border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.back-button button:hover{
+    background-color: #b9b9b9;
 }
 
 /* Footer styling */
@@ -76,7 +87,7 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     padding: 10px 0;
     text-align: center;
     font-size: 0.9em;
@@ -91,6 +102,13 @@ footer {
     padding-bottom: 50px; /* フッターの高さに合わせて調整 */
 }
 
+body{
+    background-color: #cdf3ff;
+}
+
+h1{
+    color: #333;
+}
 
 /* Responsive styling for mobile screens */
 @media (max-width: 600px) {
@@ -121,7 +139,8 @@ footer {
     }
 
     .back-button {
+        width: 90%;
         font-size: 0.9em;
-        padding: 10px;
+        padding: 6px;
     }
 }
