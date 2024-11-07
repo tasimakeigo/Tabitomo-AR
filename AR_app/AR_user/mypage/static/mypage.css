@@ -57,17 +57,20 @@ header h1 {
 }
 
 
-/* Styling for the back button */
+/* Back button styling */
 .back-button {
-    display: inline-block;
-    margin-top: 20px;
-    margin-left: 350px;
+    display: block;
+    width: 80%; /* ボタンの幅を統一 */
+    max-width: 300px; /* 最大幅を設定 */
+    margin: 20px auto 0 auto; /* 中央揃え */
     font-size: 1em;
     color: #333;
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 10px 15px;
     background-color: #ddd;
     border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Footer styling */
@@ -121,7 +124,8 @@ footer {
     }
 
     .back-button {
+        width: 90%;
         font-size: 0.9em;
-        padding: 10px;
+        padding: 6px;
     }
 }
