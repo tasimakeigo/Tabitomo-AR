@@ -1,27 +1,37 @@
 const express = require('express');
 const path = require('path');
 const { Client } = require('pg');
+require('dotenv').config(); // .envファイルを読み込む
 
 const app = express();
 const PORT = process.env.PORT || 8080;  // RenderのPORT環境変数を使用
 
-// Use Render's environment variable for the connection string
+// PostgreSQLクライアントの設定
 const client = new Client({
-  connectionString: process.env.DATABASE_URL, // Uses the DATABASE_URL environment variable
+  connectionString: process.env.DATABASE_URL, // .envファイルから接続情報を取得
   ssl: {
-    rejectUnauthorized: false, // SSL is required by Render for PostgreSQL
+    rejectUnauthorized: false, // Renderで必要な設定
   }
 });
 
-// Connect to PostgreSQL
+// PostgreSQLデータベースに接続
 client.connect()
-  .then(() => console.log('Connected to the PostgreSQL database'))
-  .catch(err => console.error('Error connecting to the database', err.stack));
+  .then(() => {
+    console.log('PostgreSQLデータベースに接続しました');
+  })
+  .catch(err => {
+    console.error('データベース接続エラー:', err.stack);
+  });
 
-// Serve static files
-app.use(express.static(path.join(__dirname)));
+// 静的ファイルの提供
+app.use(express.static(path.join(__dirname, 'public')));  // 'public'ディレクトリを静的ファイルのルートに指定
 
-// Start server
+// ルートエンドポイント（例）
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
+// サーバー起動
 app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`サーバーがhttp://localhost:${PORT}で実行中`);
 });
