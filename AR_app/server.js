@@ -42,6 +42,7 @@ app.post('/login', (req, res) => {
   // SQLクエリを準備
   const query = 'SELECT * FROM admin WHERE name = $1 AND password = $2';  // プレースホルダーを使用
 
+  
   // PostgreSQLにクエリを実行
   client.query(query, [adminname, password])
     .then(result => {
