@@ -26,10 +26,6 @@ client.connect()
 // 静的ファイルの提供
 app.use(express.static(path.join(__dirname, 'public')));  // 'public'ディレクトリを静的ファイルのルートに指定
 
-// ルートエンドポイント（例）
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
 
 // サーバー起動
 app.listen(PORT, () => {
