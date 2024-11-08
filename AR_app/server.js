@@ -1,16 +1,11 @@
-// server.js
 const express = require('express');
 const path = require('path');
 const { Client } = require('pg');
-require('dotenv').config(); // .envファイルを読み込む
+require('dotenv').config();
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = 8080;  // ローカルのPORT
-
-// EJSの設定
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'AR_admin'));  // AR_admin内にmenu.ejsがある場合
+const PORT = 8080;
 
 // PostgreSQLクライアントの設定
 const connection = new Client({
@@ -21,7 +16,7 @@ const connection = new Client({
   port: 5432,
 });
 
-// PostgreSQLデータベースに接続
+// データベース接続
 connection.connect()
   .then(() => {
     console.log('PostgreSQLデータベースに接続しました');
@@ -30,18 +25,15 @@ connection.connect()
     console.error('データベース接続エラー:', err.stack);
   });
 
-// JSONボディをパースするためのミドルウェア
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // 静的ファイルを提供
 app.use(express.static(path.join(__dirname)));
 
-// /loginエンドポイントを追加
+// /loginエンドポイント
 app.post('/login', (req, res) => {
   const { adminname, password } = req.body;
-
-  // SQLクエリを準備
   const query = 'SELECT * FROM ADMIN WHERE name = $1 AND password = $2;';
   connection.query(query, [adminname, password], (err, results) => {
       if (err) {
@@ -49,16 +41,14 @@ app.post('/login', (req, res) => {
           return res.status(500).send('サーバーエラー');
       }
 
-      // 結果に応じてレスポンスを返す
-      if (results.rows.length > 0) {  // results.rowsにデータが入っているか確認
-          res.render('menu.html', { adminname: adminname, password: password });
+      if (results.rows.length > 0) {
+          res.redirect(`/AR_admin/menu.html?adminname=${encodeURIComponent(adminname)}`);
       } else {
-          res.status(401).send('ユーザー名またはパスワードが間違っています'); // ログイン失敗メッセージ
+          res.status(401).send('ユーザー名またはパスワードが間違っています');
       }
   });
 });
 
-// サーバーを起動
 app.listen(PORT, () => {
     console.log(`サーバーが http://localhost:${PORT} で実行中です`);
 });

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!-- menu.html -->
 <html lang="ja">
 
 <head>
@@ -12,9 +12,9 @@
 
     <header>
         <h1>管理者システム</h1>
+        <p>ユーザー名: </p> <!-- adminnameはここで動的に挿入 -->
         <a href="">ログアウト</a>
     </header>
-
 
     <div class="sideber">
         <div class="sideber-container">
@@ -28,7 +28,6 @@
         </div>
     </div>
 
-
     <div class="container">
         <a href="AR_user/user.html"><button>ユーザー情報</button></a>
         <a href="AR_marker/marker.html"><button>マーカー</button></a>
@@ -38,14 +37,22 @@
         <a href="AR_map/map.html"><button>マップ管理</button></a>
         <a href="AR_language/language.html"><button>言語管理</button></a>
     </div>
-    
 
     <footer>
         <p>© 2024 TIC<br>大原学園  C-2</p>
-
     </footer>
 
+    <!-- スクリプトをボディの最後に移動 -->
+    <script>
+        // URLパラメータからadminnameを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const adminname = urlParams.get('adminname');
+
+        // adminnameがある場合にページに表示
+        if (adminname) {
+            document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
+        }
+    </script>
 
 </body>
-
 </html>
