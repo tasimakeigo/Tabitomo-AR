@@ -32,6 +32,7 @@ header h1 {
     align-items: center; /* ボタンコンテナ全体を中央揃え */
     gap: 10px;
     padding: 20px;
+    font-family: sans-serif;
 }
 
 .button-container a {
@@ -43,7 +44,7 @@ header h1 {
     width: 100%; /* 親要素の幅に合わせる */
     padding: 15px;
     font-size: 1em;
-    background-color: #007bff;
+    background-color: #71aeef;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -53,7 +54,7 @@ header h1 {
 }
 
 .button-container button:hover {
-    background-color: #0056b3;
+    background-color: #71aeef;
 }
 
 
@@ -89,6 +90,10 @@ footer {
 .content {
     padding-top: 100px; /* Adjust this value based on the header height */
     padding-bottom: 50px; /* フッターの高さに合わせて調整 */
+}
+
+body{
+    font-family: 'Osaka';
 }
 
 
