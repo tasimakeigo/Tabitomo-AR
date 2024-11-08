@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン</title>
-    <link rel="stylesheet" href="/AR_app/AR_admin/static/admin.css">
+    <link rel="stylesheet" href="../static/admin.css"> <!-- CSSファイルのパスを適切に設定 -->
+    <script src="../js/login.js" defer></script> <!-- login.jsのパスを適切に設定 -->
 </head>
 
 <body>
@@ -15,7 +16,7 @@
                 <h1>ログイン</h1>
             </div>
 
-            <form id="login-form" class="login-form" method="POST">
+            <form id="login-form" class="login-form">
                 <div class="control-group">
                     <input type="text" class="login-field" placeholder="ユーザー名" id="login-name" name="adminname" required>
                     <label class="login-field-icon fui-user" for="login-name"></label>
@@ -32,13 +33,8 @@
             <a href="new.html">
                 <button>新規登録</button>
             </a>
-
-            <!-- エラーメッセージを表示するための要素 -->
-            <p id="error-message" style="color:red;"></p>
         </div>
     </div>
-
-    <script src="/static/login.js" defer></script>
 </body>
 
 </html>

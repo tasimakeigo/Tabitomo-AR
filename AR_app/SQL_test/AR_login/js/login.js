@@ -1,3 +1,4 @@
+// static/login.js
 document.getElementById('login-form').addEventListener('submit', function (event) {
     event.preventDefault(); // デフォルトのフォーム送信を防ぐ
 
