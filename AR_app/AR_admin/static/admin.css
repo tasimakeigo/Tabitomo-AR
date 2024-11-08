@@ -87,10 +87,9 @@ header a {
     margin-top: 60px; /* ヘッダーの高さを考慮 */
     margin-left: 220px; /* サイドバーの幅を考慮 */
     padding: 20px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2列 */
     gap: 15px;
-    flex-grow: 1;
 }
 
 /* フッター */
@@ -100,10 +99,27 @@ footer {
     left: 0;
     width: 100%;
     background-color: #f0f0f0;
-    padding: 10px;
+    
     text-align: center;
     font-size: 0.9em;
     color: #333;
     border-top: 1px solid #ccc;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ボタン */
+.container button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.container button:hover {
+    background-color: #0056b3;
 }
