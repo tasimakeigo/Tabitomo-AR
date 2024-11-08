@@ -11,9 +11,10 @@
 <body>
     <a-scene embedded arjs>
         <!-- 3Dモデルの配置 -->
-        <a-assets>
+        <a-assets timeout="10000">
             <a-asset-item id="model" src="../../../AR_user/model/glb/monkey.glb"></a-asset-item>
         </a-assets>
+
 
         <!-- 3Dモデルの表示 -->
         <a-entity id="model-entity" gltf-model="#model" position="0 1.5 -3" scale="1 1 1" rotation="0 45 0"
