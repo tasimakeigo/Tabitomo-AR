@@ -5,7 +5,7 @@ require('dotenv').config(); // .envファイルを読み込む
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = process.env.PORT || 8080;  // RenderのPORT環境変数を使用
+const PORT = 8080;  // ローカルのPORT
 
 // EJSの設定
 app.set('view engine', 'ejs');
@@ -13,10 +13,11 @@ app.set('views', path.join(__dirname, 'AR_admin', 'AR_login'));  // AR_admin内�
 
 // PostgreSQLクライアントの設定
 const connection = new Client({
-  connectionString: process.env.DATABASE_URL, // .envファイルから接続情報を取得
-  ssl: {
-    rejectUnauthorized: false, // Renderで必要な設定
-  }
+  user: 'postgres',
+  host: 'localhost',
+  database: 'tabitomo',  // ここにデータベース名を入力
+  password: 'kashi0001',
+  port: 5432,
 });
 
 // PostgreSQLデータベースに接続
