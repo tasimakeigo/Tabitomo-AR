@@ -2,17 +2,17 @@ const express = require('express');
 const path = require('path');
 const { Client } = require('pg');
 require('dotenv').config(); // .envファイルを読み込む
-const bodyParser = require('body-parser');  // body-parserモジュールをインポート
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 8080;  // RenderのPORT環境変数を使用
 
 // EJSの設定
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'AR_login', 'html')); // viewsフォルダの指定
+app.set('views', path.join(__dirname, 'AR_admin', 'AR_login'));  // AR_admin内にmenu.ejsがある場合
 
 // PostgreSQLクライアントの設定
-const client = new Client({
+const connection = new Client({
   connectionString: process.env.DATABASE_URL, // .envファイルから接続情報を取得
   ssl: {
     rejectUnauthorized: false, // Renderで必要な設定
@@ -20,7 +20,7 @@ const client = new Client({
 });
 
 // PostgreSQLデータベースに接続
-client.connect()
+connection.connect()
   .then(() => {
     console.log('PostgreSQLデータベースに接続しました');
   })
@@ -32,34 +32,31 @@ client.connect()
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// 静的ファイルの提供
-app.use(express.static(path.join(__dirname)));  // 'AR_app'ディレクトリを静的ファイルのルートに指定
+// 静的ファイルを提供
+app.use(express.static(path.join(__dirname)));
 
-// /loginエンドポイントを追加 //
+// /loginエンドポイントを追加
 app.post('/login', (req, res) => {
   const { adminname, password } = req.body;
+
   // SQLクエリを準備
-  const query = 'SELECT * FROM admin WHERE name = $1 AND password = $2';  // プレースホルダーを使用
-  // PostgreSQLにクエリを実行
-  client.query(query, [adminname, password])
-    .then(result => {
-      if (result.rows.length > 0) {
-        // EJSを使ってsuccess.ejsをレンダリング
-        res.render('/success', { adminname: adminname, password: password });
-      } else {
-        res.status(401).send('ユーザー名またはパスワードが間違っています'); // ログイン失敗メッセージ
+  const query = 'SELECT * FROM ADMIN WHERE name = $1 AND password = $2';
+  connection.query(query, [adminname, password], (err, results) => {
+      if (err) {
+          console.error('データベースエラー:', err);
+          return res.status(500).send('サーバーエラー');
       }
-    })
-    .catch(err => {
-      console.error('データベースエラー:', err);
-      res.status(500).send('サーバーエラー');
-    });
+
+      // 結果に応じてレスポンスを返す
+      if (results.rows.length > 0) {  // results.rowsにデータが入っているか確認
+          res.render('success', { adminname: adminname, password: password });
+      } else {
+          res.status(401).send('ユーザー名またはパスワードが間違っています'); // ログイン失敗メッセージ
+      }
+  });
 });
-// /loginエンドポイント終了 //
 
-
-
-// サーバー起動
+// サーバーを起動
 app.listen(PORT, () => {
-  console.log(`サーバーがhttp://localhost:${PORT}で実行中`);
+    console.log(`サーバーが http://localhost:${PORT} で実行中です`);
 });
