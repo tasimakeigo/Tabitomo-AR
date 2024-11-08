@@ -21,7 +21,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 5px 15px;
     background-color: #ededed;
     color: #333;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -42,16 +42,35 @@ header a {
     font-size: 1em;
 }
 
+li{
+    list-style: none;
+}
+
+ul{
+    padding-left: 0;
+}
+
+/* メイン */
+
+/*main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+*/
+
 /* サイドバー */
 .sideber {
     position: fixed;
-    top: 60px; /* ヘッダーの高さを考慮 */
+    top: 115px; /* ヘッダーの高さを考慮 */
     left: 0;
     width: 200px;
-    height: calc(100vh - 60px); /* ヘッダー分を引いた高さ */
+    height: calc(100vh - 60px - 40px); /* ヘッダー分を引いた高さ */
     background-color: #ffffff;
     padding: 20px 0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y:scroll /*スクロールばあ*/
+    
 }
 
 .sideber-container {
@@ -86,7 +105,7 @@ header a {
 
 /* メインコンテンツ */
 .container {
-    margin-top: 60px; /* ヘッダーの高さを考慮 */
+    margin-top: 150px; /* ヘッダーの高さを考慮 */
     margin-left: 220px; /* サイドバーの幅を考慮 */
     padding: 20px;
     display: grid;
@@ -106,7 +125,7 @@ footer {
     left: 0;
     width: 100%;
     background-color: #f0f0f0;
-    
+    padding: 0 -100px;
     text-align: center;
     font-size: 0.9em;
     color: #333;
