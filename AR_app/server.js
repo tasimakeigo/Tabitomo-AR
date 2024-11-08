@@ -9,7 +9,7 @@ const PORT = 8080;  // ローカルのPORT
 
 // EJSの設定
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'AR_admin', 'AR_login'));  // AR_admin内にmenu.ejsがある場合
+app.set('views', path.join(__dirname, 'SQL_test', 'AR_login','html'));  // AR_admin内にmenu.ejsがある場合
 
 // PostgreSQLクライアントの設定
 const connection = new Client({
