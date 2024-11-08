@@ -1,3 +1,4 @@
+
 /* Header styling */
 header {
     display: flex;
@@ -7,9 +8,9 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: #ededed;
     padding: 10px 20px;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid #ffffff;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -21,7 +22,7 @@ header h1 {
 
 .username {
     font-size: 1em;
-    color: #333;
+    color: #000000;
 }
 
 /* ボタンコンテナ */
@@ -31,7 +32,7 @@ header h1 {
     align-items: center;
     gap: 15px;
     padding: 20px;
-    padding-top: 300px;
+    padding-top: 150px;
 }
 
 /* ボタンスタイル */
@@ -44,19 +45,27 @@ header h1 {
     width: 100%;
     padding: 15px;
     font-size: 1em;
-    background-color: #71aeef;
-    color: #fff;
-    border: none;
+    background-color: #ffffff;
+    color: #10153d;
     border-radius: 4px;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s;
+    border:1px solid;
+    border-color: #10153d;
 }
 
 .button-container button:hover {
     background-color: #0056b3;
 }
 
+body{
+    background-color: rgb(255, 255, 255);
+}
+
+h1{
+    color: #000000;
+}
 
 
 /* Footer styling */
@@ -65,11 +74,29 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: #ededed;
     padding: 10px 0;
     text-align: center;
     font-size: 0.9em;
     color: #333;
     border-top: 1px solid #ccc;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Back button styling */
+.back-button {
+    display: block;
+    width: 80%; /* ボタンの幅を統一 */
+    max-width: 300px; /* 最大幅を設定 */
+    margin: 10px auto 0 auto; /* 中央揃え */
+    font-size: 1em;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 17px 38px;
+    background-color: #4a6999;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
