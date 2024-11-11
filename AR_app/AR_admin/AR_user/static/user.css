@@ -221,3 +221,8 @@ footer {
 .container button:hover {
     background-color: #ededed;
 }
+
+.deletecomplete{
+        padding-top: 200px;
+        padding-left: 150px;
+}
