@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!-- menu.html -->
 <html lang="ja">
 
 <head>
@@ -14,7 +14,7 @@
         <h1>管理者システム</h1>
        
             <ul>
-                <li><p>ID:123456</p></li>
+                <li><p>ユーザー名: </p></li>
                <li><a href="">ログアウト</a><li>
             </ul>
       
@@ -34,7 +34,6 @@
         </div>
     </div>
 
-
     <div class="container">
         <a href="AR_user/user.html"><button>ユーザー情報</button></a>
         <a href="AR_marker/marker.html"><button>マーカー</button></a>
@@ -52,7 +51,17 @@
         <p>© 2024 TIC 大原学園 C-2</p>
     </footer>
 
+    <!-- スクリプトをボディの最後に移動 -->
+    <script>
+        // URLパラメータからadminnameを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const adminname = urlParams.get('adminname');
+
+        // adminnameがある場合にページに表示
+        if (adminname) {
+            document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
+        }
+    </script>
 
 </body>
-
 </html>
