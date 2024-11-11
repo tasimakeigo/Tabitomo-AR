@@ -200,3 +200,96 @@ footer {
 .registration-container button:hover {
     background-color: #d0d7ff;
 }
+
+
+/* ログインフォーム */
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.login-screen {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 15px;
+    background-color: #ffffff;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-title h1 {
+    font-size: 1.5em;
+    margin: 0 0 20px;
+    color: #333;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.control-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.new{
+    padding-top: 20px;
+}
+
+
+.login-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+
+.login-field::placeholder {
+    color: #666;
+}
+
+#login-form label {
+    display: block;
+    text-align: left;
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.btn {
+    padding: 10px;
+    font-size: 1em;
+    background-color: #d0e2ff;
+    color: #333;
+    border: 1px solid #a0b6d0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #a0c0ff;
+}
+
+#show-password {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+}

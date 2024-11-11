@@ -1,3 +1,10 @@
+// パスワード表示/非表示の切り替え
+function togglePassword() {
+    const passwordField = document.getElementById("login-pass");
+    passwordField.type = passwordField.type === "password" ? "text" : "password";
+}
+
+
 document.getElementById('login-form').addEventListener('submit', function (event) {
     event.preventDefault();
 
