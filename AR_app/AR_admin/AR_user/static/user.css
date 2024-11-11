@@ -73,6 +73,63 @@ main {
    
 }
 
+/* cheakscreenのスタイル */
+.cheakscreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding-left: 100px;
+    padding-top: 50px;
+}
+
+/* 確認ボックスのスタイル */
+.confirmation-box {
+    background-color: #ffe4c4; /* 背景色を淡いオレンジ色に設定 */
+    border: 2px solid #f4a460; /* 薄い茶色の枠線 */
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+}
+
+.confirmation-box h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.confirmation-box p {
+    margin: 10px 0;
+    font-size: 1em;
+}
+
+/* ボタンのスタイル */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* ボタンリンクのスタイル */
+.button-group a {
+    display: inline-block;
+    padding: 5px 15px;
+    font-size: 0.9em;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #87ceeb; /* 青色 */
+    text-align: center;
+    cursor: pointer;
+}
+
+.button-group a:hover {
+    background-color: #6bb8d6; /* ホバーカラー */
+}
+
+
 /* サイドバー */
 .sideber {
     position: fixed;
