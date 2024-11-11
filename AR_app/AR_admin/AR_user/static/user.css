@@ -60,6 +60,19 @@ main {
     flex-grow: 1;
   }
 
+
+.subtitle{
+    padding-left: 220px;
+    padding-top: 130px;
+   
+}
+
+.userinfo{
+    padding-top: 25px;
+    padding-left: 270px;
+   
+}
+
 /* サイドバー */
 .sideber {
     position: fixed;
@@ -107,7 +120,7 @@ main {
 
 /* メインコンテンツ */
 .container {
-    margin-top: 150px; /* ヘッダーの高さを考慮 */
+    margin-top: 30px; /* ヘッダーの高さを考慮 */
     margin-left: 220px; /* サイドバーの幅を考慮 */
     padding: 20px;
     display: grid;
