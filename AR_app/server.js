@@ -144,11 +144,11 @@ app.get('/modellist', async (req, res) => {
   }
 });
 
-// /modellistエンドポイント
+// /modelnameエンドポイント
 app.get('/modelname', async (req, res) => {
   try {
-    // model_infoテーブルからモデル名だけを取得
-    const result = await connection.query('SELECT mdlname FROM model_info');
+    // model_infoテーブルからモデル名とmdlIDを取得
+    const result = await connection.query('SELECT mdlname, mdlid FROM model_info');
 
     // HTMLを生成してレスポンスを送信
     res.send(`
@@ -169,7 +169,7 @@ app.get('/modelname', async (req, res) => {
           <div class="modellist">
             <ul>
               ${result.rows.map(row => `
-                <li>${row.mdlname}</li>
+                <li><a href="/model_detail?mdlID=${row.mdlid}">${row.mdlname}</a></li>
               `).join('')}
             </ul>
           </div>
@@ -186,6 +186,73 @@ app.get('/modelname', async (req, res) => {
     res.status(500).send('Error fetching model info');
   }
 });
+
+
+
+app.get('/model_detail', async (req, res) => {
+  const mdlID = req.query.mdlID; // URLクエリから mdlID を取得
+  try {
+    // model_info テーブルから mdltext を取得
+    const modelInfo = await connection.query('SELECT mdltext FROM model_info WHERE mdlid = $1', [mdlID]);
+
+    if (modelInfo.rows.length > 0) {
+      const mdltext = modelInfo.rows[0].mdltext;
+
+      // mdltext を基に napisy テーブルから関連するデータを取得
+      const result = await connection.query('SELECT mdltext, languagename, napisyfile FROM napisy WHERE mdltext = $1', [mdltext]);
+
+      if (result.rows.length > 0) {
+        // 複数のデータがある場合、それらをリスト表示
+        const subtitlesList = result.rows.map(row => `
+          <li>
+            <p>字幕ID: ${row.mdltext}</p>
+            <p>言語名: ${row.languagename}</p>
+            <p>字幕ファイル: <a href="/path/to/subtitles/${row.napisyfile}">${row.napisyfile}</a></p>
+          </li>
+        `).join('');
+
+        // モデル詳細ページのHTMLを生成
+        res.send(`
+          <!DOCTYPE html>
+          <html lang="ja">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>モデル詳細</title>
+            <link rel="stylesheet" href="static/server.css">
+          </head>
+          <body>
+            <header>
+              <h1>モデル詳細</h1>
+            </header>
+
+            <main>
+              <h2>mdlID: ${mdlID}</h2>
+              <ul>
+                ${subtitlesList}
+              </ul>
+            </main>
+
+            <footer>
+              <p>© 2024 TIC 大原学園 C-2</p>
+            </footer>
+          </body>
+          </html>
+        `);
+      } else {
+        res.status(404).send('指定された字幕が見つかりません');
+      }
+    } else {
+      res.status(404).send('指定されたモデルIDが見つかりません');
+    }
+  } catch (error) {
+    console.error('Error fetching model details:', error);
+    res.status(500).send('エラーが発生しました');
+  }
+});
+
+
+
 
 // サーバーの起動
 app.listen(PORT, () => {
