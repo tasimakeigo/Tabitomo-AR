@@ -95,6 +95,98 @@ app.get('/markerinfo', async (req, res) => {
   }
 });
 
+// /modellistエンドポイント
+app.get('/modellist', async (req, res) => {
+  try {
+    // model_infoテーブルからデータを取得
+    const result = await connection.query('SELECT mdlid, mkid, mdlname, mdlimage, mdlsound, mdltext FROM model_info');
+
+    // HTMLを生成してレスポンスを送信
+    res.send(`
+      <!DOCTYPE html>
+      <html lang="ja">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>モデル情報</title>
+        <link rel="stylesheet" href="static/server.css">
+      </head>
+      <body>
+        <header>
+          <h1>モデル情報</h1>
+        </header>
+
+        <main>
+          <div class="modellist">
+            <ul>
+              ${result.rows.map(row => `
+                <li>モデルID: ${row.mdlid}</li>
+                <li>マーカーID: ${row.mkid}</li>
+                <li>モデル名: ${row.mdlname}</li>
+                <li>3Dモデル: ${row.mdlimage}</li>
+                <li>音声ID: ${row.mdlsound}</li>
+                <li>字幕ID: ${row.mdltext}</li>
+                <br>
+              `).join('')}
+            </ul>
+          </div>
+        </main>
+
+        <footer>
+          <p>© 2024 TIC 大原学園 C-2</p>
+        </footer>
+      </body>
+      </html>
+    `);
+  } catch (error) {
+    console.error('Error fetching model info:', error);
+    res.status(500).send('Error fetching model info');
+  }
+});
+
+// /modellistエンドポイント
+app.get('/modelname', async (req, res) => {
+  try {
+    // model_infoテーブルからモデル名だけを取得
+    const result = await connection.query('SELECT mdlname FROM model_info');
+
+    // HTMLを生成してレスポンスを送信
+    res.send(`
+      <!DOCTYPE html>
+      <html lang="ja">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>モデル情報</title>
+        <link rel="stylesheet" href="static/server.css">
+      </head>
+      <body>
+        <header>
+          <h1>モデル名一覧</h1>
+        </header>
+
+        <main>
+          <div class="modellist">
+            <ul>
+              ${result.rows.map(row => `
+                <li>${row.mdlname}</li>
+              `).join('')}
+            </ul>
+          </div>
+        </main>
+
+        <footer>
+          <p>© 2024 TIC 大原学園 C-2</p>
+        </footer>
+      </body>
+      </html>
+    `);
+  } catch (error) {
+    console.error('Error fetching model info:', error);
+    res.status(500).send('Error fetching model info');
+  }
+});
+
 // サーバーの起動
 app.listen(PORT, () => {
   console.log(`サーバーが http://localhost:${PORT} で実行中です`);
