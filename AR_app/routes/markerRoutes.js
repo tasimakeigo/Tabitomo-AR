@@ -17,7 +17,9 @@ router.get('/markerinfo', async (req, res) => {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>マーカー情報</title>
-            <link rel="stylesheet" href="static/server.css"> <!-- 静的ファイルのパス -->
+           <link rel="stylesheet" href="/static/server.css">
+
+            
         </head>
         <body>
             <header>
