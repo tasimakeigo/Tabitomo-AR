@@ -18,8 +18,7 @@
             <li>
                 <p>ユーザー名: </p>
             </li>
-            <li><a href="AR_login/logout.html">ログアウト</a>
-            <li>
+            <li><a href="AR_login/logout.html">ログアウト</a></li>
         </ul>
 
     </header>
@@ -60,20 +59,15 @@
                         <td>AR-1</td>
                         <td>チーバ君</td>
                         <td>Text</td>
-                        <td><button class="delete-button">削除</button></td>
+                        <td><button class="delete-button" onclick="confirmDelete('AR-1')">削除</button></td>
                     </tr>
                     <!-- 追加の行を追加 -->
                 </tbody>
             </table>
 
-            <h2><a href="delete.html">削除ボタンを押した前提のリンク</a></h2>
-
-
         </main>
         
-
     </main>
-
 
     <footer>
         <p>© 2024 TIC 大原学園 C-2</p>
@@ -89,10 +83,16 @@
         if (adminname) {
             document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
         }
-    </script>
-    <script>
+
         function goToUserInfo() {
             window.location.href = '/userinfo';  // ユーザー情報ページに遷移
+        }
+
+        function confirmDelete(modelId) {
+            const confirmed = confirm(`${modelId}を削除してもよろしいですか？`);
+            if (confirmed) {
+                window.location.href = 'success.html';  // 削除成功ページにリダイレクト
+            }
         }
     </script>
 </body>
