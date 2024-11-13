@@ -12,7 +12,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
     const password = document.getElementById('login-pass').value;
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/login', true);
+    xhr.open('POST', '/api/login', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onload = function () {
