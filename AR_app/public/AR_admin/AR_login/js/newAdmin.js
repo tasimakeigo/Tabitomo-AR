@@ -1,4 +1,3 @@
-// C:\Tabitomo-AR\AR_app\public\AR_admin\AR_login\js\login.js
 // パスワード表示/非表示の切り替え
 function togglePassword() {
     const passwordField = document.getElementById("login-pass");
@@ -13,7 +12,7 @@ document.getElementById('login-form').addEventListener('submit', function (event
     const password = document.getElementById('login-pass').value;
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/login', true);
+    xhr.open('POST', '/api/newadmin', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onload = function () {

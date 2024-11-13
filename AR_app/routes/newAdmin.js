@@ -1,4 +1,4 @@
-// routes/adminRoutes.js
+// routes/newAdmin.js
 const express = require('express');
 const router = express.Router();
 const connection = require('../config');
@@ -13,7 +13,7 @@ router.post('/newadmin', (req, res) => {
             return res.status(500).send('サーバーエラー');
         }
         if (results.rows.length > 0) {
-            res.redirect(`/AR_admin/menu.html?adminname=${encodeURIComponent(adminname)}`);
+            res.redirect(`/AR_admin/AR_login/confirmation.html?adminname=${encodeURIComponent(adminname)}`);
         } else {
             res.status(401).send('ユーザー名またはパスワードが間違っています');
         }
