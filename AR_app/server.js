@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const markerRoutes = require('./routes/markerRoutes'); // markerRoutesをインポート
+const markerRoutes2 = require('./routes/markerRoutes2'); // markerRoutesをインポート
 const adminlogin = require('./routes/admin'); // markerRoutesをインポート
 const newAdmin = require('./routes/newAdmin'); // markerRoutesをインポート
 
@@ -15,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));  // 'public' フォル�
 
 // データベースに関するルートを設定
 app.use('/api', markerRoutes); // markerRoutes を /api パスにマウント
+app.use('/api', markerRoutes2); // markerRoutes を /api パスにマウント
 
 app.use('/api', adminlogin);  // /api/login エンドポイントが有効になります
 
