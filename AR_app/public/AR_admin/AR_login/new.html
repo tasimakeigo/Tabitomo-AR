@@ -1,10 +1,10 @@
-<!DOCTYPE html><!-- menu.html -->
+<!DOCTYPE html>
 <html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ホーム</title>
+    <title>新規登録</title>
     <link rel="stylesheet" href="static/login.css">
 </head>
 
@@ -17,33 +17,20 @@
     <main>
         <div class="registration-container">
             <h2>新規登録</h2>
-            <form action="#" method="post">
-                <input type="text" placeholder="名前" required>
-                <input type="password" placeholder="パスワード" required>
-                <input type="password" placeholder="パスワード2回目" required>
-                <button type="submit">登録</button>
+            <form action="#" id="registration-form" method="post">
+                <input type="text" id="adminname" placeholder="管理者名" required>
+                <input type="password" id="password" placeholder="パスワード" required>
+                <input type="password" id="password-confirm" placeholder="パスワード（確認用）" required>
+                <button type="submit">登録内容確認</button>
             </form>
         </div>
-
-        <a href="login.html">登録完了後、ログイン画面</a>
-        
     </main>
 
     <footer>
         <p>© 2024 TIC 大原学園 C-2</p>
     </footer>
 
-    <!-- スクリプトをボディの最後に移動 -->
-    <script>
-        // URLパラメータからadminnameを取得
-        const urlParams = new URLSearchParams(window.location.search);
-        const adminname = urlParams.get('adminname');
-
-        // adminnameがある場合にページに表示
-        if (adminname) {
-            document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
-        }
-    </script>
+    <script src="js/login.js" defer></script>
 
 </body>
 </html>
