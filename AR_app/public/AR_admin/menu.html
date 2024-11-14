@@ -43,7 +43,7 @@
         <div class="container">
             <div class="container">
                 <a href="AR_user/user.html"><button>ユーザー情報</button></a>
-                <a href="/api/markerinfo"><button>マーカー情報</button></a>
+                <a href="AR_marker/marker.html"><button>マーカー情報</button></a>
                 <a href="/modellist"><button>3Dモデル</button></a>
                 <a href="/modelname"><button>字幕管理</button></a>
                 <a href="/modelname"><button>音声管理</button></a>
@@ -61,11 +61,19 @@
 
     <!-- スクリプトをボディの最後に移動 -->
     <script>
-        // URLパラメータからadminnameを取得
+        // URLパラメータまたはローカルストレージからadminnameを取得
         const urlParams = new URLSearchParams(window.location.search);
-        const adminname = urlParams.get('adminname');
+        let adminname = urlParams.get('adminname');
 
-        // adminnameがある場合にページに表示
+        // adminnameがURLパラメータにある場合はローカルストレージに保存
+        if (adminname) {
+            localStorage.setItem('adminname', adminname);
+        } else {
+            // URLパラメータがない場合はローカルストレージから取得
+            adminname = localStorage.getItem('adminname');
+        }
+
+        // adminnameが存在する場合にページに表示
         if (adminname) {
             document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
         }
