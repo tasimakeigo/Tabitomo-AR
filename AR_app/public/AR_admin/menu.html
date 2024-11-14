@@ -61,11 +61,19 @@
 
     <!-- スクリプトをボディの最後に移動 -->
     <script>
-        // URLパラメータからadminnameを取得
+        // URLパラメータまたはローカルストレージからadminnameを取得
         const urlParams = new URLSearchParams(window.location.search);
-        const adminname = urlParams.get('adminname');
+        let adminname = urlParams.get('adminname');
 
-        // adminnameがある場合にページに表示
+        // adminnameがURLパラメータにある場合はローカルストレージに保存
+        if (adminname) {
+            localStorage.setItem('adminname', adminname);
+        } else {
+            // URLパラメータがない場合はローカルストレージから取得
+            adminname = localStorage.getItem('adminname');
+        }
+
+        // adminnameが存在する場合にページに表示
         if (adminname) {
             document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
         }
