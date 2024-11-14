@@ -8,6 +8,8 @@ const markerRoutes2 = require('./routes/markerRoutes2'); // markerRoutesをイ�
 const adminlogin = require('./routes/admin'); // adminログインルートをインポート
 const newadmin = require('./routes/newAdmin'); // 新規adminルートをインポート
 const modellistRoutes = require('./routes/modellistRoutes'); // モデルリストのルートをインポート
+const napisyRoutes = require('./routes/napisyRoutes');
+const soundRoutes = require('./routes/soundRoutes');
 
 // ボディパーサー設定 (POSTデータを受け取るため)
 app.use(express.urlencoded({ extended: true }));  // URLエンコードされたデータの処理
@@ -21,6 +23,8 @@ app.use('/api', markerRoutes2);  // /api/markerinfo2 にアクセスできるよ
 app.use('/api', adminlogin);     // /api/login エンドポイントが有効になります
 app.use('/api', newadmin);       // /api/newAdmin エンドポイントが有効になります
 app.use('/modellist', modellistRoutes); // /modellist エンドポイントが有効になります
+app.use('/napisy', napisyRoutes);
+app.use('/sound', soundRoutes);
 
 // サーバーの起動
 const PORT = 8080;
