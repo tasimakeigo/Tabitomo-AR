@@ -112,3 +112,59 @@ footer {
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+/* 名前変更セクション */
+.name-change-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 150px;
+    margin-left: 80px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 400px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.name-change-section h2 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.name-change-section p {
+    margin: 10px 0;
+    font-size: 1em;
+}
+
+.name-change-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.name-change-section input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+/* 名前変更ボタン */
+.change-name-button {
+    display: block;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #4a6999;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.change-name-button:hover {
+    background-color: #3a5577;
+}
+

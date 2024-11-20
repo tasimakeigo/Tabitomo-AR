@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/mypage.css">
+    <title>マイページ</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>マイページ</h1>
+        <ul>
+            <li>ID:</li>
+            <li><a href="logout.html">ログアウト</a></li>
+        </ul>
+    </header>
+
+    <div class="content">
+        <div class="name-change-section">
+            <h2>名前の変更</h2>
+            <p>現在の名前: <span id="current-name">山田太郎</span></p>
+    
+            <label for="new-name">新しい名前:</label>
+            <input type="text" id="new-name" placeholder="新しい名前を入力" required>
+            
+            <a href="javascript:void(0);" id="change-name-link" class="change-name-button">名前を変更</a>
+        </div>
+    
+        <a href="../home.html" class="back-button">戻る</a>
+    </div>
+
+    <footer>
+        <p>© 2024 たびとも</p>
+    </footer>
+
+</body>
+
+</html>
+
+
