@@ -25,7 +25,7 @@ app.use('/api', newadmin);       // /api/newAdmin エンドポイントが有効
 app.use('/modellist', modellistRoutes); // /modellist エンドポイントが有効になります
 app.use('/napisy', napisyRoutes);
 app.use('/sound', soundRoutes);
-app.use('/api', napisylistRoutes);
+app.use('/napisylist', napisylistRoutes);
 
 // サーバーの起動
 const PORT = 8080;
