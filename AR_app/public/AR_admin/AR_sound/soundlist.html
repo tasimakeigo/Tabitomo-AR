@@ -32,7 +32,6 @@
                             <strong>音声ファイル:</strong> ${model.soundfile}</p>
                             <button class="edit-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">編集</button>
                             <button class="delete-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">削除</button>
-                            <button class="add-btn" data-mdlsound="${model.mdlsound}">追加</button>
                         `;
                     });
 
@@ -46,6 +45,8 @@
             alert('音声テキストが指定されていません。');
         }
     </script>
+    </br>
+    <button class="add-btn" data-mdlsound="${model.mdlsound}">新規音声追加</button>
 </body>
 
 </html>
