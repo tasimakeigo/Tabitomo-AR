@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // モデルテキストにリンクを追加
                 listItem.innerHTML = `
                     モデルID: ${model.mdlid}<br>
-                    字幕テキスト: <a href="soundlist.html?mdlsound=${model.mdlsound}" class="soundtext">
+                    音声テキスト: <a href="soundlist.html?mdlsound=${model.mdlsound}" class="soundtext">
                         ${model.mdlsound}
                     </a>
                 `;

@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // モデルテキストにリンクを追加
                 listItem.innerHTML = `
-                    字幕テキスト: <a href="soundlist.html?mdlsound=${mdlsound}" class="soundtext">${mdlsound}</a>
+                    音声テキスト: <a href="soundlist.html?mdlsound=${mdlsound}" class="soundtext">${mdlsound}</a>
                 `;
 
                 napisy.appendChild(listItem); // リストに追加
