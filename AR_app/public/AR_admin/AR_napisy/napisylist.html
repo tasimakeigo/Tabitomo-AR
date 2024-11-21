@@ -32,11 +32,13 @@
                             <strong>字幕ファイル:</strong> ${model.napisyfile}</p>
                             <button class="edit-btn" data-mdltext="${model.mdltext}" data-languagename="${model.languagename}">編集</button>
                             <button class="delete-btn" data-mdltext="${model.mdltext}" data-languagename="${model.languagename}">削除</button>
-                            <button class="add-btn" data-mdltext="${model.mdltext}">追加</button>
+                            
                         `;
+
                     });
 
                     napisyDetails.innerHTML = detailsHtml;
+
                 })
                 .catch(error => {
                     console.error('字幕情報の取得中にエラーが発生しました:', error);
@@ -46,6 +48,8 @@
             alert('字幕テキストが指定されていません。');
         }
     </script>
+    <br>
+    <button class="add-btn" data-mdltext="${model.mdltext}">新規字幕追加</button>
 </body>
 
 </html>
