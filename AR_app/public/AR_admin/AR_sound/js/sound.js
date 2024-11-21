@@ -9,9 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // 取得したモデル情報をリストに表示
             data.forEach(model => {
                 const listItem = document.createElement('li');
+
                 listItem.innerHTML = `
-                    <p>モデルID: ${model.mdlid}</p>
-                   
+                    <a href="soundlist.html?mdlid=${model.mdlid}">
+                        ${model.mdlid}
+                    </a>
                 `;
                 sound.appendChild(listItem);  // リストに追加
             });
