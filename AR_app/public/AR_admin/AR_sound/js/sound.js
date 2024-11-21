@@ -1,4 +1,3 @@
-// C:\Tabitomo-AR\AR_app\public\AR_admin\AR_model\js\modellist.js
 
 document.addEventListener('DOMContentLoaded', function () {
     // モデル情報を取得するためのAPI呼び出し

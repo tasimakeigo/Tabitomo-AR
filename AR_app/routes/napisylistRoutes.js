@@ -1,4 +1,3 @@
-// napisylistRoutes.js
 const express = require('express');
 const router = express.Router();
 const connection = require('../config'); // PostgreSQLの接続設定
@@ -20,14 +19,14 @@ router.get('/napisylist', async (req, res) => {
             if (result.rows.length > 0) {
                 res.json(result.rows); // 取得したデータをJSONとして返す
             } else {
-                res.status(404).send('指定された字幕が見つかりません');
+                res.status(404).json({ error: '指定された字幕が見つかりません' });
             }
         } else {
-            res.status(404).send('指定されたモデルIDが見つかりません');
+            res.status(404).json({ error: '指定されたモデルIDが見つかりません' });
         }
     } catch (error) {
-        console.error('モデル詳細の取得中にエラーが発生しました:', error);
-        res.status(500).send('エラーが発生しました');
+        console.error('エラーが発生しました:', error);
+        res.status(500).json({ error: 'サーバーエラー' });
     }
 });
 
