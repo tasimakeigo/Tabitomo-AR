@@ -1,24 +1,34 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // URLパラメータからmdlidを取得
   const urlParams = new URLSearchParams(window.location.search);
-  const mdlid = urlParams.get('mdlid');
+  const mdlID = urlParams.get('mdlid');  // クエリパラメータからmdlIDを取得
 
-  if (mdlid) {
-    // mdlidに基づいてデータを取得するためのAPI呼び出し
-    fetch(`/napisy/${mdlid}`)  // 例: モデルIDに基づいてデータを取得するエンドポイント
+  if (mdlID) {
+    // mdlIDを使って字幕情報を取得するAPIを呼び出す
+    fetch(`/api/napisylist?mdlID=${mdlID}`)
       .then(response => response.json())  // JSONレスポンスを取得
       .then(data => {
-        const napisyDetail = document.querySelector('.napisy-detail');
-        napisyDetail.innerHTML = `
-                  <h2>モデルID: ${data.mdlid}</h2>
-                  <p>${data.description}</p>  <!-- ここでモデルの詳細情報を表示 -->
-              `;
+        const napisyListElement = document.querySelector('.napisy ul');  // モデル情報を表示する要素を選択
+        napisyListElement.innerHTML = ''; // 初期化
+
+        if (data.length > 0) {
+          // 取得した字幕情報をリストに表示
+          data.forEach(napisy => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                          <p><strong>言語:</strong> ${napisy.languagename}</p>
+                          <p><strong>字幕ファイル:</strong> ${napisy.napisyfile}</p>
+                      `;
+            napisyListElement.appendChild(listItem);
+          });
+        } else {
+          napisyListElement.innerHTML = '<p>関連する字幕が見つかりません。</p>';
+        }
       })
       .catch(error => {
-        console.error('データ取得中にエラーが発生しました:', error);
-        alert('データの取得に失敗しました。');
+        console.error('字幕情報の取得中にエラーが発生しました:', error);
+        document.querySelector('.napisy ul').innerHTML = `<p>${error.message}</p>`;
       });
   } else {
-    alert('モデルIDが指定されていません。');
+    alert('モデルIDが指定されていません');
   }
 });
