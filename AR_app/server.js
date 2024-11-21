@@ -12,6 +12,7 @@ const napisyRoutes = require('./routes/napisyRoutes');
 const soundRoutes = require('./routes/soundRoutes');
 const napisylistRoutes = require('./routes/napisylistRoutes');
 const soundlistRoutes = require('./routes/soundlistRoutes');
+
 // ボディパーサー設定 (POSTデータを受け取るため)
 app.use(express.urlencoded({ extended: true }));  // URLエンコードされたデータの処理
 app.use(express.json());  // JSONデータの処理
@@ -27,7 +28,8 @@ app.use('/modellist', modellistRoutes); // /modellist エンドポイントが�
 app.use('/napisy', napisyRoutes);
 app.use('/sound', soundRoutes);
 app.use('/api/napisylist', napisylistRoutes);
-app.use('api/soundlist', soundlistRoutes);
+app.use('/api/soundlist', soundlistRoutes);
+
 // サーバーの起動
 const PORT = 8080;
 app.listen(PORT, () => {
