@@ -4,26 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>音声情報</title>
-    <link rel="stylesheet" href="/static/server.css">
-    <script src="js/soundlist.js" defer></script>
+    <title>字幕詳細情報</title>
 </head>
 
 <body>
-    <header>
-        <h1>音声情報</h1>
-    </header>
+    <h1>字幕詳細情報</h1>
+    <div id="sound-details"></div>
 
-    <main>
-        <div id="sound-list" class="sound">
-            <p>音声情報がここに表示されます。</p>
-            <ul></ul>
-        </div>
-    </main>
+    <script>
+        // URLのパラメータからmdltextを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const mdlsound = urlParams.get('mdlsound');
 
-    <footer>
-        <p>© 2024 TIC 大原学園 C-2</p>
-    </footer>
+        // mdltextが取得できたら、その字幕テキストに関連する情報を表示
+        if (mdlsound) {
+            // サーバーからその字幕テキストに関連するデータを取得
+            fetch(`/soundlist?mdlsound=${mdlsound}`)
+                .then(response => response.json())
+                .then(data => {
+                    const soundDetails = document.getElementById('sound-details');
+                    let detailsHtml = `<h2>字幕テキスト: ${mdlsound}</h2>`;
+
+                    // 各言語の情報を表示
+                    data.forEach(model => {
+                        detailsHtml += `
+                            <p><strong>言語名:</strong> ${model.languagename} <br>
+                            <strong>字幕ファイル:</strong> ${model.soundfile}</p>
+                            <button class="edit-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">編集</button>
+                            <button class="delete-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">削除</button>
+                            <button class="add-btn" data-mdlsound="${model.mdlsound}">追加</button>
+                        `;
+                    });
+
+                    soundDetails.innerHTML = detailsHtml;
+                })
+                .catch(error => {
+                    console.error('字幕情報の取得中にエラーが発生しました:', error);
+                    alert('字幕情報の取得に失敗しました。');
+                });
+        } else {
+            alert('字幕テキストが指定されていません。');
+        }
+    </script>
 </body>
 
 </html>

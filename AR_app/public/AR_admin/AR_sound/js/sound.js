@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
     // モデル情報を取得するためのAPI呼び出し
     fetch('/sound')  // モデル情報を取得するエンドポイント
@@ -10,13 +9,17 @@ document.addEventListener('DOMContentLoaded', function () {
             data.forEach(model => {
                 const listItem = document.createElement('li');
 
+                // モデルテキストにリンクを追加
                 listItem.innerHTML = `
-                    <a href="soundlist.html?mdlid=${model.mdlid}">
-                        ${model.mdlid}
+                    モデルID: ${model.mdlid}<br>
+                    字幕テキスト: <a href="soundlist.html?mdlsound=${model.mdlsound}" class="soundtext">
+                        ${model.mdlsound}
                     </a>
                 `;
-                sound.appendChild(listItem);  // リストに追加
+
+                sound.appendChild(listItem); // リストに追加
             });
+
         })
         .catch(error => {
             console.error('モデル情報の取得中にエラーが発生しました:', error);

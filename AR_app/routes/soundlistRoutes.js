@@ -1,33 +1,23 @@
-const express = require('express');
-const router = express.Router();
-const connection = require('../config'); // PostgreSQLの接続設定
+const express = require('express');  // expressモジュールのインポート
+const router = express.Router();     // express.Router() でルーターを定義
+const connection = require('../config');  // PostgreSQLの接続設定
 
-// /api/napisylist エンドポイント
-router.get('/api/soundlist', async (req, res) => {
-    const mdlID = req.query.mdlID; // クエリから mdlID を取得
+// ここでルートの設定
+router.get('/', async (req, res) => {
+    const mdlsound = req.query.mdlsound;  // クエリパラメータからmdltextを取得
+
+    if (!mdlsound) {
+        return res.status(400).json({ error: 'mdltextが指定されていません。' });
+    }
 
     try {
-        // model_info テーブルから mdltext を取得
-        const modelInfo = await connection.query('SELECT mdlsound FROM model_info WHERE mdlid = $1', [mdlID]);
-
-        if (modelInfo.rows.length > 0) {
-            const mdlsound = modelInfo.rows[0].mdlsound;
-
-            // mdlsound を基に sound テーブルから関連するデータを取得
-            const result = await connection.query('SELECT mdltext, languagename, soundfile FROM sound WHERE mdlsound = $1', [mdlsound]);
-
-            if (result.rows.length > 0) {
-                res.json(result.rows); // 取得したデータをJSONとして返す
-            } else {
-                res.status(404).json({ error: '指定された字幕が見つかりません' });
-            }
-        } else {
-            res.status(404).json({ error: '指定されたモデルIDが見つかりません' });
-        }
+        // `mdltext` に関連するデータを取得するSQL
+        const result = await connection.query('SELECT * FROM sound WHERE mdlsound = $1', [mdlsound]);
+        res.json(result.rows);  // 取得したデータを返す
     } catch (error) {
-        console.error('エラーが発生しました:', error);
-        res.status(500).json({ error: 'サーバーエラー' });
+        console.error(error);
+        res.status(500).json({ error: 'データの取得中にエラーが発生しました' });
     }
 });
 
-module.exports = router;
+module.exports = router;  // ルーターをエクスポート
