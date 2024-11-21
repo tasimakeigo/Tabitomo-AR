@@ -3,15 +3,15 @@ const router = express.Router();
 const connection = require('../config'); // PostgreSQLの接続設定
 
 // /api/napisylist エンドポイント
-router.get('/soundlist', async (req, res) => {
+router.get('/api/soundlist', async (req, res) => {
     const mdlID = req.query.mdlID; // クエリから mdlID を取得
 
     try {
         // model_info テーブルから mdltext を取得
-        const modelInfo = await connection.query('SELECT mdltext FROM model_info WHERE mdlid = $1', [mdlID]);
+        const modelInfo = await connection.query('SELECT mdlsound FROM model_info WHERE mdlid = $1', [mdlID]);
 
         if (modelInfo.rows.length > 0) {
-            const mdltext = modelInfo.rows[0].mdltext;
+            const mdlsound = modelInfo.rows[0].mdlsound;
 
             // mdlsound を基に sound テーブルから関連するデータを取得
             const result = await connection.query('SELECT mdltext, languagename, soundfile FROM sound WHERE mdlsound = $1', [mdlsound]);

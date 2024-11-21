@@ -28,6 +28,7 @@ app.use('/modellist', modellistRoutes); // /modellist エンドポイントが�
 app.use('/napisy', napisyRoutes);
 app.use('/sound', soundRoutes);
 app.use('/napisylist', napisylistRoutes);
+app.use('/soundlist', soundlistRoutes);
 // サーバーの起動
 const PORT = 8080;
 app.listen(PORT, () => {
