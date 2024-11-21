@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // モデルテキストにリンクを追加
                 listItem.innerHTML = `
-                モデルID: ${model.mdlid}<br>
-                字幕テキスト:<a href="napisylist.html" class="napisytext">
-                    ${model.mdltext}
-                </a>
+                    モデルID: ${model.mdlid}<br>
+                    字幕テキスト: <a href="napisylist.html?mdltext=${model.mdltext}" class="napisytext">
+                        ${model.mdltext}
+                    </a>
                 `;
 
                 napisy.appendChild(listItem); // リストに追加

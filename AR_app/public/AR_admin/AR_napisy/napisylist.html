@@ -4,27 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>字幕情報</title>
-    <link rel="stylesheet" href="/static/server.css">
-    <script src="js/napisylist.js" defer></script>
+    <title>字幕詳細情報</title>
 </head>
 
 <body>
-    <header>
-        <h1>字幕情報</h1>
-    </header>
+    <h1>字幕詳細情報</h1>
+    <div id="napisy-details"></div>
 
-    <main>
-        <div class="napisylist">
-            <ul>
+    <script>
+        // URLのパラメータからmdltextを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const mdltext = urlParams.get('mdltext');
 
-            </ul>
-        </div>
-    </main>
+        // mdltextが取得できたら、その字幕テキストに関連する情報を表示
+        if (mdltext) {
+            // サーバーからその字幕テキストに関連するデータを取得
+            fetch(`/napisylist?mdltext=${mdltext}`)
+                .then(response => response.json())
+                .then(data => {
+                    const napisyDetails = document.getElementById('napisy-details');
+                    let detailsHtml = `<h2>字幕テキスト: ${mdltext}</h2>`;
 
-    <footer>
-        <p>© 2024 TIC 大原学園 C-2</p>
-    </footer>
+                    // 各言語の情報を表示
+                    data.forEach(model => {
+                        detailsHtml += `
+                            <p><strong>言語名:</strong> ${model.languagename} <br>
+                            <strong>字幕ファイル:</strong> ${model.napisyfile}</p>
+                        `;
+                    });
+
+                    napisyDetails.innerHTML = detailsHtml;
+                })
+                .catch(error => {
+                    console.error('字幕情報の取得中にエラーが発生しました:', error);
+                    alert('字幕情報の取得に失敗しました。');
+                });
+        } else {
+            alert('字幕テキストが指定されていません。');
+        }
+    </script>
 </body>
 
 </html>

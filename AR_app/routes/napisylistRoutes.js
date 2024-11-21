@@ -1,17 +1,23 @@
-const express = require('express');
-const router = express.Router();
-const connection = require('../config'); // PostgreSQLの接続設定
+const express = require('express');  // expressモジュールのインポート
+const router = express.Router();     // express.Router() でルーターを定義
+const connection = require('../config');  // PostgreSQLの接続設定
 
-// modellistエンドポイント - モデル情報をJSONとして返す
+// ここでルートの設定
 router.get('/', async (req, res) => {
+    const mdltext = req.query.mdltext;  // クエリパラメータからmdltextを取得
+
+    if (!mdltext) {
+        return res.status(400).json({ error: 'mdltextが指定されていません。' });
+    }
+
     try {
-        // SQLクエリの例: napisyテーブルからすべてのデータを取得
-        const result = await connection.query('SELECT * FROM napisy');
-        res.json(result.rows);  // データをJSONとして返す
+        // `mdltext` に関連するデータを取得するSQL
+        const result = await connection.query('SELECT * FROM napisy WHERE mdltext = $1', [mdltext]);
+        res.json(result.rows);  // 取得したデータを返す
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'モデル情報の取得中にエラーが発生しました' });
+        res.status(500).json({ error: 'データの取得中にエラーが発生しました' });
     }
 });
 
-module.exports = router;
+module.exports = router;  // ルーターをエクスポート
