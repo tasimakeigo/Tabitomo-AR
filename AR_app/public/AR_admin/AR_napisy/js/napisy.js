@@ -9,15 +9,17 @@ document.addEventListener('DOMContentLoaded', function () {
             data.forEach(model => {
                 const listItem = document.createElement('li');
 
-                // モデルIDにリンクを追加
+                // モデルテキストにリンクを追加
                 listItem.innerHTML = `
-                    <a href="napisylist.html?mdlid=${model.mdlid}">
-                        モデルID: ${model.mdlid}
-                    </a>
+                モデルID: ${model.mdlid}<br>
+                字幕テキスト:<a href="napisylist.html" class="napisytext">
+                    ${model.mdltext}
+                </a>
                 `;
 
-                napisy.appendChild(listItem);  // リストに追加
+                napisy.appendChild(listItem); // リストに追加
             });
+
         })
         .catch(error => {
             console.error('モデル情報の取得中にエラーが発生しました:', error);
