@@ -1,17 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const mdlID = urlParams.get('mdlid');  // クエリパラメータからmdlIDを取得
-
-    console.log(mdlID);
-
     if (mdlID) {
         // mdlIDを使って字幕情報を取得するAPIを呼び出す
         fetch(`/api/soundlist?mdlID=${mdlID}`)
-            .then(response => response.text())  // JSONレスポンスを取得
+            .then(response => response.json())  // JSONレスポンスを取得
             .then(data => {
-
-                console.log(data)
-
                 const soundListElement = document.querySelector('.sound ul');  // モデル情報を表示する要素を選択
                 soundListElement.innerHTML = ''; // 初期化
 

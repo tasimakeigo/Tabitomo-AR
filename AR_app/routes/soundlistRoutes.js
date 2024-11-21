@@ -3,7 +3,7 @@ const router = express.Router();
 const connection = require('../config'); // PostgreSQLの接続設定
 
 // /api/napisylist エンドポイント
-router.get('/soundlist', async (req, res) => {
+router.get('/api/soundlist', async (req, res) => {
     const mdlID = req.query.mdlID; // クエリから mdlID を取得
 
     try {
