@@ -11,6 +11,8 @@ const modellistRoutes = require('./routes/modellistRoutes'); // モデルリス�
 const napisyRoutes = require('./routes/napisyRoutes');
 const soundRoutes = require('./routes/soundRoutes');
 const napisylistRoutes = require('./routes/napisylistRoutes');
+const soundlistRoutes = require('./routes/soundlistRoutes');
+
 // ボディパーサー設定 (POSTデータを受け取るため)
 app.use(express.urlencoded({ extended: true }));  // URLエンコードされたデータの処理
 app.use(express.json());  // JSONデータの処理

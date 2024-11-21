@@ -1,4 +1,3 @@
-// C:\Tabitomo-AR\AR_app\public\AR_admin\AR_model\js\modellist.js
 
 document.addEventListener('DOMContentLoaded', function () {
     // モデル情報を取得するためのAPI呼び出し
@@ -10,9 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // 取得したモデル情報をリストに表示
             data.forEach(model => {
                 const listItem = document.createElement('li');
+
                 listItem.innerHTML = `
-                    <p>モデルID: ${model.mdlid}</p>
-                   
+                    <a href="soundlist.html?mdlid=${model.mdlid}">
+                        ${model.mdlid}
+                    </a>
                 `;
                 sound.appendChild(listItem);  // リストに追加
             });
