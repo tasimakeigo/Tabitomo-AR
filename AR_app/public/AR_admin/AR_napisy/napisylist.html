@@ -30,6 +30,9 @@
                         detailsHtml += `
                             <p><strong>言語名:</strong> ${model.languagename} <br>
                             <strong>字幕ファイル:</strong> ${model.napisyfile}</p>
+                            <button class="edit-btn" data-mdltext="${model.mdltext}" data-languagename="${model.languagename}">編集</button>
+                            <button class="delete-btn" data-mdltext="${model.mdltext}" data-languagename="${model.languagename}">削除</button>
+                            <button class="add-btn" data-mdltext="${model.mdltext}">追加</button>
                         `;
                     });
 
