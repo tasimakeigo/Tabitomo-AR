@@ -50,7 +50,7 @@
                 const mdlsound = event.target.dataset.mdlsound;
                 const languagename = event.target.dataset.languagename;
 
-                if (confirm(`mdlsound '${mdlsound}' と言語 '${languagename}' の音声情報を削除してよろしいですか？`)) {
+                if (confirm(` '${mdlsound}' : '${languagename}' の音声情報を削除してよろしいですか？`)) {
                     fetch(`/sound/${mdlsound}/${languagename}`, {
                         method: 'DELETE',
                     })

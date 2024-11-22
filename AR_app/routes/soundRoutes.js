@@ -29,7 +29,7 @@ router.delete('/:mdlsound/:languagename', async (req, res) => {
         );
 
         if (result.rowCount > 0) {
-            res.json({ message: `音声情報 (mdlsound: ${mdlsound}, languagename: ${languagename}) を削除しました。` });
+            res.json({ message: `${mdlsound} : ${languagename} の音声情報を削除しました。` });
         } else {
             res.status(404).json({ error: `音声情報 (mdlsound: ${mdlsound}, languagename: ${languagename}) が見つかりません。` });
         }
