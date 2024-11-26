@@ -23,4 +23,21 @@ router.get('/markerinfo2', async (req, res) => {
     });
 });
 
+router.delete('/marker/:mkid', async (req, res) => {
+    const mkid = req.params.mkid;  // URLパラメータから削除対象のモデルIDを取得
+    const query = 'DELETE FROM marker WHERE mkid = $1';
+
+    connection.query(query, [mkid], (err, results) => {
+        if (err) {
+            console.error('データベースエラー:', err);
+            return res.status(500).send('サーバーエラー');
+        }
+        if (results.rowCount > 0) {
+            res.status(200).send('削除成功');
+        } else {
+            res.status(404).send('モデルが見つかりません');
+        }
+    });
+});
+
 module.exports = router;
