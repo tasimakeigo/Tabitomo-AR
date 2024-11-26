@@ -47,6 +47,33 @@
         } else {
             alert('字幕テキストが指定されていません。');
         }
+
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('delete-btn')) {
+                const mdltext = event.target.dataset.mdltext;
+                const languagename = event.target.dataset.languagename;
+
+                if (confirm(` '${mdltext}' : '${languagename}' の字幕情報を削除してよろしいですか？`)) {
+                    fetch(`/napisy/${mdltext}/${languagename}`, {
+                        method: 'DELETE',
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.error) {
+                                alert(result.error);
+                            } else {
+                                alert(result.message);
+                                location.reload(); // ページをリロードして削除結果を反映
+                            }
+                        })
+                        .catch(error => {
+                            console.error('削除中にエラーが発生しました:', error);
+                            alert('削除に失敗しました。');
+                        });
+                }
+            }
+        });
+
     </script>
     <br>
     <button class="add-btn" data-mdltext="${model.mdltext}">新規字幕追加</button>

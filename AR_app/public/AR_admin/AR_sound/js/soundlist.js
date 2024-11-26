@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // 取得したモデル情報をリストに表示
             const uniqueMdltexts = [...new Set(data.map(model => model.mdlsound))];  // 重複するmdltextを除外
 
-            uniqueMdltexts.forEach(mdlsoundt => {
+            uniqueMdltexts.forEach(mdlsound => {
                 const listItem = document.createElement('li');
 
                 // モデルテキストにリンクを追加
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     音声テキスト: <a href="soundlist.html?mdlsound=${mdlsound}" class="soundtext">${mdlsound}</a>
                 `;
 
-                napisy.appendChild(listItem); // リストに追加
+                sound.appendChild(listItem); // リストに追加
             });
 
         })
