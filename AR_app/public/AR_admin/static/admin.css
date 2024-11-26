@@ -114,7 +114,7 @@ main {
 
 /* メインコンテンツ */
 .container {
-    margin-top: 150px; /* ヘッダーの高さを考慮 */
+    margin-top: 50px; /* ヘッダーの高さを考慮 */
     margin-left: 220px; /* サイドバーの幅を考慮 */
     padding: 20px;
     display: grid;
@@ -123,6 +123,7 @@ main {
 }
 
 .container a{
+    padding: 20px 20px 20px 20px;
     border:1px solid;
     border-color: #333;
 }
