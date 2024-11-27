@@ -56,18 +56,30 @@
         </div>
     </main>
 
-    <!-- スクリプトをボディの最後に移動 -->
-    <script>
-        // URLパラメータからadminnameを取得
-        const urlParams = new URLSearchParams(window.location.search);
-        const adminname = urlParams.get('adminname');
 
-        // adminnameがある場合にページに表示
-        if (adminname) {
-            document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
-        }
-    </script>
+    <footer>
+        <p>© 2024 TIC 大原学園 C-2</p>
+    </footer>
+
+
 
 </body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let adminname = urlParams.get('adminname');
+
+    // adminnameがURLパラメータにある場合、ローカルストレージに保存
+    if (adminname) {
+        localStorage.setItem('adminname', adminname);
+    } else {
+        // ローカルストレージから取得
+        adminname = localStorage.getItem('adminname');
+    }
+
+    // adminnameが存在する場合に表示
+    if (adminname) {
+        document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
+    }
+</script>
 
 </html>
