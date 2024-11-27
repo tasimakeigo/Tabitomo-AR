@@ -6,6 +6,7 @@ const app = express();
 // ルートをインポート
 const markerRoutes2 = require('./routes/markerRoutes2'); // markerRoutesをインポート
 const adminlogin = require('./routes/admin'); // adminログインルートをインポート
+const userlogin = require('./routes/users'); // userログインルートをインポート
 const newadmin = require('./routes/newAdmin'); // 新規adminルートをインポート
 const modellistRoutes = require('./routes/modellistRoutes'); // モデルリストのルートをインポート
 const napisyRoutes = require('./routes/napisyRoutes');
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));  // 'public' フォル�
 // APIエンドポイントを設定
 app.use('/api', markerRoutes2);  // /api/markerinfo2 にアクセスできるように設定
 app.use('/api', adminlogin);     // /api/login エンドポイントが有効になります
+app.use('/api', userlogin);     // /api/login エンドポイントが有効になります
 app.use('/api', newadmin);       // /api/newAdmin エンドポイントが有効になります
 app.use('/modellist', modellistRoutes); // /modellist エンドポイントが有効になります
 app.use('/napisy', napisyRoutes);
