@@ -59,6 +59,8 @@ header p {
 
 li {
     list-style: none;
+    margin-left: 220px;
+    margin-bottom: 50px;
 }
 
 ul {
