@@ -20,4 +20,17 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.post('/add', async (req, res) => {
+    const { soundFile, mdlsound } = req.body;  // フォームデータを取得
+    // サウンドデータをデータベースに保存する処理
+    try {
+        // 必要な処理をここに記述
+        res.json({ success: true });
+    } catch (error) {
+        console.error('音声追加中にエラーが発生しました:', error);
+        res.status(500).json({ error: '音声追加に失敗しました' });
+    }
+});
+
+
 module.exports = router;  // ルーターをエクスポート
