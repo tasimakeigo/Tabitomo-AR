@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規字幕追加</title>
+    <link rel="stylesheet" href="static/napisyadd.css">
+</head>
+
+<body>
+    <header>
+        <h1><a href="menu.html">管理者システム　　-字幕情報-</a></h1>
+        <ul>
+            <li>
+                <p>ユーザー名: </p>
+            </li>
+            <li id="logout">
+                <a href="">ログアウト</a>
+            </li>
+        </ul>
+    </header>
+
+    <main>
+        <div class="sideber">
+            <div class="sideber-container">
+                <a href="../menu.html"><button>メニュー</button></a>
+                <a href="../AR_user/user.html"><button>管理者情報</button></a>
+                <a href="../AR_marker/marker.html"><button>マーカー管理</button></a>
+                <a href="../AR_model/modellist.html"><button>3Dモデル</button></a>
+                <a href="../AR_napisy/napisy.html"><button>字幕管理</button></a>
+                <a href="../AR_sound/sound.html"><button>音声管理</button></a>
+                <a href="../AR_map/map.html"><button>マップ管理</button></a>
+            </div>
+        </div>
+
+        <div id="add-form">
+            <h2>新規字幕追加</h2>
+
+            <form id="add-subtitle-form" enctype="multipart/form-data">
+                <input type="hidden" id="mdltext" value="">
+
+                <!-- 言語名選択プルダウン -->
+                <label for="languagename">言語名:</label>
+                <select id="languagename" name="languagename" required>
+                    <option value="japan">日本語</option>
+                    <option value="english">英語</option>
+                    <option value="china">中国語</option>
+                    <option value="korea">韓国語</option>
+                </select>
+                <br><br>
+
+                <!-- 字幕ファイル選択 -->
+                <label for="napisyfile">字幕ファイル:</label>
+                <input type="file" id="napisyfile" name="napisyfile" accept=".text" required>
+                <br><br>
+
+                <!-- 登録ボタン -->
+                <button type="submit">追加</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // URLのパラメータからmdltextを取得
+            const urlParams = new URLSearchParams(window.location.search);
+            const mdltext = urlParams.get('mdltext');
+            if (mdltext) {
+                // mdltextをフォームに設定
+                document.getElementById('mdltext').value = mdltext;
+            } else {
+                alert('mdltext パラメータが見つかりません。');
+            }
+
+            // フォーム送信時にデータをサーバーに送信
+            const form = document.getElementById('add-subtitle-form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // ページ遷移を防ぐ
+
+                const languagename = document.getElementById('languagename').value;
+                const napisyfile = document.getElementById('napisyfile').files[0];
+                const mdltext = document.getElementById('mdltext').value;
+
+                // フォームデータを作成
+                const formData = new FormData();
+                formData.append('mdltext', mdltext);
+                formData.append('languagename', languagename);
+                formData.append('napisyfile', napisyfile);
+
+                // データをサーバーに送信
+                fetch(`/napisyadd`, {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.success) {
+                            alert('字幕が追加されました！');
+                            window.location.href = `napisylist.html?mdltext=${mdltext}`; // リストページに遷移
+                        } else {
+                            alert('字幕の追加に失敗しました。');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('字幕の追加中にエラーが発生しました:', error);
+                        alert('エラーが発生しました。');
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>
