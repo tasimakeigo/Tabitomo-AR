@@ -17,8 +17,7 @@ body {
 }
 
 main {
-    margin-left: 220px; /* サイドバー幅に合わせて余白を確保 */
-    padding: 20px; /* 内側の余白 */
+    padding-bottom: 50px;
 }
 
 /* Header styling */
@@ -72,7 +71,7 @@ ul {
 
 main {
     flex-grow: 1;
-    margin-top: 50px;
+    margin-top: 70px;
 }
 
 /* サイドバー */
@@ -174,97 +173,7 @@ footer {
     background-color: #ededed;
 }
 
-
-
-/* その他のスタイル */
-.markerinfo h2 {
-    width: 80%;
-    display: inline-flex; /* 横並びにする */
+#sound-form {
+    margin-left: 220px;
+    margin-top: 20px;
 }
-
-.newmarkerbotton {
-    display: flex; /* 横並びの制御をフレックスに */
-    justify-content: flex-end; /* 左寄せに設定 */
-}
-
-.newmarkerbotton a {
-    display: inline-block; /* ボタンをブロック要素に */
-    width: 150px; /* 固定幅 */
-    padding: 10px 20px; /* 内側の余白 */
-    font-size: 16px; /* フォントサイズ */
-    text-align: center; /* 中央揃え */
-    text-decoration: none; /* 下線を消す */
-    color: #ffffff; /* テキスト色 */
-    background-color: #333333; /* 背景色 */
-    border-radius: 5px; /* 角丸 */
-}
-
-/* ボタンにホバーしたときの効果 */
-.newmarkerbotton a:hover {
-    background-color: #0056b3; /* ホバー時の色 */
-}
-
-.markerlist-info span{
-    margin-right: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input[type="text"], input[type="file"] {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.form-group button{
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 30px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    justify-content: flex-end;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-
-.button-group {
-    display: flex;
-    gap: 10px; /* ボタン間のスペースを指定 */
-    justify-content: flex-start;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button[type="button"] {
-    background-color: #f44336; /* 戻るボタンは赤色 */
-}
-
-button[type="button"]:hover {
-    background-color: #e53935; /* 戻るボタンのホバー時 */
-}
-
-button:hover {
-    background-color: #45a049; /* 登録ボタンのホバー時 */
-}
-
