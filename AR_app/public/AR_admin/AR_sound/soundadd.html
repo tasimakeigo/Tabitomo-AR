@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音声追加</title>
+    <link rel="stylesheet" href="static/soundadd.css">
+</head>
+
+<body>
+    <header>
+        <h1><a href="menu.html">管理者システム　　-音声情報-</a></h1>
+        <ul>
+            <li>
+                <p>ユーザー名: </p>
+            </li>
+            <li id="logout">
+                <a href="">ログアウト</a>
+            </li>
+        </ul>
+    </header>
+
+    <main>
+        <div class="sideber">
+            <div class="sideber-container">
+                <a href="../menu.html"><button>メニュー</button></a>
+                <a href="../AR_user/user.html"><button>管理者情報</button></a>
+                <a href="../AR_marker/marker.html"><button>マーカー管理</button></a>
+                <a href="../AR_model/modellist.html"><button>3Dモデル</button></a>
+                <a href="../AR_napisy/napisy.html"><button>字幕管理</button></a>
+                <a href="../AR_sound/sound.html"><button>音声管理</button></a>
+                <a href="../AR_map/map.html"><button>マップ管理</button></a>
+                <!-- <a href="AR_language/language.html"><button>言語管理</button></a> -->
+            </div>
+        </div>
+
+        <form id="sound-form" enctype="multipart/form-data">
+            <label for="sound-file">音声ファイルを選択 (mp3):</label>
+            <input type="file" id="sound-file" name="sound-file" accept="audio/mp3">
+            <br><br>
+            <label>または音声を収録:</label>
+            <button type="button" id="start-record">録音開始</button>
+            <button type="button" id="stop-record" disabled>録音停止</button>
+            <audio id="recorded-audio" controls style="display: none;"></audio>
+            <br><br>
+            <input type="hidden" id="mdlsound" name="mdlsound" value="">
+            <button type="submit">送信</button>
+        </form>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const mdlsound = urlParams.get('mdlsound');
+
+                if (mdlsound) {
+                    document.getElementById('mdlsound').value = mdlsound;
+                } else {
+                    alert('音声テキストが指定されていません。');
+                }
+
+                // 録音用の設定
+                let mediaRecorder;
+                let audioChunks = [];
+                const startRecordBtn = document.getElementById('start-record');
+                const stopRecordBtn = document.getElementById('stop-record');
+                const recordedAudio = document.getElementById('recorded-audio');
+
+                startRecordBtn.addEventListener('click', async () => {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.start();
+
+                    mediaRecorder.addEventListener('dataavailable', event => {
+                        audioChunks.push(event.data);
+                    });
+
+                    mediaRecorder.addEventListener('stop', () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        recordedAudio.src = audioUrl;
+                        recordedAudio.style.display = 'block';
+                        audioChunks = [];
+                    });
+
+                    startRecordBtn.disabled = true;
+                    stopRecordBtn.disabled = false;
+                });
+
+                stopRecordBtn.addEventListener('click', () => {
+                    mediaRecorder.stop();
+                    startRecordBtn.disabled = false;
+                    stopRecordBtn.disabled = true;
+                });
+
+                // フォーム送信
+                const form = document.getElementById('sound-form');
+                form.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const formData = new FormData(form);
+
+                    // 録音ファイルがある場合に追加
+                    if (recordedAudio.src) {
+                        const audioBlob = await fetch(recordedAudio.src).then(res => res.blob());
+                        formData.append('recorded-file', audioBlob, 'recorded-audio.mp3');
+                    }
+
+                    fetch('/sound/add', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('音声が追加されました！');
+                                window.location.href = '/sound'; // 音声リストに戻る
+                            } else {
+                                alert(data.error || 'エラーが発生しました');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('送信エラー:', error);
+                            alert('送信に失敗しました');
+                        });
+                });
+            });
+        </script>
+    </main>
+</body>
+
+</html>

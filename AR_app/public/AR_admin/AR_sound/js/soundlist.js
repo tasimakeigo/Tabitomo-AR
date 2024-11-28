@@ -25,3 +25,14 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('モデル情報の取得に失敗しました。');
         });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mdlsound = urlParams.get('mdlsound'); // URL パラメータから mdlsound を取得
+
+    const addButton = document.querySelector('.add-btn');
+    if (addButton && mdlsound) {
+        // 新規追加ボタンのリンクを修正
+        addButton.href = `/AR_admin/AR_sound/soundadd.html?mdlsound=${mdlsound}`;
+    }
+});
