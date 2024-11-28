@@ -17,7 +17,8 @@ body {
 }
 
 main {
-    padding-bottom: 50px;
+    margin-left: 220px; /* サイドバー幅に合わせて余白を確保 */
+    padding: 20px; /* 内側の余白 */
 }
 
 /* Header styling */
@@ -71,7 +72,7 @@ ul {
 
 main {
     flex-grow: 1;
-    margin-top: 70px;
+    margin-top: 50px;
 }
 
 /* サイドバー */
@@ -173,31 +174,36 @@ footer {
     background-color: #ededed;
 }
 
-.markerinfo  h2{
+
+
+/* その他のスタイル */
+.markerinfo h2 {
     width: 80%;
-    margin: 20px auto;
-    margin-left: 200px;
-    padding: 10px;
+    display: inline-flex; /* 横並びにする */
 }
 
+.newmarkerbotton {
+    display: flex; /* 横並びの制御をフレックスに */
+    justify-content: flex-end; /* 左寄せに設定 */
+}
 
-    .newmarkerbotton a {
-        display: inline-block; /* ボタンをブロック状に表示 */
-        padding: 10px 20px; /* 内側の余白 */
-        margin-left: 350px; /* 左側の余白（現在の設定を維持） */
-        font-size: 16px; /* フォントサイズ */
-        text-align: center; /* テキストを中央揃え */
-        text-decoration: none; /* 下線を消す */
-        color: #ffffff; /* テキスト色 */
-        background-color: #007BFF; /* ボタンの背景色 */
-        border: none; /* ボーダーを削除 */
-        border-radius: 5px; /* 角を丸くする */
-        cursor: pointer; /* カーソルをポインターに変更 */
-        transition: background-color 0.3s ease; /* ホバー時の色変更を滑らかにする */
-    }
-    
-    /* ボタンにホバーしたときの効果 */
-    .newmarkerbotton a:hover {
-        background-color: #0056b3; /* ホバー時の色 */
-    }
-    
+.newmarkerbotton a {
+    display: inline-block; /* ボタンをブロック要素に */
+    width: 150px; /* 固定幅 */
+    padding: 10px 20px; /* 内側の余白 */
+    font-size: 16px; /* フォントサイズ */
+    text-align: center; /* 中央揃え */
+    text-decoration: none; /* 下線を消す */
+    color: #ffffff; /* テキスト色 */
+    background-color: #333333; /* 背景色 */
+    border-radius: 5px; /* 角丸 */
+}
+
+/* ボタンにホバーしたときの効果 */
+.newmarkerbotton a:hover {
+    background-color: #0056b3; /* ホバー時の色 */
+}
+
+.markerlist-info span{
+    margin-right: 20px;
+}
