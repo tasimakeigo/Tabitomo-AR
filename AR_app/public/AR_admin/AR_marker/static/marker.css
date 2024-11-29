@@ -200,6 +200,7 @@ footer {
     color: #ffffff; /* テキスト色 */
     background-color: #333333; /* 背景色 */
     border-radius: 5px; /* 角丸 */
+    margin-top: 20px;
 }
 
 /* ボタンにホバーしたときの効果 */
