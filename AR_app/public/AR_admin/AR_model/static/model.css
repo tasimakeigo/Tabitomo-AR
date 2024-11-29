@@ -59,7 +59,6 @@ header p {
 
 li {
     list-style: none;
-    margin-left: 220px;
     margin-bottom: 50px;
 }
 
@@ -172,4 +171,16 @@ footer {
 
 .container button:hover {
     background-color: #ededed;
+}
+
+.modellist ul{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 100;
+    /* 4列に設定 */
+    gap: 30px;
+    /* 列間の隙間 */
+    list-style-type: none;
+    /* デフォルトのリストスタイルを削除 */
+    margin-left: 220px;
 }
