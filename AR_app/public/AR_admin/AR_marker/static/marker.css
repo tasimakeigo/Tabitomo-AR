@@ -60,7 +60,6 @@ header p {
 
 li {
     list-style: none;
-    margin-left: 220px;
     margin-bottom: 50px;
 }
 
@@ -180,6 +179,10 @@ footer {
 .markerinfo h2 {
     width: 80%;
     display: inline-flex; /* 横並びにする */
+}
+
+.markerinfo{
+    padding: 100;
 }
 
 .newmarkerbotton {
