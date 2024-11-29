@@ -173,3 +173,8 @@ footer {
 .container button:hover {
     background-color: #ededed;
 }
+
+#model-add-form {
+    margin-left: 220px;
+    margin-top: 20px;
+}

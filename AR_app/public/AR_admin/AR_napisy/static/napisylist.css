@@ -70,7 +70,7 @@ ul {
 /* メイン */
 
 main {
-    flex-grow: 1;
+    /* flex-grow: 1; */
     margin-top: 70px;
     display: flex;
 }
@@ -172,4 +172,13 @@ footer {
 
 .container button:hover {
     background-color: #ededed;
+}
+
+#napisy-details {
+    margin-left: 220px;
+}
+
+.add-btn {
+    margin-left: 20px;
+    margin-top: 30px;
 }
