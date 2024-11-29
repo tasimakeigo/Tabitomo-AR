@@ -175,12 +175,28 @@ footer {
 
 .modellist ul{
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     padding: 100;
     /* 4列に設定 */
-    gap: 30px;
+    gap: 40px;
     /* 列間の隙間 */
     list-style-type: none;
     /* デフォルトのリストスタイルを削除 */
     margin-left: 220px;
+}
+
+.modellist{
+    margin-top: 100px;
+}
+
+.addbotton button {
+    padding: 15px; /* パディングを大きく */
+    font-size: 15px; /* フォントサイズを大きく */
+    width: 150px; /* 幅を指定 */
+    height: 50px; /* 高さを指定 */
+}
+
+.addbotton{
+    margin-top: 30px;
+    margin-right: 30px;
 }
