@@ -196,3 +196,47 @@ document.getElementById("change-name").addEventListener("click", function() {
         alert("新しい名前を現在の名前と異なるものにしてください。");
     }
 });
+        // パスワード変更ボタンのクリックイベント
+        document.getElementById('changepassword').addEventListener('click', function () {
+            const currentuserPassword = document.getElementById('current-user-password').value;
+            const newuserPassword = document.getElementById('new-user-password').value;
+            const confirmuserPassword = document.getElementById('confirm-user-password').value;
+            const username = document.getElementById('username-display').textContent;
+
+            // フィールドのバリデーション
+            if (!currentuserPassword || !newuserPassword || !confirmuserPassword) {
+                alert('すべてのフィールドを入力してください');
+                return;
+            }
+
+            if (newuserPassword !== confirmuserPassword) {
+                alert('新しいパスワードが一致しません');
+                return;
+            }
+
+            console.log('送信中:', { username, currentuserPassword, newuserPassword });  // デバッグ用ログ
+
+            // サーバーにパスワード変更リクエストを送信
+            fetch('/api/updatepassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    currentPassword: currentuserPassword,
+                    newPassword: newuserPassword,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = 'changepasswordsuccess.html';  // パスワード変更後にマイページに戻る
+                } else {
+                    alert('現在のパスワードが正しくありません');
+                }
+            })
+            .catch(error => {
+                console.error('エラーが発生しました:', error);
+                alert('サーバーエラーが発生しました');
+            });
+        });
