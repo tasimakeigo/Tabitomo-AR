@@ -182,3 +182,13 @@ footer {
     margin-left: 20px;
     margin-top: 30px;
 }
+
+.napisy-details li{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 4列に設定 */
+    gap: 20px; /* 列間の隙間 */
+    list-style-type: none; /* デフォルトのリストスタイルを削除 */
+    padding-right: 100; /* パディングを削除 */
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
