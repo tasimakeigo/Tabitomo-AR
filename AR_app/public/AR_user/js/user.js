@@ -119,7 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .then(response => {
                     if (response.ok) {
-                        alert(`${languagename} に変更されました！`);
                         window.location.href = `language_success.html?languagename=${encodeURIComponent(languagename)}`;
                     } else {
                         alert("言語変更に失敗しました");
@@ -153,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // ユーザー名が存在する場合、ヘッダーと現在の名前に表示
 if (username) {
-    document.getElementById('username-display').textContent = `名前: ${username}`;
+    document.getElementById('username-display').textContent = `${username}`;
     document.getElementById('current-name').textContent = username;
 }}
 );
@@ -197,7 +196,8 @@ document.getElementById("change-name").addEventListener("click", function() {
     }
 });
 // パスワード変更フォームの処理
-document.getElementById("change-password").addEventListener("click", function() {
+document.getElementById("change-password")?.addEventListener('submit', function (event) {
+    event.preventDefault();
 
     const currentPassword = document.getElementById('current-password').value;
     const newPassword = document.getElementById('new-password').value;
@@ -215,33 +215,23 @@ document.getElementById("change-password").addEventListener("click", function() 
         return;
     }
 
-    if (newPassword && confirmPassword !== currentPassword) {
-        // サーバーに名前変更リクエストを送信
-        fetch('/api/updateusername', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: username,
-                currentPassword: newPassword,
-                newPassword: confirmPassword
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                window.location.href = 'changepasswordsuccess.html'; // 名前変更成功ページへ遷移
-            } else {
-                alert('パスワード変更に失敗しました。再試行してください。');
-            }
-        })
-        .catch(error => {
-            console.error('エラーが発生しました:', error);
-            alert('サーバーエラーが発生しました');
-        });
-    } else {
-        alert("新しいパスワードを現在のパスワードと異なるものにしてください。");
-    }
+    // パスワード変更リクエストを送信
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/changepassword', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // リクエスト送信
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            window.location.href = 'changepasswordsuccess.html'; // 成功後のページに遷移
+        } else if (xhr.status === 401) {
+            alert('現在のパスワードが正しくありません。');
+        } else {
+            alert('パスワード変更に失敗しました。再試行してください。');
+        }
+    };
+
+    // リクエストボディにパラメータを設定
+    xhr.send(`username=${encodeURIComponent(username)}&currentPassword=${encodeURIComponent(currentPassword)}&newPassword=${encodeURIComponent(newPassword)}`);
 });
 
