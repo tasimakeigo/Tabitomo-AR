@@ -6,11 +6,8 @@ const app = express();
 // ルートをインポート
 const markerRoutes2 = require('./routes/markerRoutes2'); // markerRoutesをインポート
 const adminlogin = require('./routes/admin'); // adminログインルートをインポート
-const userlogin = require('./routes/users'); // userログインルートをインポート
+const user = require('./routes/users'); // userログインルートをインポート
 const newadmin = require('./routes/newAdmin'); // 新規adminルートをインポート
-const newuser = require('./routes/newUser'); // 新規userルートをインポート
-const updatelanguage = require('./routes/updatelanguage.js'); // 言語変更ルートをインポート
-const updateusername = require('./routes/updateusername.js'); // ユーザー名変更ルートをインポート
 const modellistRoutes = require('./routes/modellistRoutes'); // モデルリストのルートをインポート
 const napisyRoutes = require('./routes/napisyRoutes');
 const soundRoutes = require('./routes/soundRoutes');
@@ -27,11 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));  // 'public' フォル�
 // APIエンドポイントを設定
 app.use('/api', markerRoutes2);  // /api/markerinfo2 にアクセスできるように設定
 app.use('/api', adminlogin);     // /api/login エンドポイントが有効になります
-app.use('/api', userlogin);     // /api/login エンドポイントが有効になります
+app.use('/api', user);     // /api/login エンドポイントが有効になります
 app.use('/api', newadmin);       // /api/newAdmin エンドポイントが有効になります
-app.use('/api', newuser);       // /api/newUser エンドポイントが有効になります
-app.use('/api', updatelanguage);       // /api/updatelanguage エンドポイントが有効になります
-app.use('/api', updateusername);       // /api/updateusername エンドポイントが有効になります
 app.use('/modellist', modellistRoutes); // /modellist エンドポイントが有効になります
 app.use('/napisy', napisyRoutes);
 app.use('/sound', soundRoutes);
