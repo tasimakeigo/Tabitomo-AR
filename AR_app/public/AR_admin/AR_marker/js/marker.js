@@ -13,18 +13,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     <p>名前: ${marker.mkname}</p>
                     <p>patt: ${marker.patt}</p>
                     <p>image: <img src="/path/to/images/${marker.mkimage}" alt="Image"></p>
-                    <button class="delete-btn" data-mkid="${marker.mkid}">削除</button>
+                    <button class="delete-btn" data-mkid="${marker.mkid}" type="button">削除</button>
+                    <button class="edit-btn" data-mkid="${marker.mkid}" type="button">編集</button>
                 `;
                 markerList.appendChild(listItem);
             });
 
+            // 削除ボタンのイベントリスナーを登録
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function () {
                     const mkidToDelete = this.getAttribute('data-mkid');
-                    // 削除前に確認
                     if (confirm(`マーカーID: ${mkidToDelete} を削除しますか？`)) {
                         deleteMarker(mkidToDelete);
                     }
+                });
+            });
+
+            // 編集ボタンのイベントリスナーを登録
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const mkidToEdit = this.getAttribute('data-mkid');
+                    window.location.href = `/editmarker.html?mkid=${mkidToEdit}`;
                 });
             });
 
@@ -35,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 });
 
+
 function deleteMarker(mkid) {
     fetch(`/api/marker/${mkid}`, {
         method: 'DELETE',
@@ -42,8 +52,10 @@ function deleteMarker(mkid) {
         .then(response => {
             if (response.ok) {
                 alert('マーカーが削除されました');
-                const listItem = document.querySelector(`[data-mkid="${mkid}"]`).closest('li');
-                listItem.remove();
+                const listItem = document.querySelector(`[data-mkid="${mkid}"]`);
+                if (listItem) {
+                    listItem.closest('li').remove();
+                }
             } else {
                 alert('削除に失敗しました');
             }

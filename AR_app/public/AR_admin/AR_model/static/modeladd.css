@@ -17,8 +17,7 @@ body {
 }
 
 main {
-    margin-left: 220px; /* サイドバー幅に合わせて余白を確保 */
-    padding: 20px; /* 内側の余白 */
+    padding-bottom: 50px;
 }
 
 /* Header styling */
@@ -60,6 +59,7 @@ header p {
 
 li {
     list-style: none;
+    margin-left: 220px;
     margin-bottom: 50px;
 }
 
@@ -71,7 +71,8 @@ ul {
 
 main {
     flex-grow: 1;
-    margin-top: 50px;
+    margin-top: 70px;
+    display: flex;
 }
 
 /* サイドバー */
@@ -173,49 +174,7 @@ footer {
     background-color: #ededed;
 }
 
-
-
-/* その他のスタイル */
-.markerinfo h2 {
-    width: 80%;
-    display: inline-flex; /* 横並びにする */
-}
-
-.markerinfo{
-    padding: 100;
-}
-
-.newmarkerbotton {
-    display: flex; /* 横並びの制御をフレックスに */
-    justify-content: flex-end; /* 左寄せに設定 */
-}
-
-.newmarkerbotton a {
-    display: inline-block; /* ボタンをブロック要素に */
-    width: 150px; /* 固定幅 */
-    padding: 10px 20px; /* 内側の余白 */
-    font-size: 16px; /* フォントサイズ */
-    text-align: center; /* 中央揃え */
-    text-decoration: none; /* 下線を消す */
-    color: #ffffff; /* テキスト色 */
-    background-color: #333333; /* 背景色 */
-    border-radius: 5px; /* 角丸 */
+#model-add-form {
+    margin-left: 220px;
     margin-top: 20px;
 }
-
-/* ボタンにホバーしたときの効果 */
-.newmarkerbotton a:hover {
-    background-color: #0056b3; /* ホバー時の色 */
-}
-
-
-.markerinfo ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 4列に設定 */
-    gap: 20px; /* 列間の隙間 */
-    list-style-type: none; /* デフォルトのリストスタイルを削除 */
-    padding-right: 100; /* パディングを削除 */
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
