@@ -49,19 +49,19 @@ function deleteMarker(mkid) {
     fetch(`/api/marker/${mkid}`, {
         method: 'DELETE',
     })
-        .then(response => {
-            if (response.ok) {
-                alert('マーカーが削除されました');
-                const listItem = document.querySelector(`[data-mkid="${mkid}"]`);
-                if (listItem) {
-                    listItem.closest('li').remove();
-                }
-            } else {
-                alert('削除に失敗しました');
+    .then(response => {
+        if (response.ok) {
+            alert('マーカーが削除されました');
+            const listItem = document.querySelector(`[data-mkid="${mkid}"]`);
+            if (listItem) {
+                listItem.closest('li').remove();
             }
-        })
-        .catch(error => {
-            console.error('削除中にエラーが発生しました:', error);
-            alert('削除中にエラーが発生しました');
-        });
+        } else {
+            alert('削除に失敗しました');
+        }
+    })
+    .catch(error => {
+        console.error('削除中にエラーが発生しました:', error);
+        alert('削除中にエラーが発生しました');
+    });
 }
