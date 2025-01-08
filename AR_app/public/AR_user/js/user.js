@@ -155,7 +155,8 @@ document.addEventListener('DOMContentLoaded', function () {
 if (username) {
     document.getElementById('username-display').textContent = `名前: ${username}`;
     document.getElementById('current-name').textContent = username;
-}});
+}}
+);
 
 document.getElementById("change-name").addEventListener("click", function() {
     const newName = document.getElementById('new-name').value;
@@ -182,7 +183,6 @@ document.getElementById("change-name").addEventListener("click", function() {
         .then(data => {
             if (data.status === 'success') {
                 localStorage.setItem('username', newName); // ローカルストレージに新しい名前を保存
-                alert('名前が変更されました！');
                 window.location.href = 'renamesuccess.html'; // 名前変更成功ページへ遷移
             } else {
                 alert('名前の変更に失敗しました。再試行してください。');
@@ -196,47 +196,52 @@ document.getElementById("change-name").addEventListener("click", function() {
         alert("新しい名前を現在の名前と異なるものにしてください。");
     }
 });
-        // パスワード変更ボタンのクリックイベント
-        document.getElementById('changepassword').addEventListener('click', function () {
-            const currentuserPassword = document.getElementById('current-user-password').value;
-            const newuserPassword = document.getElementById('new-user-password').value;
-            const confirmuserPassword = document.getElementById('confirm-user-password').value;
-            const username = document.getElementById('username-display').textContent;
+// パスワード変更フォームの処理
+document.getElementById("change-password").addEventListener("click", function() {
 
-            // フィールドのバリデーション
-            if (!currentuserPassword || !newuserPassword || !confirmuserPassword) {
-                alert('すべてのフィールドを入力してください');
-                return;
-            }
+    const currentPassword = document.getElementById('current-password').value;
+    const newPassword = document.getElementById('new-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+    const username = localStorage.getItem('username'); // ローカルストレージからユーザー名を取得
 
-            if (newuserPassword !== confirmuserPassword) {
-                alert('新しいパスワードが一致しません');
-                return;
-            }
+    // 入力チェック
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        alert('すべてのフィールドを入力してください。');
+        return;
+    }
 
-            console.log('送信中:', { username, currentuserPassword, newuserPassword });  // デバッグ用ログ
+    if (newPassword !== confirmPassword) {
+        alert('新しいパスワードが一致しません。');
+        return;
+    }
 
-            // サーバーにパスワード変更リクエストを送信
-            fetch('/api/updatepassword', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username: username,
-                    currentPassword: currentuserPassword,
-                    newPassword: newuserPassword,
-                }),
+    if (newPassword && confirmPassword !== currentPassword) {
+        // サーバーに名前変更リクエストを送信
+        fetch('/api/updateusername', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                currentPassword: newPassword,
+                newPassword: confirmPassword
             })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = 'changepasswordsuccess.html';  // パスワード変更後にマイページに戻る
-                } else {
-                    alert('現在のパスワードが正しくありません');
-                }
-            })
-            .catch(error => {
-                console.error('エラーが発生しました:', error);
-                alert('サーバーエラーが発生しました');
-            });
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                window.location.href = 'changepasswordsuccess.html'; // 名前変更成功ページへ遷移
+            } else {
+                alert('パスワード変更に失敗しました。再試行してください。');
+            }
+        })
+        .catch(error => {
+            console.error('エラーが発生しました:', error);
+            alert('サーバーエラーが発生しました');
         });
+    } else {
+        alert("新しいパスワードを現在のパスワードと異なるものにしてください。");
+    }
+});
+

@@ -121,47 +121,34 @@ router.post('/updateusername', (req, res) => {
 });
 
 // パスワード変更エンドポイント
-router.post('/updatepassword', async (req, res) => {
+router.post('/changepassword', async (req, res) => {
     const { username, currentPassword, newPassword } = req.body;
+    
+    try {
+        const query = 'SELECT * FROM users WHERE name = $1';
+        const { rows } = await connection.query(query, [username]);
 
-    if (!username || !currentPassword || !newPassword) {
-        return res.status(400).send('すべてのフィールドを入力してください');
-    }
-
-    // ユーザー情報を取得
-    const query = 'SELECT * FROM users WHERE name = $1';
-    connection.query(query, [username], async (err, results) => {
-        if (err) {
-            console.error('データベースエラー:', err);
-            return res.status(500).send('サーバーエラー');
-        }
-
-        if (results.rows.length === 0) {
+        if (rows.length === 0) {
             return res.status(404).send('ユーザーが見つかりません');
         }
 
-        const user = results.rows[0];
+        const user = rows[0];
+        const match = await bcrypt.compare(currentPassword, user.password);
 
-        // 現在のパスワードを照合
-        try {
-            const match = await bcrypt.compare(currentPassword, user.password);
-            if (!match) {
-                return res.status(401).send('現在のパスワードが間違っています');
-            }
-
-            // 新しいパスワードをハッシュ化
-            const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-
-            // パスワードを更新
-            const updateQuery = 'UPDATE users SET password = $1 WHERE name = $2';
-            await connection.query(updateQuery, [hashedNewPassword, username]);
-
-            res.status(200).send('パスワードが変更されました');
-        } catch (compareError) {
-            console.error('パスワード照合エラー:', compareError);
-            res.status(500).send('サーバーエラー');
+        if (!match) {
+            return res.status(401).send('現在のパスワードが間違っています');
         }
-    });
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        const updateQuery = 'UPDATE users SET password = $1 WHERE name = $2';
+        await connection.query(updateQuery, [hashedNewPassword, username]);
+
+        // パスワード変更完了後にリダイレクト
+        res.redirect(`/AR_user/mypage/changepasswordsuccess.html?username=${encodeURIComponent(username)}`);
+    } catch (err) {
+        console.error('エラー:', err);
+        res.status(500).send('サーバーエラー');
+    }
 });
 
 module.exports = router;
