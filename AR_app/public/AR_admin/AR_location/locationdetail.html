@@ -22,7 +22,6 @@
     </header>
 
     <main>
-
         <div class="sideber">
             <div class="sideber-container">
                 <a href="../menu.html"><button>メニュー</button></a>
@@ -34,6 +33,9 @@
                 <a href="../AR_map/map.html"><button>マップ管理</button></a>
                 <!-- <a href="AR_language/language.html"><button>言語管理</button></a> -->
             </div>
+        </div>
+        <div id="new-register-container">
+            <button class="add-btn">追加</button></a>
         </div>
         <div class="container">
             <div id="location-details"></div>
@@ -86,14 +88,14 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // URLのパラメータからmdlsoundを取得
+        // URLのパラメータからlocationidを取得
         const urlParams = new URLSearchParams(window.location.search);
-        const mdlsound = urlParams.get('locationid');
+        const locationid = urlParams.get('locationid');
 
         // 新規モデル追加ボタンがクリックされた場合に遷移する
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function () {
-            if (mdlsound) {
+            if (locationid) {
                 // 新規モデル追加ページに遷移
                 window.location.href = `/AR_admin/AR_location/modeladd.html?locationid=${encodeURIComponent(locationid)}`;
             } else {
