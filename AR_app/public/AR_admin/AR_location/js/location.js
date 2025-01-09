@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 listItem.textContent = ` ${model.locationname} `;
                 listItem.innerHTML = `
                 <a href="locationdetail.html?locationid=${model.locationid}" class="locationid">
-                    ${model.locationname}
+                    ${model.locationname},${model.address}
                 </a>
                 <button class="delete-btn" data-locationid="${model.locationid}">削除</button>
             `;

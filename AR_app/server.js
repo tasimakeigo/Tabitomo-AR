@@ -41,5 +41,5 @@ app.use('/locationdetail', locationdetailRoutes);
 // サーバーの起動
 const PORT = 8080;
 app.listen(PORT, () => {
-  console.log(`サーバーが http://localhost:${PORT} で起動しました`);
+  console.log(`サーバーが http://localhost:${PORT}/AR_admin/AR_login/login.html で起動しました`);
 });
