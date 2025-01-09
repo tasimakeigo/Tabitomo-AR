@@ -13,6 +13,8 @@ const napisyRoutes = require('./routes/napisyRoutes');
 const soundRoutes = require('./routes/soundRoutes');
 const napisylistRoutes = require('./routes/napisylistRoutes');
 const soundlistRoutes = require('./routes/soundlistRoutes');
+const locationRoutes = require('./routes/locationRoutes');
+
 
 // ボディパーサー設定 (POSTデータを受け取るため)
 app.use(express.urlencoded({ extended: true }));  // URLエンコードされたデータの処理
@@ -31,6 +33,8 @@ app.use('/napisy', napisyRoutes);
 app.use('/sound', soundRoutes);
 app.use('/napisylist', napisylistRoutes);
 app.use('/soundlist', soundlistRoutes);
+app.use('/location', locationRoutes);
+
 // サーバーの起動
 const PORT = 8080;
 app.listen(PORT, () => {
