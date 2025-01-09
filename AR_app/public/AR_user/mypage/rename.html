@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/mypage.css">
+    <script src="../js/user.js"></script>
+
+    <title>マイページ</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>マイページ</h1>
+        <ul>
+            <li><p id="username-display"></p></li> <!-- ユーザー名表示用 -->
+            <li><a href="logout.html">ログアウト</a></li>
+        </ul>
+    </header>
+
+    <div class="content">
+        <div class="name-change-section">
+            <h2>名前の変更</h2>
+            <p>現在の名前: <span id="current-name"></span></p>
+            <label for="new-name">新しい名前:</label>
+            <input type="text" id="new-name" placeholder="新しい名前を入力" required>
+
+            <a href="javascript:void(0);" id="change-name" class="change-name-button">名前を変更</a>
+        </div>
+
+        <a href="mypage.html" class="back-button">戻る</a>
+    </div>
+
+    <footer>
+        <p>© 2024 たびとも</p>
+    </footer>
+
+</body>
+
+<script src="../js/user.js" defer></script>
+
+</html>
