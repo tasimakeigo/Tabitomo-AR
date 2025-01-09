@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <a href="locationdetail.html?locationid=${model.locationid}" class="locationid">
                     ${model.locationname}
                 </a>
+                <button class="delete-btn" data-locationid="${model.locationid}">削除</button>
             `;
 
                 location.appendChild(listItem); // リストに追加
