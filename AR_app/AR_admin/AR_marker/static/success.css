@@ -1,0 +1,259 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-start;
+    /* 左寄せ */
+    align-items: center;
+    padding: 5px 30px;
+    background-color: #ededed;
+    color: #333;
+    border-bottom: 2px solid black;
+    /* ヘッダー下に黒線 */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    gap: 20px;
+    /* 各要素間の余白 */
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2.0em;
+    text-align: left;
+}
+
+.header separator {
+    width: 10px;
+    /* 縦棒の太さ */
+    height: 40%;
+    /* 縦棒の高さ（要調整） */
+    background-color: black;
+    /* 縦棒の色 */
+    margin: 0 10px;
+    /* 縦棒の左右余白 */
+}
+
+.header span {
+    font-size: 1.5em;
+}
+
+
+.right-info {
+    margin-left: auto;
+    /* 右端に配置 */
+    display: flex;
+    flex-direction: column;
+    /* 縦方向に並べる */
+    align-items: flex-end;
+    /* 右寄せ */
+    gap: 5px;
+    /* IDとログアウト間の余白 */
+}
+
+.user-id {
+    font-size: 0.9em;
+    /* IDの文字サイズ */
+}
+
+.right-info span {
+    font-size: 1em;
+}
+
+.logout {
+    color: blue;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.0em;
+}
+
+.system-name {
+    font-size: 1.0em;
+    font-family: 'Roboto', sans-serif;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logout {
+    color: blue;
+    text-decoration: none;
+}
+
+.content {
+    text-align: center;
+    padding: 100px;
+}
+
+.content h2 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.content p {
+    font-size: 1.0em;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    color: blue;
+    font-size: 1.0em;
+    text-decoration: none;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 0 -100px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #333;
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    /* 水平方向の中央揃え */
+    align-items: center;
+    /* 垂直方向の中央揃え */
+    height: 100vh;
+    /* ビューポート全体の高さに合わせる */
+    transform: translateX(70px);
+    /* 横に50px移動 */
+}
+
+/* 親コンテナ */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 確認画面ボックス */
+.confirm-box {
+    background-color: #d0eaf3;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+/* 登録ボタン */
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+/* リンクのスタイル */
+.return-link {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.confirmation-box {
+    width: 200px;
+    padding: 20px;
+    background-color: #a9d4e2;
+    /* 背景色 */
+    border-radius: 15px;
+    /* 角の丸み */
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.confirmation-box h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #000000;
+}
+
+.confirmation-box p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #000000;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.button-container button {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #000000;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.button-container button:hover {
+    background-color: #d0d0d0;
+}
+
+.button-container button {
+    width: 80px;
+    /* ボタンの横幅 */
+    height: 35px;
+    /* ボタンの縦幅 */
+    font-size: 12px;
+    /* フォントサイズ */
+    color: #ffffff;
+    /* 文字色 */
+    background-color: #000000;
+    /* 背景色 */
+    border: none;
+    /* 枠線をなくす */
+    border-radius: 12px;
+    /* 角の丸み */
+    cursor: pointer;
+    /* マウスカーソルをポインターに */
+    transition: background-color 0.3s;
+    /* ホバー時の背景色変更にスムーズなトランジション */
+}
+
+.button-container button:hover {
+    background-color: #34d873;
+    /* ホバー時の背景色 */
+}
