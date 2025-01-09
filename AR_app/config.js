@@ -8,6 +8,7 @@ const connection = new Client({
     database: process.env.DB_NAME || 'tabitomo',
     password: process.env.DB_PASSWORD || 'kashi0001',
     port: process.env.DB_PORT || 5432,
+    client_encoding: 'UTF8',
 });
 
 connection.connect()
