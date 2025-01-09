@@ -8,21 +8,21 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();  // JSONレスポンスを取得
         })
         .then(data => {
-            const location = document.querySelector('.location ul');  // モデル情報を表示する要素を選択
+            const locationIdList = document.querySelector('.locationid ul');  // モデル情報を表示する要素を選択
 
-            // 取得したモデル情報をリストに表示
-            data.forEach(model => {
+            if (!locationIdList) {
+                console.error('指定された .locationid ul が見つかりません。HTMLを確認してください。');
+                return;
+            }
+
+            // locationid の重複を除外
+            const uniqueLocationIds = [...new Set(data.map(model => model.locationid))];
+
+            uniqueLocationIds.forEach(id => {
                 const listItem = document.createElement('li');
+                listItem.textContent = id;  // locationid をリスト項目として表示
 
-                // モデル情報をリスト項目に挿入
-                listItem.textContent = ` ${model.locationname} `;
-                listItem.innerHTML = `
-                <a href="locationdetail.html?locationid=${model.locationid}" class="locationid">
-                    ${model.locationname}
-                </a>
-            `;
-
-                location.appendChild(listItem); // リストに追加
+                locationIdList.appendChild(listItem); // リストに追加
             });
 
         })
