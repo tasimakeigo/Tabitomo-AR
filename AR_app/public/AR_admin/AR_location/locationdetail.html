@@ -22,6 +22,7 @@
     </header>
 
     <main>
+        <a href="modeladd.html"><button>追加</button></a>
         <div id="location-details"></div>
 
         <div class="sideber">
@@ -61,8 +62,8 @@
                                     <strong>音声ファイル:</strong> ${model.mdlsound}<br>
                                     <strong>モデルテキスト:</strong> ${model.mdltext}
                                     </p>
-                                    <button class="edit-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">編集</button>
-                                    <button class="delete-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">削除</button>
+                                    <button class="edit-btn" data-locationid="${model.locationid}" data-languagename="${model.languagename}">編集</button>
+                                    <button class="delete-btn" data-locationid="${model.locationid}" data-languagename="${model.languagename}">削除</button>
                                 `;
                             });
 
@@ -87,16 +88,16 @@
     document.addEventListener('DOMContentLoaded', function () {
         // URLのパラメータからmdlsoundを取得
         const urlParams = new URLSearchParams(window.location.search);
-        const mdlsound = urlParams.get('mdlsound');
+        const mdlsound = urlParams.get('locationid');
 
         // 新規モデル追加ボタンがクリックされた場合に遷移する
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function () {
             if (mdlsound) {
                 // 新規モデル追加ページに遷移
-                window.location.href = `/AR_admin/AR_sound/soundadd.html?mdlsound=${encodeURIComponent(mdlsound)}`;
+                window.location.href = `/AR_admin/AR_location/modeladd.html?locationid=${encodeURIComponent(locationid)}`;
             } else {
-                alert('mdlsound パラメータが見つかりません。');
+                alert('locationid パラメータが見つかりません。');
             }
         });
     });
