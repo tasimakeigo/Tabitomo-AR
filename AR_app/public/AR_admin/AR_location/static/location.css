@@ -172,3 +172,24 @@ footer {
 .container button:hover {
     background-color: #ededed;
 }
+
+/* 新規登録ボタンのスタイル */
+#new-register-container {
+    text-align: right; /* 右寄せ */
+    padding: 10px 20px; /* ボタンと画面の境界とのスペース */
+}
+
+#new-register-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#new-register-btn:hover {
+    background-color: #ededed;
+}
