@@ -38,14 +38,13 @@
         </div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
                 // URLのパラメータからlocationidを取得
                 const urlParams = new URLSearchParams(window.location.search);
                 const locationid = urlParams.get('locationid');
 
                 if (locationid) {
                     // サーバーからそのlocationidに関連するデータを取得
-                    fetch(`/api/model2?locationid=${locationid}`)  // データを取得するエンドポイント
+                    fetch(`/locationdetail?locationid=${locationid}`)  // データを取得するエンドポイント
                         .then(response => response.json())
                         .then(data => {
                             const locationDetails = document.getElementById('location-details');
@@ -78,7 +77,6 @@
                 }
 
 
-            });
         </script>
         </br>
         <button class="add-btn">新規モデル追加</button>
