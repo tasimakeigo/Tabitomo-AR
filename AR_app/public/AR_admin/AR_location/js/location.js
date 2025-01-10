@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // モデル情報をリスト項目に挿入
                 listItem.textContent = ` ${model.locationname} `;
                 listItem.innerHTML = `
-                <a href="locationdetail.html?locationid=${model.locationid}&locationname=${model.locationname}" class="locationid">
+                <a href="locationdetail.html?locationid=${model.locationid}&locationname=${model.locationname}&address=${model.address}" class="locationid">
                     ${model.locationname}
                 </a>
                 

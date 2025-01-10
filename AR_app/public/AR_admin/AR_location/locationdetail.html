@@ -46,6 +46,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const locationid = urlParams.get('locationid');
             const locationname = urlParams.get('locationname');
+            const address = urlParams.get('address');
 
             if (locationid) {
                 // モデル情報を取得して表示
@@ -53,7 +54,7 @@
                     .then(response => response.json())
                     .then(data => {
                         const locationDetails = document.getElementById('location-details');
-                        let detailsHtml = `<h2>場所: ${locationname}</h2>`;
+                        let detailsHtml = `<h2>場所: ${locationname}</h2> <p>ID: ${locationid}</p> <p>ID: ${address}</p>`;
 
                         data.forEach(model => {
                             detailsHtml += `
