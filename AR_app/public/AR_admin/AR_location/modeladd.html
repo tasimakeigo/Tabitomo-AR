@@ -12,12 +12,8 @@
     <header>
         <h1><a href="menu.html">管理者システム - モデル情報 - 新規登録</a></h1>
         <ul>
-            <li>
-                <p>ユーザー名: </p>
-            </li>
-            <li id="logout">
-                <a href="">ログアウト</a>
-            </li>
+            <li><p>ユーザー名: </p></li>
+            <li id="logout"><a href="">ログアウト</a></li>
         </ul>
     </header>
 
@@ -51,6 +47,26 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="language">言語:</label>
+                    <select id="language" name="language" required>
+                        <option value="ja">日本語</option>
+                        <option value="en">英語</option>
+                        <option value="ko">韓国語</option>
+                        <option value="zh">中国語</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mdltext">テキストファイル (オプション):</label>
+                    <input type="file" id="napisy" name="napisy" accept=".txt">
+                </div>
+
+                <div class="form-group">
+                    <label for="mdlsound">音声ファイル (オプション):</label>
+                    <input type="file" id="sound" name="sound" accept="audio/mpeg">
+                </div>
+
+                <div class="form-group">
                     <button type="submit">登録</button>
                 </div>
             </form>
@@ -59,42 +75,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const locationID = urlParams.get('locationid'); // locationIDを取得
-
             const form = document.getElementById('model-form');
 
             form.addEventListener('submit', function (event) {
-                event.preventDefault(); // フォームのデフォルト送信を防ぐ
+                event.preventDefault();
 
-                const formData = new FormData();
-                formData.append('mdlname', document.getElementById('mdlname').value);
-                formData.append('mdlimage', document.getElementById('mdlimage').files[0]);
-                formData.append('mkname', document.getElementById('mkname').value);
-                formData.append('patt', document.getElementById('patt').files[0]);
-                formData.append('mkimage', document.getElementById('mkimage').files[0]);
+                const formData = new FormData(form);
+                const locationID = new URLSearchParams(window.location.search).get('locationid');
                 formData.append('locationID', locationID);
 
-                // データを送信するAPIエンドポイント
-                const endpoint = '/model/add';
-
-                fetch(endpoint, {
+                fetch('/model/add', {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('エラーが発生しました: ' + response.statusText);
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    alert('新規登録が完了しました: ' + data.mdlID);
+                    alert('新規登録が完了しました');
                     window.location.href = `/AR_admin/AR_location/locationdetail.html?locationid=${encodeURIComponent(locationID)}`;
                 })
                 .catch(error => {
-                    console.error('エラー:', error);
-                    alert('登録中にエラーが発生しました。');
+                    alert('登録中にエラーが発生しました');
                 });
             });
         });
