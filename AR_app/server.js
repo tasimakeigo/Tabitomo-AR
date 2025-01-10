@@ -15,7 +15,7 @@ const napisylistRoutes = require('./routes/napisylistRoutes');
 const soundlistRoutes = require('./routes/soundlistRoutes');
 const locationRoutes = require('./routes/locationRoutes');
 const locationdetailRoutes = require('./routes/locationdetailRoutes');
-
+const locationaddRoutes = require('./routes/locationaddRoutes');
 
 
 // ボディパーサー設定 (POSTデータを受け取るため)
@@ -37,6 +37,7 @@ app.use('/napisylist', napisylistRoutes);
 app.use('/soundlist', soundlistRoutes);
 app.use('/location', locationRoutes);
 app.use('/locationdetail', locationdetailRoutes);
+app.use('/locationaddRoutes', locationaddRoutes);
 
 // サーバーの起動
 const PORT = 8080;
