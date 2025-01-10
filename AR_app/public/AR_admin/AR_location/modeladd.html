@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規登録 - モデル情報</title>
+    <link rel="stylesheet" href="static/location.css">
+</head>
+
+<body>
+    <header>
+        <h1><a href="menu.html">管理者システム - モデル情報 - 新規登録</a></h1>
+        <ul>
+            <li>
+                <p>ユーザー名: </p>
+            </li>
+            <li id="logout">
+                <a href="">ログアウト</a>
+            </li>
+        </ul>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>モデル情報の新規登録</h2>
+            <form id="model-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="mdlname">モデル名:</label>
+                    <input type="text" id="mdlname" name="mdlname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mdlimage">モデルファイル (.glb):</label>
+                    <input type="file" id="mdlimage" name="mdlimage" accept=".glb" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mkname">マーカー名:</label>
+                    <input type="text" id="mkname" name="mkname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="patt">パターンファイル (.patt):</label>
+                    <input type="file" id="patt" name="patt" accept=".patt" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mkimage">マーカー画像 (.png):</label>
+                    <input type="file" id="mkimage" name="mkimage" accept=".png" required>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit">登録</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const locationID = urlParams.get('locationid'); // locationIDを取得
+
+            const form = document.getElementById('model-form');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // フォームのデフォルト送信を防ぐ
+
+                const formData = new FormData();
+                formData.append('mdlname', document.getElementById('mdlname').value);
+                formData.append('mdlimage', document.getElementById('mdlimage').files[0]);
+                formData.append('mkname', document.getElementById('mkname').value);
+                formData.append('patt', document.getElementById('patt').files[0]);
+                formData.append('mkimage', document.getElementById('mkimage').files[0]);
+                formData.append('locationID', locationID);
+
+                // データを送信するAPIエンドポイント
+                const endpoint = '/model/add';
+
+                fetch(endpoint, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('エラーが発生しました: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('新規登録が完了しました: ' + data.mdlID);
+                    window.location.href = `/AR_admin/AR_location/locationdetail.html?locationid=${encodeURIComponent(locationID)}`;
+                })
+                .catch(error => {
+                    console.error('エラー:', error);
+                    alert('登録中にエラーが発生しました。');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

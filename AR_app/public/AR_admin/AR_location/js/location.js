@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // モデル情報をリスト項目に挿入
                 listItem.textContent = ` ${model.locationname} `;
                 listItem.innerHTML = `
-                <a href="locationdetail.html?locationid=${model.locationid}" class="locationid">
+                <a href="locationdetail.html?locationid=${model.locationid}&locationname=${model.locationname}" class="locationid">
                     ${model.locationname}
                 </a>
                 <button class="edit-btn" data-locationid="${model.locationid}">編集</button>

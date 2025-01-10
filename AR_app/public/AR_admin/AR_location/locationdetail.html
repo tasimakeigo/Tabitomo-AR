@@ -45,6 +45,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
             const locationid = urlParams.get('locationid');
+            const locationname = urlParams.get('locationname');
 
             if (locationid) {
                 // モデル情報を取得して表示
@@ -52,13 +53,13 @@
                     .then(response => response.json())
                     .then(data => {
                         const locationDetails = document.getElementById('location-details');
-                        let detailsHtml = `<h2>モデル情報: ${locationid}</h2>`;
+                        let detailsHtml = `<h2>場所: ${locationname}</h2>`;
 
                         data.forEach(model => {
                             detailsHtml += `
                                 <p>
                                     <strong>モデル名:</strong> ${model.mdlname}<br>
-                                    <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlname}" width="200"><br>
+                                    <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlimage}" width="200"><br>
                                     <strong>マーカー名:</strong> ${model.mkname}<br>
                                     <strong>パターン:</strong> ${model.patt}<br>
                                     <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkname}" width="200"><br>

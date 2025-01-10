@@ -1,3 +1,4 @@
+// C:\Tabitomo-AR\AR_app\routes\locationdetailRoutes.js
 const express = require('express');  // expressモジュールのインポート
 const router = express.Router();     // express.Router() でルーターを定義
 const connection = require('../config');  // PostgreSQLの接続設定
