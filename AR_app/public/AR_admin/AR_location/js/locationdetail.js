@@ -1,33 +1,61 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // モデル情報を取得するためのAPI呼び出し
-    fetch('/location')  // モデル情報を取得するエンドポイント
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('ネットワークエラー: ' + response.status);
-            }
-            return response.json();  // JSONレスポンスを取得
-        })
-        .then(data => {
-            const locationIdList = document.querySelector('.locationid ul');  // モデル情報を表示する要素を選択
+    const urlParams = new URLSearchParams(window.location.search);
+    const locationid = urlParams.get('locationid');
+    const locationname = urlParams.get('locationname');
+    const address = urlParams.get('address');
 
-            if (!locationIdList) {
-                console.error('指定された .locationid ul が見つかりません。HTMLを確認してください。');
-                return;
-            }
+    if (locationid) {
+        // モデル情報を取得して表示
+        fetch(`/locationdetail?locationid=${locationid}`)
+            .then(response => response.json())
+            .then(data => {
+                const locationDetails = document.getElementById('location-details');
+                let detailsHtml = `<h2>場所: ${locationname}</h2> <p>ID: ${locationid}</p> <p>ID: ${address}</p>`;
 
-            // locationid の重複を除外
-            const uniqueLocationIds = [...new Set(data.map(model => model.locationid))];
+                data.forEach(model => {
+                    detailsHtml += `
+                        <p>                                    
+                            <strong>モデル名:</strong> ${model.mdlname}<br>
+                            <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlimage}" width="200"><br>
+                            <strong>マーカー名:</strong> ${model.mkname}<br>
+                            <strong>パターン:</strong> ${model.patt}<br>
+                            <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkname}" width="200"><br>
+                            <strong>音声ファイル:</strong> ${model.mdlsound}<br>
+                            <strong>モデルテキスト:</strong> ${model.mdltext}
+                        </p>
+                        <button class="edit-btn" data-mdlid="${model.mdlid}">編集</button>
+                        <button class="delete-btn" data-mdlid="${model.mdlid}">削除</button>
+                    `;
+                });
 
-            uniqueLocationIds.forEach(id => {
-                const listItem = document.createElement('li');
-                listItem.textContent = id;  // locationid をリスト項目として表示
+                locationDetails.innerHTML = detailsHtml;
 
-                locationIdList.appendChild(listItem); // リストに追加
+                // 編集ボタンのイベントリスナー追加
+                document.querySelectorAll('.edit-btn').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const mdlid = this.dataset.mdlid;
+                        window.location.href = `/AR_admin/AR_location/modeledit.html?mdlid=${encodeURIComponent(mdlid)}`;
+                    });
+                });
+
+                // 削除ボタンのイベントリスナー追加
+                document.querySelectorAll('.delete-btn').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const mdlid = this.dataset.mdlid;
+                        window.location.href = `/AR_admin/AR_location/modeldel.html?mdlid=${encodeURIComponent(mdlid)}`;
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('モデル情報の取得中にエラーが発生しました:', error);
+                alert('モデル情報の取得に失敗しました。');
             });
 
-        })
-        .catch(error => {
-            console.error('モデル情報の取得中にエラーが発生しました:', error);
-            alert('モデル情報の取得に失敗しました。');
+        // 新規モデル追加ボタンのイベントリスナー追加
+        document.querySelector('.add-btn').addEventListener('click', function () {
+            window.location.href = `/AR_admin/AR_location/modeladd.html?locationid=${encodeURIComponent(locationid)}`;
         });
+    } else {
+        alert('場所IDが指定されていません。');
+    }
 });
