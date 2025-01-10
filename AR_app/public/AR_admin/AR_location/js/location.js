@@ -18,12 +18,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 listItem.textContent = ` ${model.locationname} `;
                 listItem.innerHTML = `
                 <a href="locationdetail.html?locationid=${model.locationid}" class="locationid">
-                    ${model.locationname},${model.address}
+                    ${model.locationname}
                 </a>
+                <button class="edit-btn" data-locationid="${model.locationid}">編集</button>
                 <button class="delete-btn" data-locationid="${model.locationid}">削除</button>
             `;
 
                 location.appendChild(listItem); // リストに追加
+            });
+            // 編集ボタンのイベントリスナー追加
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const locationid = this.dataset.locationid;
+                    window.location.href = `/AR_admin/AR_location/locationedit.html?locationid=${encodeURIComponent(locationid)}`;
+                });
+            });
+
+            // 削除ボタンのイベントリスナー追加
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const locationid = this.dataset.locationid;
+                    window.location.href = `/AR_admin/AR_location/locationdel.html?locationid=${encodeURIComponent(locationid)}`;
+                });
             });
 
         })

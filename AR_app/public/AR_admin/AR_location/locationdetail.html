@@ -22,6 +22,7 @@
     </header>
 
     <main>
+        <button class="add-btn">新規モデル追加</button>
         <div class="sideber">
             <div class="sideber-container">
                 <a href="../menu.html"><button>メニュー</button></a>
@@ -31,78 +32,76 @@
                 <a href="../AR_napisy/napisy.html"><button>字幕管理</button></a>
                 <a href="../AR_sound/sound.html"><button>音声管理</button></a>
                 <a href="../AR_map/map.html"><button>マップ管理</button></a>
-                <!-- <a href="AR_language/language.html"><button>言語管理</button></a> -->
             </div>
         </div>
-        <div id="new-register-container">
-            <button class="add-btn">追加</button></a>
+        <div>
         </div>
         <div class="container">
             <div id="location-details"></div>
         </div>
-        <script>
-                // URLのパラメータからlocationidを取得
-                const urlParams = new URLSearchParams(window.location.search);
-                const locationid = urlParams.get('locationid');
+    </main>
 
-                if (locationid) {
-                    // サーバーからそのlocationidに関連するデータを取得
-                    fetch(`/locationdetail?locationid=${locationid}`)  // データを取得するエンドポイント
-                        .then(response => response.json())
-                        .then(data => {
-                            const locationDetails = document.getElementById('location-details');
-                            let detailsHtml = `<h2>モデル情報: ${locationid}</h2>`;
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const locationid = urlParams.get('locationid');
 
-                            // 各データを表示
-                            data.forEach(model => {
-                                detailsHtml += `
-                                    <p><strong>モデル名:</strong> ${model.mdlname}<br>
+            if (locationid) {
+                // モデル情報を取得して表示
+                fetch(`/locationdetail?locationid=${locationid}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const locationDetails = document.getElementById('location-details');
+                        let detailsHtml = `<h2>モデル情報: ${locationid}</h2>`;
+
+                        data.forEach(model => {
+                            detailsHtml += `
+                                <p>
+                                    <strong>モデル名:</strong> ${model.mdlname}<br>
                                     <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlname}" width="200"><br>
                                     <strong>マーカー名:</strong> ${model.mkname}<br>
                                     <strong>パターン:</strong> ${model.patt}<br>
                                     <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkname}" width="200"><br>
                                     <strong>音声ファイル:</strong> ${model.mdlsound}<br>
                                     <strong>モデルテキスト:</strong> ${model.mdltext}
-                                    </p>
-                                    <button class="edit-btn" data-locationid="${model.locationid}" data-languagename="${model.languagename}">編集</button>
-                                    <button class="delete-btn" data-locationid="${model.locationid}" data-languagename="${model.languagename}">削除</button>
-                                `;
-                            });
-
-                            locationDetails.innerHTML = detailsHtml;
-                        })
-                        .catch(error => {
-                            console.error('モデル情報の取得中にエラーが発生しました:', error);
-                            alert('モデル情報の取得に失敗しました。');
+                                </p>
+                                <button class="edit-btn" data-mdlid="${model.mdlid}">編集</button>
+                                <button class="delete-btn" data-mdlid="${model.mdlid}">削除</button>
+                            `;
                         });
-                } else {
-                    alert('場所IDが指定されていません。');
-                }
 
+                        locationDetails.innerHTML = detailsHtml;
 
-        </script>
-        </br>
-        <button class="add-btn">新規モデル追加</button>
-    </main>
-</body>
+                        // 編集ボタンのイベントリスナー追加
+                        document.querySelectorAll('.edit-btn').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const mdlid = this.dataset.mdlid;
+                                window.location.href = `/AR_admin/AR_location/modeledit.html?mdlid=${encodeURIComponent(mdlid)}`;
+                            });
+                        });
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // URLのパラメータからlocationidを取得
-        const urlParams = new URLSearchParams(window.location.search);
-        const locationid = urlParams.get('locationid');
+                        // 削除ボタンのイベントリスナー追加
+                        document.querySelectorAll('.delete-btn').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const mdlid = this.dataset.mdlid;
+                                window.location.href = `/AR_admin/AR_location/modeldel.html?mdlid=${encodeURIComponent(mdlid)}`;
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('モデル情報の取得中にエラーが発生しました:', error);
+                        alert('モデル情報の取得に失敗しました。');
+                    });
 
-        // 新規モデル追加ボタンがクリックされた場合に遷移する
-        const addBtn = document.querySelector('.add-btn');
-        addBtn.addEventListener('click', function () {
-            if (locationid) {
-                // 新規モデル追加ページに遷移
-                window.location.href = `/AR_admin/AR_location/modeladd.html?locationid=${encodeURIComponent(locationid)}`;
+                // 新規モデル追加ボタンのイベントリスナー追加
+                document.querySelector('.add-btn').addEventListener('click', function () {
+                    window.location.href = `/AR_admin/AR_location/modeladd.html?locationid=${encodeURIComponent(locationid)}`;
+                });
             } else {
-                alert('locationid パラメータが見つかりません。');
+                alert('場所IDが指定されていません。');
             }
         });
-    });
-</script>
+    </script>
+</body>
 
 </html>
