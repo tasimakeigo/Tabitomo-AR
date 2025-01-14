@@ -39,6 +39,7 @@ app.use('/location', locationRoutes);
 app.use('/locationdetail', locationdetailRoutes);
 app.use('/locationaddRoutes', locationaddRoutes);
 app.use('/sound2', locationdetailRoutes);
+app.use('/locationadd', locationaddRoutes);
 
 
 // サーバーの起動
