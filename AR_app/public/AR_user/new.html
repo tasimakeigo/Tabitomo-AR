@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規登録</title>
-    <link rel="stylesheet" href="static/login.css">
+    <link rel="stylesheet" href="static/newac.css">
     <!-- フォント推奨: Noto Sans JP -->
 </head>
 
@@ -17,6 +17,9 @@
 
     <main>
         <div class="registration-container">
+            <div class="app-title">
+            <h1>新規登録</h1>
+            </div>
             <form id="registration-form" method="post">
                 <!-- ユーザー名 -->
                 <div class="form-group">
@@ -38,6 +41,7 @@
 
                 <!-- 言語選択 -->
                 <div class="form-group">
+                 
                     <label for="languagename">言語選択</label>
                     <select id="languagename" name="languagename" required>
                         <option value="" disabled selected>言語を選択してください</option>
@@ -47,6 +51,7 @@
                         <option value="フランス語">フランス語</option>
                         <option value="韓国語">韓国語</option>
                     </select>
+                
                 </div>
 
                 <!-- 登録ボタン -->
@@ -56,7 +61,6 @@
     </main>
 
     <footer>
-        <p>© 2024 TIC 大原学園 C</p>
     </footer>
 
     <script src="js/user.js" defer></script>
