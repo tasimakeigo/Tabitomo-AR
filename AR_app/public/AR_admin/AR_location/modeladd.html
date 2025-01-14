@@ -10,60 +10,55 @@
 
 <body>
     <header>
-        <h1><a href="menu.html">管理者システム - モデル情報 - 新規登録</a></h1>
-        <ul>
-            <li><p>ユーザー名: </p></li>
-            <li id="logout"><a href="">ログアウト</a></li>
-        </ul>
+
     </header>
 
     <main>
         <div class="form-container">
             <h2>モデル情報の新規登録</h2>
             <form id="model-form" enctype="multipart/form-data">
+                <!-- モデル情報 -->
                 <div class="form-group">
                     <label for="mdlname">モデル名:</label>
                     <input type="text" id="mdlname" name="mdlname" required>
                 </div>
-
-                <div class="form-group">
-                    <label for="mdlimage">モデルファイル (.glb):</label>
-                    <input type="file" id="mdlimage" name="mdlimage" accept=".glb" required>
-                </div>
-
                 <div class="form-group">
                     <label for="mkname">マーカー名:</label>
                     <input type="text" id="mkname" name="mkname" required>
                 </div>
 
+                <!-- ファイルアップロード -->
                 <div class="form-group">
-                    <label for="patt">パターンファイル (.patt):</label>
+                    <label for="mdlimage">モデル画像（.glb）:</label>
+                    <input type="file" id="mdlimage" name="mdlimage" accept=".glb" required>
+                </div>
+                <div class="form-group">
+                    <label for="patt">パターンファイル（.patt）:</label>
                     <input type="file" id="patt" name="patt" accept=".patt" required>
                 </div>
-
                 <div class="form-group">
-                    <label for="mkimage">マーカー画像 (.png):</label>
-                    <input type="file" id="mkimage" name="mkimage" accept=".png" required>
+                    <label for="mkimage">マーカー画像:</label>
+                    <input type="file" id="mkimage" name="mkimage" accept="image/*" required>
                 </div>
 
+                <!-- オプション：音声ファイルと字幕ファイル -->
+                <!-- 言語選択 -->
                 <div class="form-group">
-                    <label for="language">言語:</label>
-                    <select id="language" name="language" required>
-                        <option value="ja">日本語</option>
-                        <option value="en">英語</option>
-                        <option value="ko">韓国語</option>
-                        <option value="zh">中国語</option>
+                    <label for="languagename">言語選択:</label>
+                    <select id="languagename" name="languagename">
+                        <option value="日本語">日本語</option>
+                        <option value="英語">英語</option>
+                        <option value="韓国語">韓国語</option>
+                        <option value="中国語">中国語</option>
                     </select>
                 </div>
-
                 <div class="form-group">
-                    <label for="mdltext">テキストファイル (オプション):</label>
-                    <input type="file" id="napisy" name="napisy" accept=".txt">
+                    <label for="sound">音声ファイル（.mp3）:</label>
+                    <input type="file" id="sound" name="sound" accept=".mp3">
                 </div>
-
                 <div class="form-group">
-                    <label for="mdlsound">音声ファイル (オプション):</label>
-                    <input type="file" id="sound" name="sound" accept="audio/mpeg">
+                    <label for="subtitles">字幕ファイル（.txt）:</label>
+                    <input type="file" id="subtitles" name="subtitles" accept=".txt">
                 </div>
 
                 <div class="form-group">
@@ -78,23 +73,23 @@
             const form = document.getElementById('model-form');
 
             form.addEventListener('submit', function (event) {
-                event.preventDefault();
+                event.preventDefault(); // フォームのデフォルト送信を防ぐ
 
                 const formData = new FormData(form);
-                const locationID = new URLSearchParams(window.location.search).get('locationid');
-                formData.append('locationID', locationID);
+                const endpoint = '/locationadd/add';
 
-                fetch('/model/add', {
+                fetch(endpoint, {
                     method: 'POST',
                     body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
-                    alert('新規登録が完了しました');
-                    window.location.href = `/AR_admin/AR_location/locationdetail.html?locationid=${encodeURIComponent(locationID)}`;
+                    alert('新規登録が完了しました: ' + data.mdlID);
+                    window.location.href = './AR_admin/AR_location/location.html'; // 登録後にメニューに戻る
                 })
                 .catch(error => {
-                    alert('登録中にエラーが発生しました');
+                    console.error('エラー:', error);
+                    alert('登録中にエラーが発生しました。');
                 });
             });
         });
