@@ -65,35 +65,33 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 document.addEventListener('DOMContentLoaded', function () {
 
-    fetch('/sound')  // /soundからデータを取得
-        .then(response => response.json())  // JSONレスポンスを取得
-        .then(data => {
-            data.forEach(model => {
-                const mdlsound = model.mdlsound;  // 音声ファイル名取得
+    // sound2 のルート設定
+    router.get('/sound2', async (req, res) => {
+        const locationid = req.query.locationid;  // クエリパラメータからlocationidを取得
 
-                // 音声ファイル名をもとに `sound` テーブルを参照する
-                fetch(`/sound?mdlsound=${mdlsound}`)
-                    .then(response => response.json())  // `sound` テーブルからのレスポンスを取得
-                    .then(soundData => {
-                        soundData.forEach(soundItem => {
-                            const listItem = document.createElement('div');  // divを使ってリストアイテムを作成
+        try {
+            let query = `
+            SELECT sound.*
+            FROM sound
+            JOIN model2 ON sound.mdlsound = model2.mdlsound
+        `;  // クエリ部分はそのまま
 
-                            listItem.innerHTML = `
-                                <p>音声テキスト: ${soundItem.mdlsound}</p>
-                                <p>言語: ${soundItem.languagename}</p>
-                                <p>音声ファイル詳細: ${soundItem.mdlsound}</p>
-                            `;
+            const params = [];
 
-                            // 任意の要素にリストアイテムを追加
-                            document.body.appendChild(listItem);  // ここでリストアイテムを追加
-                        });
-                    })
-                    .catch(error => {
-                        console.error('soundテーブルの取得中にエラーが発生しました:', error);
-                    });
-            });
-        })
-        .catch(error => {
-            console.error('モデル情報の取得中にエラーが発生しました:', error);
-        });
+            if (locationid) {
+                query += ' WHERE model2.locationid = $1';  // locationidを基準に絞り込み
+                params.push(locationid);
+            }
+
+            const result = await connection.query(query, params);
+            res.json(result.rows);  // 取得したデータを返す
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'データの取得中にエラーが発生しました' });
+        }
+    });
+
+    module.exports = router;  // ルーターをエクスポート
+
 });
+
