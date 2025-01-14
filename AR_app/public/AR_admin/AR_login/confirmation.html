@@ -11,7 +11,7 @@
 <body>
 
     <header>
-        <h1><a href="menu.html">管理者システム</a></h1>
+        <h1>管理者システム</h1>
     </header>
 
     <main>
@@ -19,15 +19,15 @@
             <h2>新規登録内容確認</h2>
             <p>管理者名: <span id="confirm-adminname"></span></p>
             <p>パスワード: <span id="confirm-password"></span></p> <!-- パスワードを表示 -->
-            <button id="confirm-register">登録</button>
+            <div class="button-container">
+                <button id="confirm-register">登録</button>
+                <button onclick="location.href='new.html'">戻る</button>
+            </div>
         </div>
     </main>
-
-    <footer>
-        <p>© 2024 TIC 大原学園 C-2</p>
-    </footer>
 
     <script src="js/login.js" defer></script>
 
 </body>
+
 </html>
