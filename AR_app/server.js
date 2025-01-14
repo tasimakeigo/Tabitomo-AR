@@ -37,7 +37,7 @@ app.use('/napisylist', napisylistRoutes);
 app.use('/soundlist', soundlistRoutes);
 app.use('/location', locationRoutes);
 app.use('/locationdetail', locationdetailRoutes);
-app.use('/locationaddRoutes', locationaddRoutes);
+app.use('/locationadd', locationaddRoutes);
 
 // サーバーの起動
 const PORT = 8080;

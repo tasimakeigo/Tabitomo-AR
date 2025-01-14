@@ -1,4 +1,4 @@
-// config.js
+// C:\Tabitomo-AR\AR_app\config.js
 const { Client } = require('pg');
 require('dotenv').config();
 
