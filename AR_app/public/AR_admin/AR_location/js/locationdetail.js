@@ -1,4 +1,3 @@
-// C:\Tabitomo-AR\AR_app\public\AR_admin\AR_location\js\locationdetail.js
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const locationid = urlParams.get('locationid');
@@ -49,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             ${model.textfiles.length > 0 ? model.textfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}
                         </p>
                         <button class="edit-btn" data-mdlid="${mdlid}">編集</button>
-                        <button class="delete-btn" data-mdlid="${mdlid}">削除</button>
+                        <button class="delete-btn" data-mdlid="${mdlid}">全データ削除</button>
                     `;
                 }
 
@@ -66,7 +65,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.querySelectorAll('.delete-btn').forEach(button => {
                     button.addEventListener('click', function () {
                         const mdlid = this.dataset.mdlid;
-                        window.location.href = `/AR_admin/AR_location/modeldel.html?mdlid=${encodeURIComponent(mdlid)}`;
+
+                        if (confirm('関連するすべてのデータを削除しますか？')) {
+                            fetch(`/modeldel?mdlid=${encodeURIComponent(mdlid)}`, {
+                                method: 'DELETE',
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.message === '関連データの削除が完了しました。') {
+                                        alert('関連データが削除されました。');
+                                        window.location.reload();  // ページをリロードして削除された内容を更新
+                                    } else {
+                                        alert('削除に失敗しました: ' + data.message);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('削除中にエラーが発生しました:', error);
+                                    alert('削除中にエラーが発生しました。');
+                                });
+                        }
                     });
                 });
             })
