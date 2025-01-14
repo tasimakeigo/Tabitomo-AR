@@ -3,42 +3,46 @@ const express = require('express');  // expressモジュールのインポート
 const router = express.Router();     // express.Router() でルーターを定義
 const connection = require('../config');  // PostgreSQLの接続設定
 
-// locationdetail のルート設定
+
 router.get('/', async (req, res) => {
-    const locationid = req.query.locationid;  // クエリパラメータからlocationidを取得
+    const locationid = req.query.locationid;
 
     if (!locationid) {
         return res.status(400).json({ error: 'locationidが指定されていません。' });
     }
 
     try {
-        // `locationid` に関連するデータを取得するSQL
-        const result = await connection.query('SELECT * FROM model2 WHERE locationid = $1', [locationid]);
-        res.json(result.rows);  // 取得したデータを返す
+        // MODEL2, sound, napisyテーブルを結合してデータ取得
+        const query = `
+            SELECT 
+                m.mdlname,
+                m.mdlid,
+                m.mdlimage,
+                m.mkname,
+                m.patt,
+                m.mkimage,
+                s.languagename,
+                s.soundfile,
+                n.napisyfile
+            FROM 
+                model2 m
+            LEFT JOIN  
+                sound s ON m.mdlsound = s.mdlsound 
+            LEFT JOIN  
+                napisy n ON m.mdltext = n.mdltext AND s.languagename = n.languagename
+            WHERE 
+                m.locationid = $1
+            ORDER BY
+                m.mdlid, s.languagename;
+        `;
+
+        const result = await connection.query(query, [locationid]);
+
+        // データをJSON形式で返す
+        res.json(result.rows);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'データの取得中にエラーが発生しました' });
-    }
-});
-
-// sound2 のルート設定
-router.get('/sound2', async (req, res) => {
-    const mdlsound = req.query.mdlsound;  // クエリパラメータからmdlsoundを取得
-
-    try {
-        let query = 'SELECT * FROM sound';
-        const params = [];
-
-        if (mdlsound) {
-            query += ' WHERE mdlsound = $1';
-            params.push(mdlsound);
-        }
-
-        const result = await connection.query(query, params);
-        res.json(result.rows);  // 取得したデータを返す
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'データの取得中にエラーが発生しました' });
+        res.status(500).json({ error: 'データの取得中にエラーが発生しました。' });
     }
 });
 
