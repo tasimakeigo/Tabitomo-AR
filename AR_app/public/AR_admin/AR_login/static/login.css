@@ -110,6 +110,10 @@ main {
     width: 100%;
 }
 
+.registration-container button:hover {
+    background-color: #a0c0ff;
+}
+
 #checkboxlabel {
     margin: 0;
     white-space: nowrap;
@@ -220,13 +224,35 @@ main {
     margin-top: 100px;
 }
 
-/* 登録確認 */
-.button-container {
-    display: flex;
-    gap: 10px;
-    /* ボタン間のスペースを調整 */
-    margin-top: 20px;
+.confirmation-container button {
+    padding: 10px;
+    font-size: 1em;
+    background-color: #d0e2ff;
+    color: #333;
+    border: 1px solid #a0b6d0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
 }
+
+/* 登録確認 */
+.confirmation-container button {
+    padding: 10px;
+    font-size: 1em;
+    background-color: #d0e2ff;
+    color: #333;
+    border: 1px solid #a0b6d0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.confirmation-container button:hover {
+    background-color: #a0c0ff;
+}
+
 
 /* ログイン完了 */
 .complete-container {
