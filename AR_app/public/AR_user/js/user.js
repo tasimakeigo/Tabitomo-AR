@@ -142,16 +142,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     let username = urlParams.get('username');
 
+    // usernameがURLパラメータにある場合、ローカルストレージに保存
     if (username) {
         localStorage.setItem('username', username);
     } else {
+        // ローカルストレージから取得
         username = localStorage.getItem('username');
     }
 
-    if (username) {
-        document.getElementById('username-display').textContent = `name: ${username}`;
-    }
-});
+// ユーザー名が存在する場合、ヘッダーと現在の名前に表示
+if (username) {
+    document.getElementById('username-display').textContent = `${username}`;
+    document.getElementById('current-name').textContent = username;
+}}
+);
 
 document.getElementById("change-name").addEventListener("click", function() {
     const newName = document.getElementById('new-name').value;
@@ -163,6 +167,7 @@ document.getElementById("change-name").addEventListener("click", function() {
     }
 
     if (newName && newName !== currentName) {
+        // サーバーに名前変更リクエストを送信
         fetch('/api/updateusername', {
             method: 'POST',
             headers: {
@@ -176,8 +181,8 @@ document.getElementById("change-name").addEventListener("click", function() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                localStorage.setItem('username', newName);
-                window.location.href = 'renamesuccess.html';
+                localStorage.setItem('username', newName); // ローカルストレージに新しい名前を保存
+                window.location.href = 'renamesuccess.html'; // 名前変更成功ページへ遷移
             } else {
                 alert('名前の変更に失敗しました。再試行してください。');
             }
