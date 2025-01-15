@@ -300,11 +300,6 @@ footer {
     margin-top: 10px;
 }
 
-.logout-info {
-    margin-top: 80px;
-    margin-left: 50px;
-}
-
 .confirmation-container {
     display: flex;
     flex-direction: column;
@@ -331,4 +326,11 @@ footer {
     flex-direction: column;
     align-items: center;
     margin-top: 100px;
+}
+
+/* 新規登録 */
+#checkboxlabel {
+    margin: 0;
+    white-space: nowrap;
+    /* テキストを折り返さない */
 }
