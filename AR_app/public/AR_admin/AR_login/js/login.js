@@ -9,6 +9,11 @@ function togglePassword() {
     if (passwordConfirmField) {
         passwordConfirmField.type = passwordConfirmField.type === "password" ? "text" : "password";
     }
+
+    const passwordnewField = document.getElementById("password");
+    if (passwordnewField) {
+        passwordnewField.type = passwordnewField.type === "password" ? "text" : "password";
+    }
 }
 
 // 新規登録フォームの処理
