@@ -5,36 +5,56 @@ document.addEventListener('DOMContentLoaded', function () {
     const address = urlParams.get('address');
 
     if (locationid) {
-
-        // モデル情報を取得して表示
         fetch(`/locationdetail?locationid=${locationid}`)
             .then(response => response.json())
             .then(data => {
                 const locationDetails = document.getElementById('location-details');
-                let detailsHtml = `<h2>場所: ${locationname}</h2> <p>ID: ${locationid}</p> <p>住所: ${address}</p>`;
+                let detailsHtml = `<h2>場所: ${locationname}</h2><p>ID: ${locationid}</p><p>住所: ${address}</p>`;
 
+                const models = {};
 
-                data.forEach(model => {
-                    detailsHtml += `
-                            <p>                                  
-                                <strong>モデル名:</strong> ${model.mdlname}<br>
-                                <strong>モデルID:</strong> ${model.mdlid}<br>
-                                <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlimage}" width="200"><br>
-                                <strong>マーカー名:</strong> ${model.mkname}<br>
-                                <strong>パターン:</strong> ${model.patt}<br>
-                                <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkname}" width="200"><br>
-                                <strong>音声ファイル:</strong> ${model.mdlsound}<br>
-                                <strong>モデルテキスト:</strong> ${model.mdltext}
-                            </p>
-                            <button class="edit-btn" data-mdlid="${model.mdlid}">編集</button>
-                            <button class="delete-btn" data-mdlid="${model.mdlid}">削除</button>
-                        `;
+                // データをモデルごとにグループ化
+                data.forEach(item => {
+                    if (!models[item.mdlid]) {
+                        models[item.mdlid] = {
+                            mdlname: item.mdlname,
+                            mdlid: item.mdlid,
+                            mdlimage: item.mdlimage,
+                            mkname: item.mkname,
+                            patt: item.patt,
+                            mkimage: item.mkimage,
+                            soundfiles: [],
+                            textfiles: []
+                        };
+                    }
+                    models[item.mdlid].soundfiles.push(item.soundfile);
+                    models[item.mdlid].textfiles.push(item.napisyfile);
                 });
 
+                // HTML生成
+                for (const mdlid in models) {
+                    const model = models[mdlid];
+                    detailsHtml += `
+                        <p>
+                            <strong>モデル名:</strong> ${model.mdlname}<br>
+                            <strong>モデルID:</strong> ${model.mdlid}<br>
+                            <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlname}" width="200"><br>
+                            <strong>マーカー名:</strong> ${model.mkname}<br>
+                            <strong>パターン:</strong> ${model.patt}<br>
+                            <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkname}" width="200"><br>
+                            <strong>音声ファイル:</strong><br>
+                            ${model.soundfiles.length > 0 ? model.soundfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}<br>
+                            <strong>モデルテキスト:</strong><br>
+                            ${model.textfiles.length > 0 ? model.textfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}
+                        </p>
+                        <button class="edit-btn" data-mdlid="${mdlid}">編集</button>
+                        <button class="delete-btn" data-mdlid="${mdlid}">全データ削除</button>
+                    `;
+                }
 
                 locationDetails.innerHTML = detailsHtml;
 
-                // 編集ボタンのイベントリスナー追加
+                // 編集・削除ボタンのイベントリスナー
                 document.querySelectorAll('.edit-btn').forEach(button => {
                     button.addEventListener('click', function () {
                         const mdlid = this.dataset.mdlid;
@@ -42,55 +62,36 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 });
 
-                // 削除ボタンのイベントリスナー追加
                 document.querySelectorAll('.delete-btn').forEach(button => {
                     button.addEventListener('click', function () {
                         const mdlid = this.dataset.mdlid;
-                        window.location.href = `/AR_admin/AR_location/modeldel.html?mdlid=${encodeURIComponent(mdlid)}`;
+
+                        if (confirm('関連するすべてのデータを削除しますか？')) {
+                            fetch(`/modeldel?mdlid=${encodeURIComponent(mdlid)}`, {
+                                method: 'DELETE',
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.message === '関連データの削除が完了しました。') {
+                                        alert('関連データが削除されました。');
+                                        window.location.reload();  // ページをリロードして削除された内容を更新
+                                    } else {
+                                        alert('削除に失敗しました: ' + data.message);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('削除中にエラーが発生しました:', error);
+                                    alert('削除中にエラーが発生しました。');
+                                });
+                        }
                     });
                 });
-
-
-
             })
-
-
-        // 新規モデル追加ボタンのイベントリスナー追加
-        document.querySelector('.add-btn').addEventListener('click', function () {
-            window.location.href = `/AR_admin/AR_location/modeladd.html?locationid=${encodeURIComponent(locationid)}`;
-        });
+            .catch(error => {
+                console.error('データの取得中にエラーが発生しました:', error);
+                alert('データの取得中にエラーが発生しました。');
+            });
     } else {
         alert('場所IDが指定されていません。');
     }
-});
-document.addEventListener('DOMContentLoaded', function () {
-
-    // sound2 のルート設定
-    router.get('/sound2', async (req, res) => {
-        const locationid = req.query.locationid;  // クエリパラメータからlocationidを取得
-
-        try {
-            let query = `
-            SELECT sound.*
-            FROM sound
-            JOIN model2 ON sound.mdlsound = model2.mdlsound
-        `;
-            const params = [];
-
-            if (locationid) {
-                query += ' WHERE model2.locationid = $1';
-                params.push(locationid);
-            }
-
-            const result = await connection.query(query, params);
-            res.json(result.rows);  // 取得したデータを返す
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: 'データの取得中にエラーが発生しました' });
-        }
-    });
-
-    module.exports = router;  // ルーターをエクスポート
-
-
 });
