@@ -48,12 +48,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             ${model.textfiles.length > 0 ? model.textfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}
                         </p>
                         <button class="edit-btn" data-mdlid="${mdlid}">編集</button>
-                        <button class="delete-btn" data-mdlid="${mdlid}">全データ削除</button>
+                        <button class="delete-btn" data-mdlid="${mdlid}">削除</button>
                     `;
                 }
 
                 locationDetails.innerHTML = detailsHtml;
-
                 // 編集・削除ボタンのイベントリスナー
                 document.querySelectorAll('.edit-btn').forEach(button => {
                     button.addEventListener('click', function () {
@@ -64,17 +63,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 document.querySelectorAll('.delete-btn').forEach(button => {
                     button.addEventListener('click', function () {
-                        const mdlid = this.dataset.mdlid;
 
                         if (confirm('関連するすべてのデータを削除しますか？')) {
-                            fetch(`/modeldel?mdlid=${encodeURIComponent(mdlid)}`, {
+                            fetch(`/locationdetail/modeldel?locationid=${encodeURIComponent(locationid)}`, {
                                 method: 'DELETE',
                             })
                                 .then(response => response.json())
                                 .then(data => {
                                     if (data.message === '関連データの削除が完了しました。') {
                                         alert('関連データが削除されました。');
-                                        window.location.reload();  // ページをリロードして削除された内容を更新
+                                        window.location.href = `/AR_admin/AR_location/location.html`;
                                     } else {
                                         alert('削除に失敗しました: ' + data.message);
                                     }

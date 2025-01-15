@@ -85,7 +85,8 @@
                 .then(response => response.json())
                 .then(data => {
                     alert('新規登録が完了しました: ' + data.mdlID);
-                    window.location.href = './AR_admin/AR_location/location.html'; // 登録後にメニューに戻る
+                    console.log('モデル情報新規登録完了')
+                    window.location.href = document.referrer;
                 })
                 .catch(error => {
                     console.error('エラー:', error);
