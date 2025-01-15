@@ -292,6 +292,7 @@ footer {
     font-size: 0.9em;
     color: #333;
     margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 #error-message {
@@ -333,4 +334,10 @@ footer {
     margin: 0;
     white-space: nowrap;
     /* テキストを折り返さない */
+}
+
+.back-button {
+    margin-top: 1em;
+    text-align: center;
+    /* ボタンを中央揃え */
 }
