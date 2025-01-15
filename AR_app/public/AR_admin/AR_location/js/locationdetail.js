@@ -74,12 +74,11 @@ document.addEventListener('DOMContentLoaded', function () {
             SELECT sound.*
             FROM sound
             JOIN model2 ON sound.mdlsound = model2.mdlsound
-        `;  // クエリ部分はそのまま
-
+        `;
             const params = [];
 
             if (locationid) {
-                query += ' WHERE model2.locationid = $1';  // locationidを基準に絞り込み
+                query += ' WHERE model2.locationid = $1';
                 params.push(locationid);
             }
 
@@ -93,5 +92,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
     module.exports = router;  // ルーターをエクスポート
 
-});
 
+});
