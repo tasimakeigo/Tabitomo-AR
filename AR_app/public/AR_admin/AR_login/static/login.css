@@ -327,3 +327,10 @@ footer {
     align-items: center;
     margin-top: 100px;
 }
+
+/* 新規登録 */
+#checkboxlabel {
+    margin: 0;
+    white-space: nowrap;
+    /* テキストを折り返さない */
+}
