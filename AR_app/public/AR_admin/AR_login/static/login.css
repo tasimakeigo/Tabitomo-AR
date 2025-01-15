@@ -327,19 +327,3 @@ footer {
     align-items: center;
     margin-top: 100px;
 }
-
-/* 新規登録 */
-#show-newpassword {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    font-size: 0.9em;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-#checkboxlabel {
-    margin: 0;
-    white-space: nowrap;
-    /* テキストを折り返さない */
-}
