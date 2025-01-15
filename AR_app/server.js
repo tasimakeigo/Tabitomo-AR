@@ -17,6 +17,8 @@ const locationRoutes = require('./routes/locationRoutes');
 const locationdetailRoutes = require('./routes/locationdetailRoutes');
 const locationaddRoutes = require('./routes/locationaddRoutes');
 
+const users = require('./routes/users'); // userRoutesをインポート
+
 
 // ボディパーサー設定 (POSTデータを受け取るため)
 app.use(express.urlencoded({ extended: true }));  // URLエンコードされたデータの処理
@@ -39,6 +41,8 @@ app.use('/location', locationRoutes);
 app.use('/locationdetail', locationdetailRoutes);
 app.use('/sound2', locationdetailRoutes);
 app.use('/locationadd', locationaddRoutes);
+
+app.use('/api/users', users); // /api/user エンドポイントを有効にする
 
 
 // サーバーの起動
