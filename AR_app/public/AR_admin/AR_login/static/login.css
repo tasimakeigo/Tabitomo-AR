@@ -292,17 +292,13 @@ footer {
     font-size: 0.9em;
     color: #333;
     margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 
 #error-message {
     color: red;
     font-size: 0.9em;
     margin-top: 10px;
-}
-
-.logout-info {
-    margin-top: 80px;
-    margin-left: 50px;
 }
 
 .confirmation-container {
@@ -331,4 +327,17 @@ footer {
     flex-direction: column;
     align-items: center;
     margin-top: 100px;
+}
+
+/* 新規登録 */
+#checkboxlabel {
+    margin: 0;
+    white-space: nowrap;
+    /* テキストを折り返さない */
+}
+
+.back-button {
+    margin-top: 1em;
+    text-align: center;
+    /* ボタンを中央揃え */
 }
