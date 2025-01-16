@@ -10,6 +10,11 @@ document.getElementById('login-form')?.addEventListener('submit', function (even
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onload = function () {
+
+        console.log('XHR Status:', xhr.status);
+        console.log('XHR Response:', xhr.responseText);
+
+
         if (xhr.status === 200) {
             window.location.href = `/AR_user/home.html?username=${encodeURIComponent(username)}`;
         } else {
