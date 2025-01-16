@@ -358,3 +358,28 @@ body {
         transform: scale(.95);
     }
 }
+
+/* selectaccount.html */
+.login-url {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
+
+.newaccount-url {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
+
+.guest-url {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
