@@ -38,10 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p>
                             <strong>モデル名:</strong> ${model.mdlname}<br>
                             <strong>モデルID:</strong> ${model.mdlid}<br>
-                            <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlname}" width="200"><br>
+                            <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlimage}" width="200"><br>
                             <strong>マーカー名:</strong> ${model.mkname}<br>
                             <strong>パターン:</strong> ${model.patt}<br>
-                            <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkname}" width="200"><br>
+                            <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkimage}" width="200"><br>
                             <strong>音声ファイル:</strong><br>
                             ${model.soundfiles.length > 0 ? model.soundfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}<br>
                             <strong>モデルテキスト:</strong><br>
