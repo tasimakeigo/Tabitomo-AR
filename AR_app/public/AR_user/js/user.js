@@ -195,3 +195,17 @@ document.getElementById("change-name").addEventListener("click", function() {
         alert("新しい名前を現在の名前と異なるものにしてください。");
     }
 });
+
+
+//デバッグ用０１２６
+app.post('/api/userlogin', (req, res) => {
+    console.log('Received login request:', req.body);  // リクエスト内容を確認
+    const { username, password } = req.body;
+    const user = findUserInDatabase(username);
+
+    if (user && user.password === password) {
+        res.status(200).send('ログイン成功');
+    } else {
+        res.status(401).send('ユーザー名またはパスワードが間違っています');
+    }
+});
