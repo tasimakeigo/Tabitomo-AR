@@ -1,3 +1,4 @@
+// C:\Tabitomo-AR\AR_app\routes\locationaddRoutes.js
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -43,9 +44,6 @@ router.post('/add', upload.fields([
     if (!locationName || !address) {
       return res.status(400).send('場所名と住所は必須です');
     }
-
-    // locationIDをリクエストヘッダーから取得
-    const locationID = new URLSearchParams(req.headers.referer.split('?')[1]).get('locationid');
 
     // LOCATIONテーブルの最大IDを取得し、新しいIDを生成
     const { rows: locationRows } = await db.query('SELECT MAX(CAST(locationid AS INTEGER)) AS maxid FROM LOCATION');

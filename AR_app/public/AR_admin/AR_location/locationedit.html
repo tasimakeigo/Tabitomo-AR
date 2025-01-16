@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モデル編集</title>
+    <style>
+        label, input, select {
+            display: block;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>モデル編集</h1>
+    <form id="edit-form" enctype="multipart/form-data">
+        <h3>場所情報</h3>
+        <label for="locationname">場所名:</label>
+        <input type="text" id="locationname" name="locationname" required>
+        
+        <label for="address">住所:</label>
+        <input type="text" id="address" name="address" required>
+
+        <h3>モデル情報</h3>
+        <label for="mdlname">モデル名:</label>
+        <input type="text" id="mdlname" name="mdlname" required>
+
+        <label for="mdlimage">モデル画像 .glb (変更しない場合は空白のまま):</label>
+        <input type="file" id="mdlimage" name="mdlimage" accept=".glb">
+        
+        <label for="mkname">マーカー名:</label>
+        <input type="text" id="mkname" name="mkname" required>
+
+        <label for="patt">パターン .patt (変更しない場合は空白のまま):</label>
+        <input type="file" id="patt" name="patt" accept=".patt">
+
+        <label for="mkimage">マーカー画像 (変更しない場合は空白のまま):</label>
+        <input type="file" id="mkimage" name="mkimage" accept="image/*">
+        
+        <button type="submit">保存</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const mdlid = urlParams.get('mdlid'); // URLからモデルIDを取得
+
+            if (mdlid) {
+                fetch(`/AR_admin/AR_location/locationedit?id=${mdlid}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // モデル情報をフォームにセット
+                        document.getElementById('locationname').value = data.locationname;
+                        document.getElementById('address').value = data.address;
+                        document.getElementById('mdlname').value = data.mdlname;
+                        document.getElementById('mkname').value = data.mkname;
+                    })
+                    .catch(error => {
+                        console.error('エラー:', error);
+                        alert('データの取得中にエラーが発生しました。');
+                    });
+            }
+
+            // フォーム送信処理
+            document.getElementById('edit-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const formData = new FormData(event.target);
+
+                fetch(`/AR_admin/AR_location/locationedit?id=${mdlid}`, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('変更が保存されました');
+                    window.location.href = `/AR_admin/AR_location/location.html`;
+                })
+                .catch(error => {
+                    console.error('エラー:', error);
+                    alert('変更の保存中にエラーが発生しました。');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
