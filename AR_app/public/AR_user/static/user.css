@@ -305,3 +305,56 @@ body {
         padding: 12px;
     }
 }
+
+/* langeage.html */
+.button-container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-container1 button {
+    height: 26px;
+}
+
+.row {
+    display: flex;
+    /* 横並びにする */
+    justify-content: center;
+    /* ボタンを中央寄せ */
+    gap: 10px;
+    /* ボタン間の間隔 */
+    margin: 10px 0;
+}
+
+.japanese {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
+
+.english {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
+
+.korea {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
+
+.china {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
