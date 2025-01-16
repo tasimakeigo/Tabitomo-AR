@@ -383,3 +383,24 @@ body {
         transform: scale(.95);
     }
 }
+
+/* japanese.html */
+.button-container button {
+    height: 26px;
+}
+
+.ar-url {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
+
+.map-url {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
