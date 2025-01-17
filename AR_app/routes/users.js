@@ -123,7 +123,7 @@ router.post('/updateusername', (req, res) => {
 // パスワード変更エンドポイント
 router.post('/changepassword', async (req, res) => {
     const { username, currentPassword, newPassword } = req.body;
-   
+
     try {
         const query = 'SELECT * FROM users WHERE name = $1';
         const { rows } = await connection.query(query, [username]);
@@ -152,5 +152,3 @@ router.post('/changepassword', async (req, res) => {
 });
  
 module.exports = router;
- 
- 
