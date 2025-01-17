@@ -28,7 +28,7 @@ router.post('/userlogin', (req, res) => {
             const match = await bcrypt.compare(password, user.password);
             if (match) {
                 // 認証成功
-                res.redirect(`../home.html?username=${encodeURIComponent(username)}`);
+                res.redirect(`/AR_user/home.html?username=${encodeURIComponent(username)}`);
             } else {
                 // パスワードが一致しない場合
                 res.status(401).send('認証に失敗しました');
@@ -123,7 +123,7 @@ router.post('/updateusername', (req, res) => {
 // パスワード変更エンドポイント
 router.post('/changepassword', async (req, res) => {
     const { username, currentPassword, newPassword } = req.body;
-    
+
     try {
         const query = 'SELECT * FROM users WHERE name = $1';
         const { rows } = await connection.query(query, [username]);
@@ -152,3 +152,4 @@ router.post('/changepassword', async (req, res) => {
 });
 
 module.exports = router;
+
