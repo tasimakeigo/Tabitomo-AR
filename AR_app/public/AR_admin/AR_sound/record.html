@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>録音音声追加</title>
+    <link rel="stylesheet" href="static/soundadd.css">
+</head>
+
+<body>
+    <header>
+        <h1><a href="menu.html">管理者システム　- 録音機能付き音声追加 -</a></h1>
+        <ul>
+            <li>
+                <p>ユーザー名:</p>
+            </li>
+            <li id="logout">
+                <a href="">ログアウト</a>
+            </li>
+        </ul>
+    </header>
+
+    <main>
+        <form id="recording-form">
+            <label for="language-select">言語選択:</label>
+            <select id="language-select" name="languagename" required>
+                <option value="">言語を選択</option>
+            </select>
+            <br><br>
+
+            <div id="recorder-controls">
+                <button id="start-recording" type="button">録音開始</button>
+                <button id="stop-recording" type="button" disabled>録音終了</button>
+            </div>
+            <br>
+            <audio id="audio-playback" controls style="display: none;"></audio>
+            <br><br>
+
+            <input type="hidden" id="mdlsound" name="mdlsound">
+            <button id="upload-sound" type="submit" disabled>送信</button>
+        </form>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const mdlsound = urlParams.get('mdlsound');
+            const languageSelect = document.getElementById('language-select');
+            const startRecordingBtn = document.getElementById('start-recording');
+            const stopRecordingBtn = document.getElementById('stop-recording');
+            const audioPlayback = document.getElementById('audio-playback');
+            const uploadButton = document.getElementById('upload-sound');
+            let mediaRecorder;
+            let audioChunks = [];
+
+            if (!mdlsound) {
+                alert('mdlsound パラメータが指定されていません。');
+                return;
+            }
+
+            document.getElementById('mdlsound').value = mdlsound;
+
+            // 言語選択肢の動的取得
+            try {
+                const response = await fetch(`/soundlist/languages?mdlsound=${mdlsound}`);
+                const availableLanguages = await response.json();
+
+                if (availableLanguages.length === 0) {
+                    alert('追加可能な言語がありません。前の画面に戻ります。');
+                    window.location.href = document.referrer || '/sound';
+                    return;
+                }
+
+                availableLanguages.forEach(language => {
+                    const option = document.createElement('option');
+                    option.value = language;
+                    option.textContent = language;
+                    languageSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('言語情報の取得に失敗しました:', error);
+                alert('言語情報の取得に失敗しました。');
+                window.location.href = document.referrer || '/sound';
+            }
+
+            // 録音開始
+            startRecordingBtn.addEventListener('click', async () => {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (event) => audioChunks.push(event.data);
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    audioPlayback.src = audioUrl;
+                    audioPlayback.style.display = 'block';
+
+                    uploadButton.disabled = false;
+                };
+
+                mediaRecorder.start();
+                startRecordingBtn.disabled = true;
+                stopRecordingBtn.disabled = false;
+            });
+
+            // 録音終了
+            stopRecordingBtn.addEventListener('click', () => {
+                mediaRecorder.stop();
+                startRecordingBtn.disabled = false;
+                stopRecordingBtn.disabled = true;
+            });
+
+            // 音声アップロード
+            document.getElementById('recording-form').addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const languagename = languageSelect.value;
+                if (!languagename) {
+                    alert('言語を選択してください。');
+                    return;
+                }
+
+                const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                const formData = new FormData();
+                formData.append('soundFile', audioBlob, 'recording.mp3');
+                formData.append('languagename', languagename);
+                formData.append('mdlsound', mdlsound);
+
+                try {
+                    const response = await fetch('/soundlist/recordadd', {
+                        method: 'POST',
+                        body: formData,
+                    });
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert('音声が追加されました！');
+                        window.location.href = document.referrer;
+                    } else {
+                        throw new Error(result.error || 'エラーが発生しました');
+                    }
+                } catch (error) {
+                    console.error('音声アップロードエラー:', error);
+                    alert('音声アップロードに失敗しました。');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

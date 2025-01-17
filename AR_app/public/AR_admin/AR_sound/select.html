@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音声登録選択</title>
+    <link rel="stylesheet" href="static/soundlist.css">
+</head>
+
+<body>
+    <header>
+        <h1>管理者システム　　-音声登録選択-</h1>
+    </header>
+
+    <main>
+        
+        <div class="sideber">
+            <div class="sideber-container">
+                <a href="../menu.html"><button>メニュー</button></a>
+                <a href="../AR_user/user.html"><button>管理者情報</button></a>
+                <a href="../AR_marker/marker.html"><button>マーカー管理</button></a>
+                <a href="../AR_model/modellist.html"><button>3Dモデル</button></a>
+                <a href="../AR_napisy/napisy.html"><button>字幕管理</button></a>
+                <a href="../AR_sound/sound.html"><button>音声管理</button></a>
+                <a href="../AR_map/map.html"><button>マップ管理</button></a>
+                <!-- <a href="AR_language/language.html"><button>言語管理</button></a> -->
+            </div>
+        </div>
+        <div id="sound-details">
+            <h2>音声登録方法を選択してください</h2>
+            <button id="record-option">録音する</button>
+            <button id="upload-option">ファイルをアップロードする</button>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // URLのパラメータからmdlsoundを取得
+            const urlParams = new URLSearchParams(window.location.search);
+            const mdlsound = urlParams.get('mdlsound');
+
+            if (!mdlsound) {
+                alert('mdlsound パラメータが指定されていません。');
+                window.history.back(); // パラメータがない場合、前の画面に戻る
+                return;
+            }
+
+            // 録音オプション
+            document.getElementById('record-option').addEventListener('click', function () {
+                // 録音ページに遷移
+                window.location.href = `/AR_admin/AR_sound/record.html?mdlsound=${encodeURIComponent(mdlsound)}`;
+            });
+
+            // ファイルアップロードオプション
+            document.getElementById('upload-option').addEventListener('click', function () {
+                // ファイルアップロードページに遷移
+                window.location.href = `/AR_admin/AR_sound/soundadd.html?mdlsound=${encodeURIComponent(mdlsound)}`;
+            });
+        });
+    </script>
+</body>
+
+</html>
