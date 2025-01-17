@@ -38,22 +38,21 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p>
                             <strong>モデル名:</strong> ${model.mdlname}<br>
                             <strong>モデルID:</strong> ${model.mdlid}<br>
-                            <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlname}" width="200"><br>
+                            <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlimage}" width="200"><br>
                             <strong>マーカー名:</strong> ${model.mkname}<br>
                             <strong>パターン:</strong> ${model.patt}<br>
-                            <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkname}" width="200"><br>
+                            <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkimage}" width="200"><br>
                             <strong>音声ファイル:</strong><br>
                             ${model.soundfiles.length > 0 ? model.soundfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}<br>
                             <strong>モデルテキスト:</strong><br>
                             ${model.textfiles.length > 0 ? model.textfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}
                         </p>
                         <button class="edit-btn" data-mdlid="${mdlid}">編集</button>
-                        <button class="delete-btn" data-mdlid="${mdlid}">全データ削除</button>
+                        <button class="delete-btn" data-mdlid="${mdlid}">削除</button>
                     `;
                 }
 
                 locationDetails.innerHTML = detailsHtml;
-
                 // 編集・削除ボタンのイベントリスナー
                 document.querySelectorAll('.edit-btn').forEach(button => {
                     button.addEventListener('click', function () {
@@ -64,17 +63,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 document.querySelectorAll('.delete-btn').forEach(button => {
                     button.addEventListener('click', function () {
-                        const mdlid = this.dataset.mdlid;
 
                         if (confirm('関連するすべてのデータを削除しますか？')) {
-                            fetch(`/modeldel?mdlid=${encodeURIComponent(mdlid)}`, {
+                            fetch(`/locationdetail/modeldel?locationid=${encodeURIComponent(locationid)}`, {
                                 method: 'DELETE',
                             })
                                 .then(response => response.json())
                                 .then(data => {
                                     if (data.message === '関連データの削除が完了しました。') {
                                         alert('関連データが削除されました。');
-                                        window.location.reload();  // ページをリロードして削除された内容を更新
+                                        window.location.href = `/AR_admin/AR_location/location.html`;
                                     } else {
                                         alert('削除に失敗しました: ' + data.message);
                                     }

@@ -76,6 +76,11 @@ document.getElementById('login-form')?.addEventListener('submit', function (even
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
     xhr.onload = function () {
+
+        console.log('XHR Status:', xhr.status);
+        console.log('XHR Response:', xhr.responseText);
+
+
         if (xhr.status === 200) {
             window.location.href = `/AR_user/home.html?username=${encodeURIComponent(username)}`;
         } else {
@@ -85,6 +90,8 @@ document.getElementById('login-form')?.addEventListener('submit', function (even
 
     xhr.send(`username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`);
 });
+
+
 
 // マイページ: 言語選択ボタンの生成
 document.addEventListener("DOMContentLoaded", function () {
@@ -193,5 +200,19 @@ document.getElementById("change-name").addEventListener("click", function() {
         });
     } else {
         alert("新しい名前を現在の名前と異なるものにしてください。");
+    }
+});
+
+
+//デバッグ用０１２６
+app.post('/api/userlogin', (req, res) => {
+    console.log('Received login request:', req.body);  // リクエスト内容を確認
+    const { username, password } = req.body;
+    const user = findUserInDatabase(username);
+
+    if (user && user.password === password) {
+        res.status(200).send('ログイン成功');
+    } else {
+        res.status(401).send('ユーザー名またはパスワードが間違っています');
     }
 });

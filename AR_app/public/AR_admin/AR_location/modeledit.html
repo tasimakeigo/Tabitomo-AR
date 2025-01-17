@@ -5,34 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>モデル編集</title>
-    <script src="js/modeledit.js" defer></script>
 </head>
 
 <body>
-    <header>
-        <h1>モデル編集</h1>
-    </header>
-    <main>
-        <form id="edit-form">
-            <label for="mdlname">モデル名:</label>
-            <input type="text" id="mdlname" name="mdlname"><br>
-            <label for="mdlid">モデルID:</label>
-            <input type="text" id="mdlid" name="mdlid" readonly><br>
-            <label for="mdlimage">画像URL:</label>
-            <input type="text" id="mdlimage" name="mdlimage"><br>
-            <label for="mkname">マーカー名:</label>
-            <input type="text" id="mkname" name="mkname"><br>
-            <label for="patt">パターン:</label>
-            <input type="text" id="patt" name="patt"><br>
-            <label for="mkimage">マーカー画像URL:</label>
-            <input type="text" id="mkimage" name="mkimage"><br>
-            <label for="soundfiles">音声ファイル:</label>
-            <textarea id="soundfiles" name="soundfiles" rows="5"></textarea><br>
-            <label for="textfiles">モデルテキスト:</label>
-            <textarea id="textfiles" name="textfiles" rows="5"></textarea><br>
-            <button type="button" id="save-btn">保存</button>
-        </form>
-    </main>
+    <h1>モデル編集</h1>
+    <form id="edit-form" enctype="multipart/form-data">
+        <label for="locationname">場所名:</label>
+        <input type="text" id="locationname" name="locationname"><br>
+
+        <label for="address">住所:</label>
+        <input type="text" id="address" name="address"><br>
+
+        <label for="mdlname">モデル名:</label>
+        <input type="text" id="mdlname" name="mdlname"><br>
+
+        <label for="mdlimage">モデル画像:</label>
+        <input type="file" id="mdlimage" name="mdlimage" accept=".glb"><br>
+
+        <label for="mkname">マーカー名:</label>
+        <input type="text" id="mkname" name="mkname"><br>
+
+        <label for="patt">パターンファイル:</label>
+        <input type="file" id="patt" name="patt" accept=".patt"><br>
+
+        <label for="mkimage">マーカー画像:</label>
+        <input type="file" id="mkimage" name="mkimage" accept="image/*"><br>
+
+        <button type="submit">更新</button>
+    </form>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const mdlid = urlParams.get('mdlid');
+
+        if (mdlid) {
+            fetch(`/locationedit?mdlid=${mdlid}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('locationname').value = data.locationname;
+                    document.getElementById('address').value = data.address;
+                    document.getElementById('mdlname').value = data.mdlname;
+                    document.getElementById('mkname').value = data.mkname;
+                    // 他のフォーム要素にデータをセット
+                });
+        }
+
+        document.getElementById('edit-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            formData.append('mdlid', mdlid);
+
+            fetch('/locationedit/edit', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    window.location.href = '/AR_admin/AR_location/location.html';
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('エラーが発生しました');
+                });
+        });
+    </script>
 </body>
 
 </html>

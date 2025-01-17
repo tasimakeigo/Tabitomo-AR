@@ -16,6 +16,7 @@ const soundlistRoutes = require('./routes/soundlistRoutes');
 const locationRoutes = require('./routes/locationRoutes');
 const locationdetailRoutes = require('./routes/locationdetailRoutes');
 const locationaddRoutes = require('./routes/locationaddRoutes');
+const locationeditRoutes = require('./routes/locationeditRoutes');
 
 
 // ボディパーサー設定 (POSTデータを受け取るため)
@@ -39,6 +40,7 @@ app.use('/location', locationRoutes);
 app.use('/locationdetail', locationdetailRoutes);
 app.use('/sound2', locationdetailRoutes);
 app.use('/locationadd', locationaddRoutes);
+app.use('/locationedit', locationeditRoutes);
 
 
 // サーバーの起動
