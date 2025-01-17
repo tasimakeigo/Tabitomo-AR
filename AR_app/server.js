@@ -38,7 +38,6 @@ app.use('/napisylist', napisylistRoutes);
 app.use('/soundlist', soundlistRoutes);
 app.use('/location', locationRoutes);
 app.use('/locationdetail', locationdetailRoutes);
-app.use('/sound2', locationdetailRoutes);
 app.use('/locationadd', locationaddRoutes);
 app.use('/locationedit', locationeditRoutes);
 
