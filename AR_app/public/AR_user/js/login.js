@@ -13,7 +13,7 @@ document.getElementById('login-form')?.addEventListener('submit', function (even
         console.log('XHR Response:', xhr.responseText);
 
         if (xhr.status === 200) {
-            window.location.href = `/AR_user/home.html?username=${encodeURIComponent(username)}`;
+            window.location.href = '../home.html?username=' + encodeURIComponent(username);
         } else {
             let errorMessage = 'ログイン失敗: ユーザー名またはパスワードが間違っています';
 
