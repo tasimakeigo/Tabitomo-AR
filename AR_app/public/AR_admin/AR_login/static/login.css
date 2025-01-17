@@ -68,11 +68,28 @@ main {
 }
 
 /* 新規登録フォーム */
-.registration-container {
+.newadmin {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+registration-container-box {
+    border: 1px solid #333;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.registration-container {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 15px;
+    background-color: #ffffff;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .registration-container h2 {
@@ -98,7 +115,7 @@ main {
     box-sizing: border-box;
 }
 
-.registration-container button {
+.confirmation-url {
     padding: 10px;
     font-size: 1em;
     background-color: #d0e2ff;
@@ -110,7 +127,7 @@ main {
     width: 100%;
 }
 
-.registration-container button:hover {
+.confirmation-url:hover {
     background-color: #a0c0ff;
 }
 
@@ -128,19 +145,22 @@ main {
 
 
 /* ログインフォーム */
-/* .login {
+.login {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f9f9f9;
-} */
+    background-color: #ffffff;
+}
 
 .login-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 100px;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 15px;
+    background-color: #ffffff;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .app-title h1 {
@@ -219,26 +239,34 @@ main {
 
 /* 登録確認 */
 .confirmation-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 100px;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #333;
+    border-radius: 15px;
+    background-color: #ffffff;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.s {
+.confirmation {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    /* margin-top: 100px; */
+    height: 100vh;
+    background-color: #ffffff;
 }
 
-.s h2 {
+.confirmation h2 {
     font-size: 1.5em;
     margin-bottom: 20px;
     color: #333;
 }
 
-.confirmation-container button {
+#confirm-register:hover {
+    background-color: #a0c0ff;
+}
+
+#confirm-register {
     padding: 10px;
     font-size: 1em;
     background-color: #d0e2ff;
@@ -249,11 +277,6 @@ main {
     transition: background-color 0.3s ease;
     width: 200px;
 }
-
-.confirmation-container button:hover {
-    background-color: #a0c0ff;
-}
-
 
 /* ログイン完了 */
 .complete-container {
