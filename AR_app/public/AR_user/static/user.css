@@ -414,3 +414,15 @@ body {
 .form-group {
     margin: 5px;
 }
+
+#show-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 横方向の中央揃え */
+    gap: 5px;
+    font-size: 0.9em;
+    /* 上部の余白を調整 */
+    width: 100%;
+    /* フォーム幅に合わせる */
+}
