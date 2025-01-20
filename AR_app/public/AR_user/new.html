@@ -27,7 +27,7 @@
                 <!-- パスワード -->
                 <div class="form-group">
                     <label for="password">パスワード</label>
-                    <input type="password" id="password" name="password" placeholder="パスワードを入力" required
+                    <input type="password" id="login-pass" name="password" placeholder="パスワードを入力" required
                         autocomplete="new-password">
                 </div>
 
@@ -45,12 +45,18 @@
                         <option value="" disabled selected>言語を選択してください</option>
                         <option value="日本語">日本語</option>
                         <option value="英語">英語</option>
+                        <option value="韓国語">韓国語</option>
                         <option value="中国語">中国語</option>
                     </select>
                 </div>
 
+                <div id="show-password">
+                    <input type="checkbox" id="checkbox" onclick="togglePassword()">
+                    <label for="checkbox" onclick="" id="checkboxlabel">パスワード表示</onclick>
+                </div>
+
                 <!-- 登録ボタン -->
-                <button type="submit">登録内容確認</button>
+                <button id="confirmation-url" type="submit">登録内容確認</button>
             </form>
         </div>
     </main>

@@ -404,3 +404,13 @@ body {
         transform: scale(.95);
     }
 }
+
+/* new.html */
+#confirmation-url {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.form-group {
+    margin: 5px;
+}
