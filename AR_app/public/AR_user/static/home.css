@@ -284,3 +284,19 @@ footer {
         /* スペースを少し減らす */
     }
 }
+
+/* logout.html */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+}
+
+.login-url {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+}
