@@ -56,7 +56,7 @@
                             detailsHtml += `
                             <p><strong>言語名:</strong> ${model.languagename} <br>
                             <strong>音声ファイル:</strong> ${model.soundfile}</p>
-                            <button class="edit-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">編集</button>
+                            <button class="edit-btn" data-soundfile="${model.soundfile}">編集</button>
                             <button class="delete-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">削除</button>
                         `;
                         });
@@ -109,12 +109,52 @@
         const urlParams = new URLSearchParams(window.location.search);
         const mdlsound = urlParams.get('mdlsound');
 
-        // 新規音声追加ボタンがクリックされた場合に遷移する
+        // 音声情報の取得と表示
+        if (mdlsound) {
+            fetch(`/soundlist?mdlsound=${mdlsound}`)
+                .then(response => response.json())
+                .then(data => {
+                    const soundDetails = document.getElementById('sound-details');
+                    let detailsHtml = `<h2>音声テキスト: ${mdlsound}</h2>`;
+
+                    // 各言語の情報を表示
+                    data.forEach(model => {
+                        detailsHtml += `
+                            <p><strong>言語名:</strong> ${model.languagename} <br>
+                            <strong>音声ファイル:</strong> ${model.soundfile}</p>
+                            <button class="edit-btn" data-soundfile="${model.soundfile}" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">編集</button>
+                            <button class="delete-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">削除</button>
+                        `;
+                    });
+
+                    soundDetails.innerHTML = detailsHtml;
+
+                    // 編集ボタンがクリックされた場合に遷移
+                    const editButtons = document.querySelectorAll('.edit-btn');
+                    editButtons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            const soundfile = button.dataset.soundfile;
+                            const mdlsound = button.dataset.mdlsound;
+                            const languagename = button.dataset.languagename;
+
+                            // 編集ページに遷移
+                            window.location.href = `/AR_admin/AR_sound/soundedit.html?mdlsound=${encodeURIComponent(mdlsound)}&languagename=${encodeURIComponent(languagename)}&soundfile=${encodeURIComponent(soundfile)}`;
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('音声情報の取得中にエラーが発生しました:', error);
+                    alert('音声情報の取得に失敗しました。');
+                });
+        } else {
+            alert('音声テキストが指定されていません。');
+        }
+
+        // 新規音声追加ボタンがクリックされた場合に遷移
         const addBtn = document.querySelector('.add-btn');
         addBtn.addEventListener('click', function () {
             if (mdlsound) {
-                // 新規音声追加ページに遷移
-                window.location.href = `/AR_admin/AR_sound/select.html?mdlsound=${encodeURIComponent(mdlsound)}`;
+                window.location.href = `/AR_admin/AR_sound/soundadd.html?mdlsound=${encodeURIComponent(mdlsound)}`;
             } else {
                 alert('mdlsound パラメータが見つかりません。');
             }

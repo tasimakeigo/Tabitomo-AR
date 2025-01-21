@@ -56,7 +56,7 @@
                             detailsHtml += `
                             <p><strong>言語名:</strong> ${model.languagename} <br>
                             <strong>字幕ファイル:</strong> ${model.napisyfile}</p>
-                            <button class="edit-btn" data-mdltext="${model.mdltext}" data-languagename="${model.languagename}">編集</button>
+                            <button class="edit-btn" data-napisyfile="${model.napisyfile}" data-mdltext="${model.mdltext}" data-languagename="${model.languagename}">編集</button>
                             <button class="delete-btn" data-mdltext="${model.mdltext}" data-languagename="${model.languagename}">削除</button>
                             
                         `;
@@ -64,7 +64,18 @@
                         });
 
                         napisyDetails.innerHTML = detailsHtml;
+                    // 編集ボタンがクリックされた場合に遷移
+                    const editButtons = document.querySelectorAll('.edit-btn');
+                    editButtons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            const napisyfile = button.dataset.napisyfile;
+                            const mdltext = button.dataset.mdltext;
+                            const languagename = button.dataset.languagename;
 
+                            // 編集ページに遷移
+                            window.location.href = `/AR_admin/AR_napisy/napisyedit.html?mdltext=${encodeURIComponent(mdltext)}&languagename=${encodeURIComponent(languagename)}&napisyfile=${encodeURIComponent(napisyfile)}`;
+                        });
+                    });
                     })
                     .catch(error => {
                         console.error('字幕情報の取得中にエラーが発生しました:', error);

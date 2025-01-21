@@ -1,9 +1,10 @@
-// C:\Tabitomo-AR\AR_app\routes\soundsRoutes.js
+// C:\Tabitomo-AR\AR_app\routes\soundlistRoutes.js
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const connection = require('../config');
 const router = express.Router();
+const fs = require('fs');  // fs モジュールをインポート
 
 // ファイルアップロード設定
 const storage = multer.diskStorage({
@@ -11,14 +12,12 @@ const storage = multer.diskStorage({
     // サウンドファイルの保存先ディレクトリ
     cb(null, 'C:/Tabitomo-AR/AR_app/public/Content/sound');
   },
-  filename: (req, file, cb) => {
-    // ファイル名にユニークなサフィックスを追加
-    const uniqueSuffix = Date.now();
-    const originalName = path.basename(file.originalname, path.extname(file.originalname));
-    cb(null, `${originalName}-${uniqueSuffix}.mp3`);
-  },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now();
+        const originalName = path.basename(file.originalname, path.extname(file.originalname));
+        cb(null, `${originalName}-${uniqueSuffix}${path.extname(file.originalname)}`);
+    }
 });
-
 const upload = multer({ storage });
 
 // GETルート：mdlsoundに基づいてデータを取得
@@ -81,28 +80,38 @@ router.post('/add', upload.single('soundFile'), async (req, res) => {
     }
 });
 
-// 音声ファイル追加
-router.post('/recordadd', upload.single('soundFile'), async (req, res) => {
-    try {
-        const { languagename, mdlsound } = req.body;
-        const soundFile = req.file?.filename;
+// 音声ファイル編集
+router.post('/edit', upload.single('soundFile'), async (req, res) => {
+    const { oldsoundfile, oldlanguagename, oldmdlsound, languagename } = req.body;
+    const soundFile = req.file?.filename;
 
-        if (!soundFile || !languagename || !mdlsound) {
-            return res.status(400).json({ error: '必要なデータが不足しています' });
+    if (!oldmdlsound || !oldlanguagename || !languagename) {
+        return res.status(400).json({ error: '必要なデータが不足しています。' });
+    }
+
+    try {
+        // ファイルがアップロードされた場合、古いファイルを削除
+        if (soundFile) {
+            const oldFilePath = path.join('C:/Tabitomo-AR/AR_app/public/Content/sound', oldsoundfile);
+            if (fs.existsSync(oldFilePath)) {
+                fs.unlinkSync(oldFilePath);
+            }
         }
 
-        await connection.query(
-            'INSERT INTO sound (mdlsound, languagename, soundfile) VALUES ($1, $2, $3)',
-            [mdlsound, languagename, soundFile]
-        );
+        // SQLクエリを生成
+        const updateQuery = `
+            UPDATE sound
+            SET languagename = $1, soundfile = $2
+            WHERE mdlsound = $3 AND languagename = $4
+        `;
+        const values = [languagename, soundFile || oldsoundfile, oldmdlsound, oldlanguagename];
 
-        res.status(200).json({ success: true });
+        await connection.query(updateQuery, values);
+
+        res.json({ success: true });
     } catch (error) {
-        console.error('音声追加エラー:', error);
-        res.status(500).json({ error: '音声データの挿入に失敗しました' });
+        console.error('音声編集エラー:', error);
+        res.status(500).json({ error: '音声情報の更新に失敗しました。' });
     }
 });
-
-
-
 module.exports = router;  // ルーターをエクスポート
