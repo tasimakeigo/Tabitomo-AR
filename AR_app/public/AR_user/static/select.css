@@ -64,7 +64,7 @@ body {
 }
 
 /* selectaccount.html */
-.login-url {
+/* .login-url {
     transition: transform .2s;
 
     &:active {
@@ -81,6 +81,14 @@ body {
 }
 
 .guest-url {
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
+} */
+
+.row button {
     transition: transform .2s;
 
     &:active {
