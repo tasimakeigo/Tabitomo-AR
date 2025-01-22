@@ -135,6 +135,18 @@ main {
     border-color: #333;
 }
 
+.container button {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 /* フッター */
 footer {
     position: fixed;
