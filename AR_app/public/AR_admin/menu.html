@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホーム</title>
     <link rel="stylesheet" href="static/admin.css">
-    <script src="sidebar.js" defer></script>
-
 </head>
 
 <body>
@@ -28,8 +26,17 @@
 
     <main>
 
-        <div id="sidebar-container"></div>
-
+        <div class="sideber">
+            <div class="sideber-container">
+                <a href="menu.html"><button>メニュー</button></a>
+                <a href="AR_user/user.html"><button>管理者情報</button></a>
+                <a href="AR_napisy/napisy.html"><button>字幕管理</button></a>
+                <a href="AR_sound/sound.html"><button>音声管理</button></a>
+                <a href="AR_map/location.html"><button>マップ管理</button></a>
+                <a href="AR_location/location.html"><button>場所 3Dモデル 管理</button></a>
+                <!-- <a href="AR_language/language.html"><button>言語管理</button></a> -->
+            </div>
+        </div>
 
         <div class="container">
             <a href="AR_user/user.html"><button>管理者情報</button></a>
@@ -49,6 +56,29 @@
     </footer> -->
 
     <!-- スクリプトをボディの最後に移動 -->
+    <script>
+        // URLパラメータまたはローカルストレージからadminnameを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        let adminname = urlParams.get('adminname');
+
+        // adminnameがURLパラメータにある場合はローカルストレージに保存
+        if (adminname) {
+            localStorage.setItem('adminname', adminname);
+        } else {
+            // URLパラメータがない場合はローカルストレージから取得
+            adminname = localStorage.getItem('adminname');
+        }
+
+        // adminnameが存在する場合にページに表示
+        if (adminname) {
+            document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
+        }
+    </script>
+    <script>
+        function goToUserInfo() {
+            window.location.href = '/userinfo';  // ユーザー情報ページに遷移
+        }
+    </script>
 </body>
 
 </html>
