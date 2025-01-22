@@ -307,6 +307,23 @@ li {
     list-style: none;
 }
 
+/* 言語 */
+.language-select {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px;
+}
+
+.change-success {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* テキストを中央揃え */
+    margin-top: 100px;
+}
+
 /* スマホ表示向けの設定 */
 @media (max-width: 768px) {
     .name-change-section {
