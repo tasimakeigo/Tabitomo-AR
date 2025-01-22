@@ -1,9 +1,14 @@
 // C:\Tabitomo-AR\AR_app\public\AR_user\js\user.js
 // パスワード表示/非表示の切り替え
 function togglePassword() {
-    const passwordField = document.getElementById("login-pass");
+    const passwordField = document.getElementById("password");
     if (passwordField) {
         passwordField.type = passwordField.type === "password" ? "text" : "password";
+    }
+
+    const password = document.getElementById("login-pass");
+    if (password) {
+        password.type = password.type === "password" ? "text" : "password";
     }
 
     const passwordConfirmField = document.getElementById("password-confirm");
@@ -117,17 +122,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         language: languagename
                     }),
                 })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = `language_success.html?languagename=${encodeURIComponent(languagename)}`;
-                    } else {
-                        alert("言語変更に失敗しました");
-                    }
-                })
-                .catch(error => {
-                    console.error("エラーが発生しました:", error);
-                    alert("サーバーエラーが発生しました");
-                });
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.href = `language_success.html?languagename=${encodeURIComponent(languagename)}`;
+                        } else {
+                            alert("言語変更に失敗しました");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("エラーが発生しました:", error);
+                        alert("サーバーエラーが発生しました");
+                    });
             });
 
             container.appendChild(button);
@@ -150,14 +155,15 @@ document.addEventListener('DOMContentLoaded', function () {
         username = localStorage.getItem('username');
     }
 
-// ユーザー名が存在する場合、ヘッダーと現在の名前に表示
-if (username) {
-    document.getElementById('username-display').textContent = `${username}`;
-    document.getElementById('current-name').textContent = username;
-}}
+    // ユーザー名が存在する場合、ヘッダーと現在の名前に表示
+    if (username) {
+        document.getElementById('username-display').textContent = `${username}`;
+        document.getElementById('current-name').textContent = username;
+    }
+}
 );
 
-document.getElementById("change-name").addEventListener("click", function() {
+document.getElementById("change-name").addEventListener("click", function () {
     const newName = document.getElementById('new-name').value;
     const currentName = document.getElementById('current-name').textContent;
 
@@ -178,60 +184,34 @@ document.getElementById("change-name").addEventListener("click", function() {
                 newusername: newName
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                localStorage.setItem('username', newName); // ローカルストレージに新しい名前を保存
-                window.location.href = 'renamesuccess.html'; // 名前変更成功ページへ遷移
-            } else {
-                alert('名前の変更に失敗しました。再試行してください。');
-            }
-        })
-        .catch(error => {
-            console.error('エラーが発生しました:', error);
-            alert('サーバーエラーが発生しました');
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    localStorage.setItem('username', newName); // ローカルストレージに新しい名前を保存
+                    window.location.href = 'renamesuccess.html'; // 名前変更成功ページへ遷移
+                } else {
+                    alert('名前の変更に失敗しました。再試行してください。');
+                }
+            })
+            .catch(error => {
+                console.error('エラーが発生しました:', error);
+                alert('サーバーエラーが発生しました');
+            });
     } else {
         alert("新しい名前を現在の名前と異なるものにしてください。");
     }
 });
-// パスワード変更フォームの処理
-document.getElementById("change-password")?.addEventListener('submit', function (event) {
-    event.preventDefault();
 
-    const currentPassword = document.getElementById('current-password').value;
-    const newPassword = document.getElementById('new-password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
-    const username = localStorage.getItem('username'); // ローカルストレージからユーザー名を取得
 
-    // 入力チェック
-    if (!currentPassword || !newPassword || !confirmPassword) {
-        alert('すべてのフィールドを入力してください。');
-        return;
+//デバッグ用０１２６
+app.post('/api/userlogin', (req, res) => {
+    console.log('Received login request:', req.body);  // リクエスト内容を確認
+    const { username, password } = req.body;
+    const user = findUserInDatabase(username);
+
+    if (user && user.password === password) {
+        res.status(200).send('ログイン成功');
+    } else {
+        res.status(401).send('ユーザー名またはパスワードが間違っています');
     }
-
-    if (newPassword !== confirmPassword) {
-        alert('新しいパスワードが一致しません。');
-        return;
-    }
-
-    // パスワード変更リクエストを送信
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/api/changepassword', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    // リクエスト送信
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            window.location.href = 'changepasswordsuccess.html'; // 成功後のページに遷移
-        } else if (xhr.status === 401) {
-            alert('現在のパスワードが正しくありません。');
-        } else {
-            alert('パスワード変更に失敗しました。再試行してください。');
-        }
-    };
-
-    // リクエストボディにパラメータを設定
-    xhr.send(`username=${encodeURIComponent(username)}&currentPassword=${encodeURIComponent(currentPassword)}&newPassword=${encodeURIComponent(newPassword)}`);
 });
-
