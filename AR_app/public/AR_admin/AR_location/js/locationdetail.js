@@ -23,8 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             mkname: item.mkname,
                             patt: item.patt,
                             mkimage: item.mkimage,
+                            mdltext: item.mdltext,
+                            mdlsound: item.mdlsound,
                             soundfiles: [],
-                            textfiles: []
+                            textfiles: [],
                         };
                     }
                     models[item.mdlid].soundfiles.push(item.soundfile);
@@ -38,13 +40,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         <p>
                             <strong>モデル名:</strong> ${model.mdlname}<br>
                             <strong>モデルID:</strong> ${model.mdlid}<br>
-                            <strong>画像:</strong> <img src="${model.mdlimage}" alt="${model.mdlimage}" width="200"><br>
+                            <strong>3Dモデル:</strong>${model.mdlname}<br>
+                            <button class="viewer-btn" data-mdlimage="${model.mdlimage}">3Dモデル表示</button><br>
                             <strong>マーカー名:</strong> ${model.mkname}<br>
                             <strong>パターン:</strong> ${model.patt}<br>
-                            <strong>マーカー画像:</strong> <img src="${model.mkimage}" alt="${model.mkimage}" width="200"><br>
-                            <strong>音声ファイル:</strong><br>
+                            <strong>マーカー画像:</strong> <img src="/Content/markerimage/${model.mkimage}" alt="${model.mkimage}" width="200"><br>
+                            <strong><a href="../../AR_admin/AR_napisy/napisylist.html?mdltext=${model.mdltext}">音声ファイル</a></strong><br>
                             ${model.soundfiles.length > 0 ? model.soundfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}<br>
-                            <strong>モデルテキスト:</strong><br>
+                            <strong><a href="../../AR_admin/AR_sound/soundlist.html?mdlsound=${model.mdlsound}">テキストファイル</a></strong><br>
                             ${model.textfiles.length > 0 ? model.textfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}
                         </p>
                         <button class="edit-btn" data-mdlid="${mdlid}">編集</button>
@@ -54,13 +57,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 locationDetails.innerHTML = detailsHtml;
                 // 編集・削除ボタンのイベントリスナー
+                document.querySelectorAll('.viewer-btn').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const mdlimage = this.dataset.mdlimage;
+                        window.location.href = `/AR_admin/AR_location/3DmodelViewer.html?model=${encodeURIComponent(mdlimage)}`;
+                    });
+                });
                 document.querySelectorAll('.edit-btn').forEach(button => {
                     button.addEventListener('click', function () {
                         const mdlid = this.dataset.mdlid;
                         window.location.href = `/AR_admin/AR_location/modeledit.html?mdlid=${encodeURIComponent(mdlid)}`;
                     });
                 });
-
                 document.querySelectorAll('.delete-btn').forEach(button => {
                     button.addEventListener('click', function () {
 
