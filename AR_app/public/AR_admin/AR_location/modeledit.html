@@ -21,15 +21,18 @@
 
         <label for="mdlimage">モデル画像:</label>
         <input type="file" id="mdlimage" name="mdlimage" accept=".glb"><br>
+        <span id="mdlimage-name"></span><br>
 
         <label for="mkname">マーカー名:</label>
         <input type="text" id="mkname" name="mkname"><br>
 
         <label for="patt">パターンファイル:</label>
         <input type="file" id="patt" name="patt" accept=".patt"><br>
+        <span id="patt-name"></span><br>
 
         <label for="mkimage">マーカー画像:</label>
         <input type="file" id="mkimage" name="mkimage" accept="image/*"><br>
+        <span id="mkimage-name"></span><br>
 
         <button type="submit">更新</button>
     </form>
@@ -46,7 +49,15 @@
                     document.getElementById('address').value = data.address;
                     document.getElementById('mdlname').value = data.mdlname;
                     document.getElementById('mkname').value = data.mkname;
-                    // 他のフォーム要素にデータをセット
+
+                    // 既存のファイル名を表示
+                    document.getElementById('mdlimage-name').textContent = `現在のモデル画像: ${data.mdlimage}`;
+                    document.getElementById('patt-name').textContent = `現在のパターンファイル: ${data.patt}`;
+                    document.getElementById('mkimage-name').textContent = `現在のマーカー画像: ${data.mkimage}`;
+                })
+                .catch(error => {
+                    console.error('エラー:', error);
+                    alert('データを取得できませんでした。');
                 });
         }
 
