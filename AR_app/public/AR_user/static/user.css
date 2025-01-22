@@ -285,10 +285,3 @@ body {
         padding: 12px;
     }
 }
-
-/* success.html */
-.complete-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}

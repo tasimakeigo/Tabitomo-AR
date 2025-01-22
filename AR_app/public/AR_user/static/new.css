@@ -41,6 +41,11 @@ body {
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
 }
 
 #confirmation-url {
@@ -76,11 +81,17 @@ body {
     }
 }
 
-/* .registration-container {
-    background-color: #fff;
+.registration-container {
+    /* background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 90%;
-    max-width: 400px;
-} */
+    max-width: 400px; */
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#languagename {
+    margin-left: 10px;
+}

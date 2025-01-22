@@ -40,8 +40,18 @@ body {
     border: none;
     border-radius: 4px;
     font-size: 16px;
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
 }
 
 .back-button {
     margin-top: 10px;
+    transition: transform .2s;
+
+    &:active {
+        transform: scale(.95);
+    }
 }
