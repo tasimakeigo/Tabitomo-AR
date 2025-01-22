@@ -17,7 +17,7 @@ const locationRoutes = require('./routes/locationRoutes');
 const locationdetailRoutes = require('./routes/locationdetailRoutes');
 const locationaddRoutes = require('./routes/locationaddRoutes');
 const locationeditRoutes = require('./routes/locationeditRoutes');
-
+const modelsRoutes = require('./routes/modelsRoutes');
 
 // ボディパーサー設定 (POSTデータを受け取るため)
 app.use(express.urlencoded({ extended: true }));  // URLエンコードされたデータの処理
@@ -40,6 +40,7 @@ app.use('/location', locationRoutes);
 app.use('/locationdetail', locationdetailRoutes);
 app.use('/locationadd', locationaddRoutes);
 app.use('/locationedit', locationeditRoutes);
+app.use('/modelsRoutes', modelsRoutes);
 
 
 // サーバーの起動
