@@ -17,7 +17,7 @@
                 <p>ユーザー名: </p>
             </li>
             <li id="logout">
-                <a href="">ログアウト</a>
+                <a href="../AR_login/logout.html">ログアウト</a>
             </li>
         </ul>
 
@@ -37,18 +37,18 @@
             </div>
         </div>
 
-        <div class="subtitle">
-            <h2>:ユーザー情報機能</h2>
-        </div>
-        <div class="userinfo">
+        <!-- <div class="userinfo">
 
             <ul>
-                <li>ID:</li>
-                <li>名前:</li>
-                <li>一覧で表示</li>
+                <li class="name">
+                    <p>名前: </p>
+                </li>
+                <li class="password">
+                    <p>パスワード: </p>
+                </li>
             </ul>
 
-        </div>
+        </div> -->
         <div class="container">
             <a href="update.html" class="btn_18"><span>登録情報の更新</span></a>
             <!-- <a href="delete.html" class="btn_18"><span>ユーザー情報の削除</span></a> -->
@@ -70,6 +70,7 @@
     // adminnameが存在する場合に表示
     if (adminname) {
         document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
+        document.querySelector('.name p').textContent = `ユーザー名: ${adminname}`;
     }
 </script>
 
