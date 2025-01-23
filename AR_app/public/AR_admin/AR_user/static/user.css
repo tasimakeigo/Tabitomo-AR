@@ -97,27 +97,41 @@ main {
 }
 
 /* その他のスタイル */
+/* サイドバー内のリンクの基本スタイル */
 .sideber-container a {
     width: 80%;
     text-align: center;
-    border: 1px solid;
-    border-color: #333;
+    border-bottom: 1px solid #333;
+    /* border-radius: 20px; */
+    overflow: hidden;
+    /* 子要素が枠からはみ出さないようにする */
+    background-color: #ffffff;
 }
 
+/* サイドバー内のボタンの基本スタイル */
 .sideber-container button {
-    width: 80%;
+    width: 100%;
     padding: 10px;
     font-size: 16px;
-    background-color: #ffffff;
+    background-color: transparent;
+    /* ボタン背景を透明に */
     color: #333;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.sideber-container button:hover {
+/* リンク全体にホバーしたときのスタイル */
+.sideber-container a:hover {
     background-color: #ededed;
+    /* リンク全体の背景色を変更 */
+    border-color: #666;
+    /* 枠線の色を変更 */
+}
+
+/* リンク内のボタンのスタイルも変更 */
+.sideber-container a:hover button {
+    color: #000;
+    /* ボタンの文字色を変更 */
 }
 
 /* メインコンテンツ */
