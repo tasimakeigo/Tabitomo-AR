@@ -16,7 +16,7 @@
         <h1>マイページ</h1>
         <ul>
             <li><p id="username-display"></p></li> <!-- ユーザー名表示用 -->
-            <li><a href="../logout.html">ログアウト</a></li>
+            <li><p><a href="../logout.html">ログアウト</a></p></li>
         </ul>
     </header>
 
@@ -38,6 +38,25 @@
     </footer>
 
 </body>
+
+<script>
+    // URLパラメータまたはローカルストレージからadminnameを取得
+    const urlParams2 = new URLSearchParams(window.location.search);
+    let username = urlParams2.get('username');
+
+    // adminnameがURLパラメータにある場合はローカルストレージに保存
+    if (username) {
+        localStorage.setItem('username', username);
+    } else {
+        // URLパラメータがない場合はローカルストレージから取得
+        username = localStorage.getItem('username');
+    }
+
+    // adminnameが存在する場合にページに表示
+    if (username) {
+        document.querySelector('header p').textContent = `name: ${username}`;
+    }
+</script>
 
 <script src="../js/user.js" defer></script>
 
