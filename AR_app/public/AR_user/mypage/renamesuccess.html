@@ -30,6 +30,25 @@
         <p>© 2024 たびとも</p>
     </footer>
 
+    <script>
+        // URLパラメータまたはローカルストレージからadminnameを取得
+        const urlParams2 = new URLSearchParams(window.location.search);
+        let username = urlParams2.get('username');
+    
+        // adminnameがURLパラメータにある場合はローカルストレージに保存
+        if (username) {
+            localStorage.setItem('username', username);
+        } else {
+            // URLパラメータがない場合はローカルストレージから取得
+            username = localStorage.getItem('username');
+        }
+    
+        // adminnameが存在する場合にページに表示
+        if (username) {
+            document.querySelector('header p').textContent = `name: ${username}`;
+        }
+    </script>
+
 </body>
 
 </html>
