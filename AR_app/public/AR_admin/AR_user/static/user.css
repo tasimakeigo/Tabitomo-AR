@@ -83,7 +83,6 @@ main {
     left: 0;
     width: 200px;
     height: calc(100vh - 70px);
-    /* ヘッダーの高さを引いた高さ */
     background-color: #ffffff;
     padding: 20px 0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -95,10 +94,8 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* 垂直方向の中央揃え */
     align-items: center;
     height: 100%;
-    /* サイドバーの高さを使う */
     gap: 15px;
 }
 
@@ -145,7 +142,6 @@ main {
 /* リンク内のボタンのスタイルも変更 */
 .sideber-container a:hover button {
     color: #000;
-    /* ボタンの文字色を変更 */
 }
 
 /* メインコンテンツ */
