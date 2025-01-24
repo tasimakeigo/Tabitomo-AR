@@ -16,10 +16,6 @@ body {
     background-color: #ffffff;
 }
 
-main {
-    padding-bottom: 50px;
-}
-
 /* Header styling */
 header {
     display: flex;
