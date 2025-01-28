@@ -64,13 +64,75 @@ main {
     margin-top: 70px;
 }
 
-.sound {
+.soundlist {
     margin-left: 250px;
-    margin-top: 50px;
+    margin-top: 30px;
+    width: 80%;
+    max-width: 800px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+.soundlist-tab {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.soundlist-tab li {
+    flex: 1;
+    text-align: center;
+}
+
+.sound {
+    list-style: none;
+    padding: 0;
 }
 
 .sound li {
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.item {
+    flex: 1;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: normal;
+    padding: 10px;
+    border-right: 1px solid #eee;
+}
+
+
+.item:last-child {
+    border-right: none;
+}
+
+.soundtext button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: transparent;
+    color: #333;
+    border: none;
+    cursor: pointer;
+}
+
+.soundtext button:hover {
+    background-color: #ededed;
+    border-color: transparent;
+    color: rgb(32, 203, 143);
 }
 
 /* サイドバー */
@@ -105,7 +167,6 @@ main {
     position: relative;
     padding: 5px 0;
     border-bottom: 1px solid #333;
-
 }
 
 .sideber-container button {
@@ -135,22 +196,16 @@ main {
     left: 0;
 }
 
-/* リンク内のボタンのスタイルも変更 */
 .sideber-container a:hover button {
     color: #000;
 }
 
-
-/* メインコンテンツ */
 .container {
     margin-top: 50px;
-    /* ヘッダーの高さを考慮 */
     margin-left: 220px;
-    /* サイドバーの幅を考慮 */
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* 2列 */
     gap: 15px;
 }
 

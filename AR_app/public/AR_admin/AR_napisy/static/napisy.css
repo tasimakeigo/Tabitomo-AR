@@ -71,7 +71,6 @@ main {
     max-width: 800px;
     border-collapse: separate;
     border-spacing: 0 15px;
-
 }
 
 .napisylist-tab {
@@ -93,7 +92,6 @@ main {
 .napisy {
     list-style: none;
     padding: 0;
-
 }
 
 .napisy li {
