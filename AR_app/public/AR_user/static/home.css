@@ -39,7 +39,7 @@ header a {
 }
 
 header p {
-    font-size: 0.5em;
+    font-size: 0.9em;
     margin-right: 50px;
 }
 
@@ -83,11 +83,11 @@ header ul {
 
 .button-container button {
     width: 100%;
-    padding: 15px;
+    padding: 20px;
     font-size: 1em;
     background-color: #ffffff;
     color: #10153d;
-    border-radius: 4px;
+    border-radius: 8px;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s;
