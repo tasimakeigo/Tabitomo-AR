@@ -63,15 +63,16 @@ main {
     margin-top: 70px;
 }
 
-.napisylist {
+.napisyeditform {
     margin-left: 250px;
     width: 80%;
     max-width: 800px;
     border-collapse: separate;
     border-spacing: 0 15px;
+    margin-top: 20px;
 }
 
-.napisylist-tab {
+.napisyeditform label {
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
@@ -79,59 +80,36 @@ main {
     border-radius: 10px;
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    margin-right: 11.5%;
-}
-
-.napisylist-tab li {
-    flex: 1;
+    margin-right: 15px;
     text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
-.napisy-container {
+.napisyeditform div {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.napisy {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #ffffff;
-    padding: 15px 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    flex: 1;
+.napisyeditform h2 {
+    margin-left: 10px;
+    font-weight: normal;
 }
 
-.languagename {
-    flex: 1;
-    text-align: center;
-    border-right: 1px solid #ccc;
+.newlanguage,
+.nowlanguage {
+    float: left;
+    width: 40%;
+}
+
+.filename {
+    width: 100%;
 }
 
 .napisyfile {
-    flex: 1;
-    text-align: center;
-    padding-left: 10px;
+    width: 100%;
 }
-
-#napisy-details h2 {
-    margin-bottom: 5px;
-}
-
-#napisy-details li:last-child {
-    border-right: none;
-}
-
-#napisy-details {
-    max-width: 800px;
-    border-collapse: separate;
-    border-spacing: 0 15px;
-}
-
 
 /* サイドバー */
 .sideber {
@@ -199,78 +177,3 @@ main {
 }
 
 /* ボタン */
-.buttons {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    margin-left: 15px;
-    width: 10%;
-}
-
-.buttons button {
-    position: relative;
-    writing-mode: horizontal-tb;
-    text-align: center;
-    white-space: nowrap;
-    padding: 8px 12px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    text-decoration: none;
-    border-bottom: 1px solid #333;
-}
-
-.buttons button:hover {
-    background-color: #ededed;
-    border-color: transparent;
-}
-
-.buttons button::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    background: transparent;
-}
-
-
-.buttons button:hover::after {
-    background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
-}
-
-.add-btn {
-    position: relative;
-    writing-mode: horizontal-tb;
-    text-align: center;
-    white-space: nowrap;
-    padding: 8px 12px;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    text-decoration: none;
-    border-bottom: 1px solid #333;
-}
-
-.add-btn:hover {
-    background-color: #ededed;
-    border-color: transparent;
-}
-
-.add-btn::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    background: transparent;
-}
-
-
-.add-btn:hover::after {
-    background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
-}
