@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <h1><a href="../menu.html">管理者システム　　-字幕情報-</a></h1>
+        <h1><a href="../menu.html">管理者システム　　-字幕情報-　　新規字幕追加</a></h1>
         <ul>
             <li>
                 <p>ユーザー名: </p>
@@ -35,18 +35,22 @@
 
         <div class="napisyaddlist">
             <form id="napisy-form" enctype="multipart/form-data">
-                <label for="napisy-file">字幕ファイルを選択 (txt, srt):</label>
-                <input type="file" id="napisy-file" name="napisyFile" accept=".txt, .srt" required>
+                <div class="napisyfile">
+                    <label for="napisy-file">字幕ファイルを選択 (txt, srt)</label>
+                    <input type="file" id="napisy-file" name="napisyFile" accept=".txt, .srt" required>
+                </div>
                 <br><br>
 
-                <label for="language-select">言語選択:</label>
-                <select id="language-select" name="languagename" required>
-                    <option value="">言語を選択</option>
-                </select>
+                <div class="language">
+                    <label for="language-select">言語選択</label>
+                    <select id="language-select" name="languagename" required>
+                        <option value="">言語を選択</option>
+                    </select>
+                </div>
                 <br><br>
 
                 <input type="hidden" id="mdltext" name="mdltext">
-                <button type="submit">送信</button>
+                <button class="submit" type="submit">送信</button>
             </form>
 
             <script>
