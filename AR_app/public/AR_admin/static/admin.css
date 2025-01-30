@@ -101,13 +101,8 @@ main {
 .sideber-container button {
     width: 100%;
     padding: 10px;
-<<<<<<< HEAD
     font-size: 14px;
     background-color: #ffffff;
-=======
-    font-size: 16px;
-    background-color: transparent;
->>>>>>> 8fb795391e0b07a01974ac3dd68f07e82094a605
     color: #333;
     border: none;
     cursor: pointer;
