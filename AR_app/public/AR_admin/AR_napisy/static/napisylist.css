@@ -270,7 +270,6 @@ main {
     background: transparent;
 }
 
-
 .add-btn:hover::after {
     background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
 }
