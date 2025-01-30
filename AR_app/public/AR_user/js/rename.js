@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // ユーザー名が存在する場合、ヘッダーと現在の名前に表示
 if (username) {
-    document.getElementById('username-display').textContent = `${username}`;
+    document.getElementById('username-display').textContent = `name: ${username}`;
     document.getElementById('current-name').textContent = username;
 }}
 );

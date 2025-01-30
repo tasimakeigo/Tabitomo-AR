@@ -16,7 +16,7 @@ header {
 }
 
 /* Reset for iframe */
-iframe {
+/* iframe {
     margin: 0;
     margin-top: 80px;
     padding: 0;
@@ -24,7 +24,7 @@ iframe {
     width: 100%;
     height: 450px;
     border: none;
-}
+} */
 
 header h1 {
     margin: 0;
@@ -39,7 +39,7 @@ header a {
 }
 
 header p {
-    font-size: 0.9em;
+    font-size: 0.5em;
     margin-right: 50px;
 }
 
@@ -83,11 +83,11 @@ header ul {
 
 .button-container button {
     width: 100%;
-    padding: 20px;
+    padding: 15px;
     font-size: 1em;
     background-color: #ffffff;
     color: #10153d;
-    border-radius: 8px;
+    border-radius: 4px;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -142,7 +142,7 @@ footer {
     text-decoration: none;
     padding: 10px 20px;
     background-color: #4a6999;
-    border-radius: 8px;
+    border-radius: 4px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -287,17 +287,9 @@ footer {
 
 /* 全体のレイアウトを中央に整列 */
 .content {
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 200px);
-    /* header & footerの高さを除いたスペースを考慮 */
-    padding: 10px;
+    margin-top: 120px;
+    margin-right: 150px;
 }
-
-.content h3 {
-    margin-top: 100px;
-}
-
 
 .change-success {
     margin-top: 100px;
@@ -305,23 +297,6 @@ footer {
 
 li {
     list-style: none;
-}
-
-/* 言語 */
-.language-select {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 20px;
-}
-
-.change-success {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    /* テキストを中央揃え */
-    margin-top: 100px;
 }
 
 /* スマホ表示向けの設定 */
