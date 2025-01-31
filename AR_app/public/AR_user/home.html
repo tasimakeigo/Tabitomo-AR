@@ -24,15 +24,9 @@
 
     <div class="content">
         <div class="button-container">
-
-          <!--  <div class="button-container-l">-->
             <a href="test3.html"><button>AR</ARea></button></a>
-           <!-- </div>-->
-
-           <!-- <div class="button-container-r">-->
-            <a href="map.html"><button>※作成中-マップ-</button></a>
+            <a id="ar-button" href="multi_AR.html"><button>AR</button></a>
             <a href="mypage/mypage.html"><button>マイページ</button></a>
-            <!-- </div> -->
         </div>
     </div>
 
@@ -42,9 +36,11 @@
 
 </body>
 <script>
-    // URLパラメータまたはローカルストレージからadminnameを取得
-    const urlParams2 = new URLSearchParams(window.location.search);
-    let username = urlParams2.get('username');
+    // URLパラメータからusername、userid、languagenameを取得
+    const urlParams = new URLSearchParams(window.location.search);
+    let username = urlParams.get('username');
+    let userid = urlParams.get('userid');
+    let languagename = urlParams.get('languagename');
 
     // adminnameがURLパラメータにある場合はローカルストレージに保存
     if (username) {
@@ -53,11 +49,24 @@
         // URLパラメータがない場合はローカルストレージから取得
         username = localStorage.getItem('username');
     }
-
+    // languagenameがURLパラメータにある場合はローカルストレージに保存
+    if (languagename) {
+        localStorage.setItem('languagename', languagename);
+    } else {
+        // URLパラメータがない場合はローカルストレージから取得
+        languagename = localStorage.getItem('languagename');
+    }
     // adminnameが存在する場合にページに表示
     if (username) {
-        document.querySelector('header p').textContent = `name: ${username}`;
+        document.querySelector('header p').textContent = `ユーザー名: ${username}`;
+    }
+
+    // ARボタンのURLにuseridとlanguagenameを追加
+    if (languagename) {
+        const arButton = document.getElementById('ar-button');
+        arButton.href = `multi_AR.html?languagename=${encodeURIComponent(languagename)}`;
     }
 </script>
+
 
 </html>
