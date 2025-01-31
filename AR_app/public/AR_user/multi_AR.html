@@ -7,7 +7,6 @@
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://ar-js-org.github.io/AR.js/aframe/build/aframe-ar.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-  <link rel="stylesheet" href="static/">  <!-- 外部CSSファイルをリンク -->
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -25,13 +24,13 @@
   </a-scene>
 
   <!-- UIコントロールボタン -->
-  <div id="ui-container">
-    <button id="toggle-subtitles">字幕オフ</button>
-    <button id="toggle-audio">音声オフ</button>
-    <button id="back">戻る</button>
+  <div id="ui-container" style="position: absolute; top: 10px; left: 10px; color: white;">
+    <button id="toggle-subtitles" style="margin-bottom: 10px;">字幕オフ</button>
+    <button id="toggle-audio" style="margin-bottom: 10px;">音声オフ</button>
+    <button id="back" style="margin-bottom: 10px;">戻る</button>
   </div>
 
-  <div id="subtitles-container"></div>
+  <div id="subtitles-container" style="position: absolute; top: 100px; left: 10px; color: white; font-size: 20px;"></div>
 
   <script>
     // URLパラメータから言語設定を取得
