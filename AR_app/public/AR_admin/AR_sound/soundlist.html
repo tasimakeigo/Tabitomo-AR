@@ -6,101 +6,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>音声詳細情報</title>
     <link rel="stylesheet" href="static/soundlist.css">
-    
+
 </head>
 
 <body>
     <header>
-        <h1><a href="menu.html">管理者システム　　-音声情報-</a></h1>
+        <h1><a href="../menu.html">管理者システム　　-音声情報-</a></h1>
         <ul>
             <li>
                 <p>ユーザー名: </p>
             </li>
-            <li id="logout">
-                <a href="">ログアウト</a>
-            </li>
+            <li>
+                <p><a href="../AR_login/logout.html">ログアウト</a></p>
+            <li>
         </ul>
     </header>
 
     <main>
-        <div id="sound-details"></div>
+
 
         <div class="sideber">
             <div class="sideber-container">
                 <a href="../menu.html"><button>メニュー</button></a>
                 <a href="../AR_user/user.html"><button>管理者情報</button></a>
-                <a href="../AR_marker/marker.html"><button>マーカー管理</button></a>
-                <a href="../AR_model/modellist.html"><button>3Dモデル</button></a>
                 <a href="../AR_napisy/napisy.html"><button>字幕管理</button></a>
                 <a href="../AR_sound/sound.html"><button>音声管理</button></a>
-                <a href="../AR_map/map.html"><button>マップ管理</button></a>
-                <!-- <a href="AR_language/language.html"><button>言語管理</button></a> -->
+                <a href="../AR_map/location.html"><button>マップ管理</button></a>
+                <a href="../AR_location/location.html"><button>場所 3Dモデル<br>管理</button></a>
             </div>
         </div>
 
-        <script>
-            // URLのパラメータからmdltextを取得
-            const urlParams = new URLSearchParams(window.location.search);
-            const mdlsound = urlParams.get('mdlsound');
+        <div class="sound-details" id="sound-details">
+            <script>
+                // URLのパラメータからmdltextを取得
+                const urlParams = new URLSearchParams(window.location.search);
+                const mdlsound = urlParams.get('mdlsound');
 
-            // mdltextが取得できたら、その字幕テキストに関連する情報を表示
-            if (mdlsound) {
-                // サーバーからその字幕テキストに関連するデータを取得
-                fetch(`/soundlist?mdlsound=${mdlsound}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const soundDetails = document.getElementById('sound-details');
-                        let detailsHtml = `<h2>音声テキスト: ${mdlsound}</h2>`;
+                // mdltextが取得できたら、その字幕テキストに関連する情報を表示
+                if (mdlsound) {
+                    // サーバーからその字幕テキストに関連するデータを取得
+                    fetch(`/soundlist?mdlsound=${mdlsound}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const soundDetails = document.getElementById('sound-details');
+                            let detailsHtml = `<h2>音声テキスト: ${mdlsound}</h2>`;
 
-                        // 各言語の情報を表示
-                        data.forEach(model => {
-                            detailsHtml += `
-                            <p><strong>言語名:</strong> ${model.languagename} <br>
-                            <strong>音声ファイル:</strong> ${model.soundfile}</p>
-                            <button class="edit-btn" data-soundfile="${model.soundfile}">編集</button>
-                            <button class="delete-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">削除</button>
+                            // 各言語の情報を表示
+                            data.forEach(model => {
+                                detailsHtml += `
+                            <div class="sound-container">    
+                                <div class="languagename">${model.languagename}</div>
+                                <div class="soundfile">${model.soundfile}</div>
+                            </div>
+                            <div class="buttons">
+                                <button class="edit-btn" data-soundfile="${model.soundfile}">編集</button>
+                                <button class="delete-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">削除</button>
+                            </div>
                         `;
-                        });
-
-                        soundDetails.innerHTML = detailsHtml;
-                    })
-                    .catch(error => {
-                        console.error('音声情報の取得中にエラーが発生しました:', error);
-                        alert('音声情報の取得に失敗しました。');
-                    });
-            } else {
-                alert('音声テキストが指定されていません。');
-            }
-
-            document.addEventListener('click', function (event) {
-                if (event.target.classList.contains('delete-btn')) {
-                    const mdlsound = event.target.dataset.mdlsound;
-                    const languagename = event.target.dataset.languagename;
-
-                    if (confirm(` '${mdlsound}' : '${languagename}' の音声情報を削除してよろしいですか？`)) {
-                        fetch(`/sound/${mdlsound}/${languagename}`, {
-                            method: 'DELETE',
-                        })
-                            .then(response => response.json())
-                            .then(result => {
-                                if (result.error) {
-                                    alert(result.error);
-                                } else {
-                                    alert(result.message);
-                                    location.reload(); // ページをリロードして削除結果を反映
-                                }
-                            })
-                            .catch(error => {
-                                console.error('削除中にエラーが発生しました:', error);
-                                alert('削除に失敗しました。');
                             });
-                    }
-                }
-            });
 
-        </script>
-        </br>
-        <button class="add-btn">新規音声追加</button>
+                            soundDetails.innerHTML = detailsHtml;
+                        })
+                        .catch(error => {
+                            console.error('音声情報の取得中にエラーが発生しました:', error);
+                            alert('音声情報の取得に失敗しました。');
+                        });
+                } else {
+                    alert('音声テキストが指定されていません。');
+                }
+
+                document.addEventListener('click', function (event) {
+                    if (event.target.classList.contains('delete-btn')) {
+                        const mdlsound = event.target.dataset.mdlsound;
+                        const languagename = event.target.dataset.languagename;
+
+                        if (confirm(` '${mdlsound}' : '${languagename}' の音声情報を削除してよろしいですか？`)) {
+                            fetch(`/sound/${mdlsound}/${languagename}`, {
+                                method: 'DELETE',
+                            })
+                                .then(response => response.json())
+                                .then(result => {
+                                    if (result.error) {
+                                        alert(result.error);
+                                    } else {
+                                        alert(result.message);
+                                        location.reload(); // ページをリロードして削除結果を反映
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('削除中にエラーが発生しました:', error);
+                                    alert('削除に失敗しました。');
+                                });
+                        }
+                    }
+                });
+
+            </script>
+            <button class="add-btn">新規音声追加</button>
+
+        </div>
     </main>
 </body>
 
@@ -109,6 +113,7 @@
         // URLのパラメータからmdlsoundを取得
         const urlParams = new URLSearchParams(window.location.search);
         const mdlsound = urlParams.get('mdlsound');
+        let adminname = urlParams.get('adminname');
 
         // 音声情報の取得と表示
         if (mdlsound) {
@@ -118,17 +123,45 @@
                     const soundDetails = document.getElementById('sound-details');
                     let detailsHtml = `<h2>音声テキスト: ${mdlsound}</h2>`;
 
+                    detailsHtml += `
+                                <div class="soundlist-tab">
+                                    <li>言語名</li>
+                                    <li>字幕ファイル</li>
+                                </div>
+                            `;
+
                     // 各言語の情報を表示
                     data.forEach(model => {
                         detailsHtml += `
-                            <p><strong>言語名:</strong> ${model.languagename} <br>
-                            <strong>音声ファイル:</strong> ${model.soundfile}</p>
-                            <button class="edit-btn" data-soundfile="${model.soundfile}" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">編集</button>
-                            <button class="delete-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">削除</button>
+                        <div class="sound-container">
+                            <div class="sound">
+                                <div class="languagename">${model.languagename}</div>
+                                <div class="soundfile">${model.soundfile}</div>
+                            </div>
+                            <div class="buttons">
+                                <button class="edit-btn" data-soundfile="${model.soundfile}" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">編集</button>
+                                <button class="delete-btn" data-mdlsound="${model.mdlsound}" data-languagename="${model.languagename}">削除</button>
+                            </div>
+                        </div>
                         `;
                     });
 
                     soundDetails.innerHTML = detailsHtml;
+
+                    // **新規追加ボタンを再度追加**
+                    const addButton = document.createElement('button');
+                    addButton.classList.add('add-btn');
+                    addButton.textContent = '新規音声追加';
+                    soundDetails.appendChild(addButton);
+
+                    const addBtn = document.querySelector('.add-btn');
+                    addBtn.addEventListener('click', function () {
+                        if (mdlsound) {
+                            window.location.href = `/AR_admin/AR_sound/soundadd.html?mdlsound=${encodeURIComponent(mdlsound)}`;
+                        } else {
+                            alert('mdlsound パラメータが見つかりません。');
+                        }
+                    });
 
                     // 編集ボタンがクリックされた場合に遷移
                     const editButtons = document.querySelectorAll('.edit-btn');
@@ -152,14 +185,27 @@
         }
 
         // 新規音声追加ボタンがクリックされた場合に遷移
-        const addBtn = document.querySelector('.add-btn');
-        addBtn.addEventListener('click', function () {
-            if (mdlsound) {
-                window.location.href = `/AR_admin/AR_sound/soundadd.html?mdlsound=${encodeURIComponent(mdlsound)}`;
-            } else {
-                alert('mdlsound パラメータが見つかりません。');
-            }
-        });
+        // const addBtn = document.querySelector('.add-btn');
+        // addBtn.addEventListener('click', function () {
+        //     if (mdlsound) {
+        //         window.location.href = `/AR_admin/AR_sound/soundadd.html?mdlsound=${encodeURIComponent(mdlsound)}`;
+        //     } else {
+        //         alert('mdlsound パラメータが見つかりません。');
+        //     }
+        // });
+
+        // adminnameがURLパラメータにある場合はローカルストレージに保存
+        if (adminname) {
+            localStorage.setItem('adminname', adminname);
+        } else {
+            // URLパラメータがない場合はローカルストレージから取得
+            adminname = localStorage.getItem('adminname');
+        }
+
+        // adminnameが存在する場合にページに表示
+        if (adminname) {
+            document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
+        }
     });
 </script>
 
