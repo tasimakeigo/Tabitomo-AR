@@ -6,7 +6,6 @@
   <title>Multi Marker AR</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://ar-js-org.github.io/AR.js/aframe/build/aframe-ar.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 
 <body style="margin: 0; overflow: hidden;">
@@ -15,70 +14,54 @@
            arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; sourceWidth: 1280; sourceHeight: 720;" 
            embedded>
 
-    <a-assets>
-      <!-- 動的に読み込むコンテンツ -->
-    </a-assets>
-
+    <a-assets></a-assets>
     <a-camera position="0 0 0" scale="2 2 2"></a-camera>
 
   </a-scene>
 
-  <!-- UIコントロールボタン -->
   <div id="ui-container" style="position: absolute; top: 10px; left: 10px; color: white;">
-    <button id="toggle-subtitles" style="margin-bottom: 10px;">字幕オフ</button>
-    <button id="toggle-audio" style="margin-bottom: 10px;">音声オフ</button>
-    <button id="back" style="margin-bottom: 10px;">戻る</button>
+    <button id="toggle-subtitles">字幕オフ</button>
+    <button id="toggle-audio">音声オフ</button>
+    <button id="back">戻る</button>
   </div>
 
-  <div id="subtitles-container" style="position: absolute; top: 100px; left: 10px; color: white; font-size: 20px;"></div>
+  <div id="subtitles-container" style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); color: white; font-size: 24px; background: rgba(0, 0, 0, 0.7); padding: 10px; border-radius: 5px; text-align: center; display: none;"></div>
 
   <script>
-    // URLパラメータから言語設定を取得
     const urlParams = new URLSearchParams(window.location.search);
     const languagename = urlParams.get('languagename') || '日本語';
 
     let subtitlesVisible = true;
     let audioEnabled = true;
-    let subtitles = [];  // 字幕の内容を格納する配列
-    let currentSubtitleIndex = 0;  // 現在表示中の字幕のインデックス
-    const displayDuration = 3000;  // 字幕を表示する時間（ミリ秒）
-    let subtitleTimeout;  // タイムアウトのID
+    let subtitles = [];
+    let currentSubtitleIndex = 0;
+    let subtitleTimeout;
 
-    // マーカー情報を動的に読み込む
     async function loadMarkersData() {
       const response = await fetch(`/multiAR?languagename=${languagename}`);
       const markers = await response.json();
 
       markers.forEach(marker => {
-        // モデルデータを読み込み
         const assetItem = document.createElement('a-asset-item');
         assetItem.setAttribute('id', `model-${marker.id}`);
         assetItem.setAttribute('src', marker.model);
-        assetItem.setAttribute('crossorigin', 'anonymous');
         document.querySelector('a-assets').appendChild(assetItem);
 
-        // マーカーの設定
         const markerElement = document.createElement('a-marker');
         markerElement.setAttribute('id', marker.id);
         markerElement.setAttribute('type', 'pattern');
-        markerElement.setAttribute('preset', 'custom');
         markerElement.setAttribute('url', marker.patt);
-        
-        // モデルエンティティをマーカーに追加
+
         const modelEntity = document.createElement('a-entity');
         modelEntity.setAttribute('gltf-model', `#model-${marker.id}`);
         modelEntity.setAttribute('scale', '0.5 0.5 0.5'); 
         modelEntity.setAttribute('position', '0 0.1 0'); 
         markerElement.appendChild(modelEntity);
 
-        // 音声と字幕の設定
         if (marker.audio) {
           const audioElement = document.createElement('audio');
           audioElement.setAttribute('src', marker.audio);
           audioElement.setAttribute('id', marker.audioId);
-          audioElement.setAttribute('preload', 'auto');
-          audioElement.setAttribute('loop', 'true');
-          audioElement.setAttribute('style', 'display: none;');
           document.body.appendChild(audioElement);
         }
 
@@ -86,27 +69,25 @@
           fetch(marker.subtitle)
             .then(response => response.text())
             .then(text => {
-              subtitles = text.split('\n');  // 改行で字幕を分割して配列に格納
+              subtitles = text.split('\n').map(line => ({
+                text: line.trim(),
+                duration: Math.max(line.length * 100, 2000)
+              }));
             });
         }
 
-        // マーカーをシーンに追加
         document.querySelector('a-scene').appendChild(markerElement);
 
-        // マーカーが検出された時のイベントリスナー
         markerElement.addEventListener('markerFound', () => {
           if (audioEnabled && marker.audio) {
             const audio = document.getElementById(marker.audioId);
-            if (audio) {
-              audio.play();
-            }
+            if (audio) audio.play();
           }
           if (subtitlesVisible && subtitles.length > 0) {
-            showSubtitle();  // 字幕を表示
+            showSubtitle();
           }
         });
 
-        // マーカーが失われた時のイベントリスナー
         markerElement.addEventListener('markerLost', () => {
           if (marker.audio) {
             const audio = document.getElementById(marker.audioId);
@@ -115,40 +96,31 @@
               audio.currentTime = 0;
             }
           }
-          clearTimeout(subtitleTimeout);  // タイムアウトをクリア
-          currentSubtitleIndex = 0;  // 字幕のインデックスをリセット
+          clearTimeout(subtitleTimeout);
+          document.querySelector('#subtitles-container').style.display = 'none';
+          currentSubtitleIndex = 0;
         });
       });
     }
 
-    // 字幕を表示する関数
     function showSubtitle() {
       if (currentSubtitleIndex < subtitles.length) {
-        const subtitle = subtitles[currentSubtitleIndex];
-        const subtitleElement = document.createElement('div');
-        subtitleElement.textContent = subtitle;
-        subtitleElement.setAttribute('style', 'color: white; font-size: 20px;');
+        const subtitleData = subtitles[currentSubtitleIndex];
+        const subtitleElement = document.querySelector('#subtitles-container');
+        subtitleElement.textContent = subtitleData.text;
+        subtitleElement.style.display = 'block';
 
-        // 字幕を表示
-        document.querySelector('#subtitles-container').appendChild(subtitleElement);
-
-        // 次の字幕を表示するためのタイムアウト設定
         currentSubtitleIndex++;
         subtitleTimeout = setTimeout(() => {
-          subtitleElement.style.display = 'none';  // 前の字幕を非表示
-          showSubtitle();  // 次の字幕を表示
-        }, displayDuration);
+          subtitleElement.style.display = 'none';
+          showSubtitle();
+        }, subtitleData.duration);
       }
     }
 
-    // ボタンのイベント設定
     document.getElementById('toggle-subtitles').addEventListener('click', () => {
       subtitlesVisible = !subtitlesVisible;
-      const subtitles = document.querySelectorAll('#subtitles-container > div');
-      subtitles.forEach(subtitle => {
-        subtitle.style.display = subtitlesVisible ? 'block' : 'none';
-      });
-      // ボタンテキストの変更
+      document.querySelector('#subtitles-container').style.display = subtitlesVisible ? 'block' : 'none';
       document.getElementById('toggle-subtitles').textContent = subtitlesVisible ? '字幕オフ' : '字幕オン';
     });
 
@@ -162,7 +134,6 @@
           audio.pause();
         }
       });
-      // ボタンテキストの変更
       document.getElementById('toggle-audio').textContent = audioEnabled ? '音声オフ' : '音声オン';
     });
 
@@ -170,7 +141,6 @@
       window.history.back();
     });
 
-    // マーカー情報の読み込み
     loadMarkersData();
   </script>
 </body>
