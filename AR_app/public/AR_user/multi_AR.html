@@ -37,72 +37,129 @@
     let currentSubtitleIndex = 0;
     let subtitleTimeout;
 
+    // マーカー情報を非同期で取得
     async function loadMarkersData() {
-      const response = await fetch(`/multiAR?languagename=${languagename}`);
-      const markers = await response.json();
+      try {
+        const response = await fetch(`/multiAR?languagename=${languagename}`);
+        if (!response.ok) throw new Error('マーカー情報の読み込みに失敗しました');
+        const markers = await response.json();
 
-      markers.forEach(marker => {
+        for (const marker of markers) {
+          await loadMarker(marker);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // 個々のマーカー情報を読み込む
+    async function loadMarker(marker) {
+      try {
+        // モデルの読み込み
         const assetItem = document.createElement('a-asset-item');
         assetItem.setAttribute('id', `model-${marker.id}`);
         assetItem.setAttribute('src', marker.model);
         document.querySelector('a-assets').appendChild(assetItem);
 
-        const markerElement = document.createElement('a-marker');
-        markerElement.setAttribute('id', marker.id);
-        markerElement.setAttribute('type', 'pattern');
-        markerElement.setAttribute('url', marker.patt);
+        // マーカーの作成
+        const markerElement = createMarkerElement(marker);
 
-        const modelEntity = document.createElement('a-entity');
-        modelEntity.setAttribute('gltf-model', `#model-${marker.id}`);
-        modelEntity.setAttribute('scale', '0.5 0.5 0.5'); 
-        modelEntity.setAttribute('position', '0 0.1 0'); 
+        // 3Dモデルの作成
+        const modelEntity = createModelEntity(marker);
         markerElement.appendChild(modelEntity);
 
+        // 音声ファイルの読み込み
         if (marker.audio) {
-          const audioElement = document.createElement('audio');
-          audioElement.setAttribute('src', marker.audio);
-          audioElement.setAttribute('id', marker.audioId);
-          document.body.appendChild(audioElement);
+          createAudioElement(marker);
         }
 
+        // 字幕ファイルの読み込み
         if (marker.subtitle) {
-          fetch(marker.subtitle)
-            .then(response => response.text())
-            .then(text => {
-              subtitles = text.split('\n').map(line => ({
-                text: line.trim(),
-                duration: Math.max(line.length * 100, 2000)
-              }));
-            });
+          const subtitleText = await fetchSubtitle(marker.subtitle);
+          subtitles = parseSubtitles(subtitleText);
         }
 
         document.querySelector('a-scene').appendChild(markerElement);
 
-        markerElement.addEventListener('markerFound', () => {
-          if (audioEnabled && marker.audio) {
-            const audio = document.getElementById(marker.audioId);
-            if (audio) audio.play();
-          }
-          if (subtitlesVisible && subtitles.length > 0) {
-            showSubtitle();
-          }
-        });
+        addMarkerEvents(markerElement, marker);
 
-        markerElement.addEventListener('markerLost', () => {
-          if (marker.audio) {
-            const audio = document.getElementById(marker.audioId);
-            if (audio) {
-              audio.pause();
-              audio.currentTime = 0;
-            }
+      } catch (error) {
+        console.error(`マーカー読み込みエラー: ${marker.id}`, error);
+      }
+    }
+
+    // マーカーのDOM要素を作成
+    function createMarkerElement(marker) {
+      const markerElement = document.createElement('a-marker');
+      markerElement.setAttribute('id', marker.id);
+      markerElement.setAttribute('type', 'pattern');
+      markerElement.setAttribute('url', marker.patt);
+      return markerElement;
+    }
+
+    // 3DモデルのDOM要素を作成
+    function createModelEntity(marker) {
+      const modelEntity = document.createElement('a-entity');
+      modelEntity.setAttribute('gltf-model', `#model-${marker.id}`);
+      modelEntity.setAttribute('scale', '0.5 0.5 0.5');
+      modelEntity.setAttribute('position', '0 0.1 0');
+      return modelEntity;
+    }
+
+    // 音声のDOM要素を作成
+    function createAudioElement(marker) {
+      const audioElement = document.createElement('audio');
+      audioElement.setAttribute('src', marker.audio);
+      audioElement.setAttribute('id', marker.audioId);
+      document.body.appendChild(audioElement);
+    }
+
+    // 字幕を分割してパース
+    function parseSubtitles(subtitleText) {
+      return subtitleText.split('\n').map(line => ({
+        text: line.trim(),
+        duration: Math.max(line.length * 100, 2000)
+      }));
+    }
+
+    // 字幕のテキストファイルを非同期で取得
+    async function fetchSubtitle(url) {
+      try {
+        const response = await fetch(url);
+        return await response.text();
+      } catch (error) {
+        console.error('字幕ファイルの読み込みに失敗しました', error);
+        return '';
+      }
+    }
+
+    // マーカーのイベントリスナーを追加
+    function addMarkerEvents(markerElement, marker) {
+      markerElement.addEventListener('markerFound', () => {
+        if (audioEnabled && marker.audio) {
+          const audio = document.getElementById(marker.audioId);
+          if (audio) audio.play();
+        }
+        if (subtitlesVisible && subtitles.length > 0) {
+          showSubtitle();
+        }
+      });
+
+      markerElement.addEventListener('markerLost', () => {
+        if (marker.audio) {
+          const audio = document.getElementById(marker.audioId);
+          if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
           }
-          clearTimeout(subtitleTimeout);
-          document.querySelector('#subtitles-container').style.display = 'none';
-          currentSubtitleIndex = 0;
-        });
+        }
+        clearTimeout(subtitleTimeout);
+        document.querySelector('#subtitles-container').style.display = 'none';
+        currentSubtitleIndex = 0;
       });
     }
 
+    // 字幕の表示
     function showSubtitle() {
       if (currentSubtitleIndex < subtitles.length) {
         const subtitleData = subtitles[currentSubtitleIndex];
@@ -118,14 +175,22 @@
       }
     }
 
+    // 状態切り替え関数
+    function toggleState(elementId, state, onText, offText) {
+      state = !state;
+      document.getElementById(elementId).textContent = state ? onText : offText;
+      return state;
+    }
+
+    // 字幕の表示/非表示切り替え
     document.getElementById('toggle-subtitles').addEventListener('click', () => {
-      subtitlesVisible = !subtitlesVisible;
+      subtitlesVisible = toggleState('toggle-subtitles', subtitlesVisible, '字幕オフ', '字幕オン');
       document.querySelector('#subtitles-container').style.display = subtitlesVisible ? 'block' : 'none';
-      document.getElementById('toggle-subtitles').textContent = subtitlesVisible ? '字幕オフ' : '字幕オン';
     });
 
+    // 音声のオン/オフ切り替え
     document.getElementById('toggle-audio').addEventListener('click', () => {
-      audioEnabled = !audioEnabled;
+      audioEnabled = toggleState('toggle-audio', audioEnabled, '音声オフ', '音声オン');
       const audioElements = document.querySelectorAll('audio');
       audioElements.forEach(audio => {
         if (audioEnabled) {
@@ -134,13 +199,14 @@
           audio.pause();
         }
       });
-      document.getElementById('toggle-audio').textContent = audioEnabled ? '音声オフ' : '音声オン';
     });
 
+    // 戻るボタン
     document.getElementById('back').addEventListener('click', () => {
       window.history.back();
     });
 
+    // 初期データの読み込み
     loadMarkersData();
   </script>
 </body>
