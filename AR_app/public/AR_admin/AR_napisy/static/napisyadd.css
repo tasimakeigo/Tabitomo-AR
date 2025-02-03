@@ -193,7 +193,6 @@ input[type='file'] {
 
 /* 送信 */
 .submit {
-    float: right;
     position: relative;
     writing-mode: horizontal-tb;
     text-align: center;
