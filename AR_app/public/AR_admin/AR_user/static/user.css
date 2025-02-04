@@ -103,13 +103,11 @@ main {
 /* サイドバー内のリンクの基本スタイル */
 .sideber-container a {
     width: 80%;
-    /* text-align: center; */
     overflow: hidden;
     background-color: #ffffff;
     position: relative;
     padding: 5px 0;
     border-bottom: 1px solid #333;
-
 }
 
 .sideber-container button {
@@ -139,11 +137,6 @@ main {
     left: 0;
 }
 
-/* リンク内のボタンのスタイルも変更 */
-.sideber-container a:hover button {
-    color: #000;
-}
-
 /* メインコンテンツ */
 .container {
     margin-top: 50px;
@@ -151,7 +144,6 @@ main {
     padding: 20px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* 2列 */
     gap: 15px;
 }
 
@@ -161,7 +153,32 @@ main {
     border-color: #333;
 }
 
-/* フッター */
+/* ユーザー情報表示エリア */
+.userinfo {
+    margin-top: 20px;
+    margin-left: 250px;
+    padding: 20px;
+    border: 1px solid #333;
+    background-color: #f9f9f9;
+}
+
+.userinfo ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.userinfo li {
+    margin-bottom: 10px;
+}
+
+.userinfo p {
+    font-size: 1.1em;
+}
+
+.userinfo span {
+    font-weight: bold;
+}
+
 footer {
     position: fixed;
     bottom: 0;
@@ -222,8 +239,3 @@ footer {
             rgb(0, 80, 172) 94.3%);
     transition: all 0.45s;
 }
-
-/* .userinfo {
-    margin-top: 65px;
-    margin-left: 250px;
-} */
