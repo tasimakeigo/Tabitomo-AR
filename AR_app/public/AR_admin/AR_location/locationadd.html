@@ -1,72 +1,93 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規登録</title>
-    <link rel="stylesheet" href="static/location.css">
+    <link rel="stylesheet" href="static/locationadd.css">
 </head>
+
 <body>
     <header>
-        <h1><a href="menu.html">管理者システム - 新規登録</a></h1>
+        <h1><a href="../menu.html">管理者システム　　-場所 3Dモデル管理-　　新規登録</a></h1>
         <ul>
             <li>
-                <!-- ユーザー名を表示するエリア -->
                 <p>ユーザー名: </p>
             </li>
-            <li id="logout">
-                <!-- ログアウトリンク -->
-                <a href="#">ログアウト</a>
-            </li>
+            <li>
+                <p><a href="../AR_login/logout.html">ログアウト</a></p>
+            <li>
         </ul>
     </header>
 
     <main>
+
+        <div class="sideber">
+            <div class="sideber-container">
+                <a href="../menu.html"><button>メニュー</button></a>
+                <a href="../AR_user/user.html"><button>管理者情報</button></a>
+                <a href="../AR_napisy/napisy.html"><button>字幕管理</button></a>
+                <a href="../AR_sound/sound.html"><button>音声管理</button></a>
+                <a href="../AR_location/location.html"><button>場所 3Dモデル<br>管理</button></a>
+            </div>
+        </div>
+
         <div class="form-container">
-            <h2>新規登録</h2>
             <form id="bulk-register-form" enctype="multipart/form-data">
                 <!-- 場所情報 -->
-                <div class="form-group">
-                    <label for="locationName">場所名:</label>
+                <div class="locationname">
+                    <label for="locationName">場所名</label>
                     <!-- 場所名を入力するフィールド -->
                     <input type="text" id="locationName" name="locationName" required placeholder="例: 東京タワー">
                 </div>
-                <div class="form-group">
-                    <label for="address">住所:</label>
+                <div class="address">
+                    <label for="address">住所</label>
                     <!-- 住所を入力するフィールド -->
                     <input type="text" id="address" name="address" required placeholder="例: 東京都港区芝公園">
                 </div>
 
                 <!-- モデル情報 -->
-                <div class="form-group">
-                    <label for="mdlname">モデル名:</label>
+                <div class="mdlname">
+                    <label for="mdlname">モデル名</label>
                     <!-- モデル名を入力するフィールド -->
                     <input type="text" id="mdlname" name="mdlname" required placeholder="例: モデル1">
                 </div>
-                <div class="form-group">
-                    <label for="mkname">マーカー名:</label>
+                <div class="mkname">
+                    <label for="mkname">マーカー名</label>
                     <!-- マーカー名を入力するフィールド -->
                     <input type="text" id="mkname" name="mkname" required placeholder="例: マーカー1">
                 </div>
-                <div class="form-group">
-                    <label for="mdlimage">モデル画像（.glb）:</label>
+                <div class="mdlimage">
+                    <label for="mdlimage">モデル画像（.glb）</label>
                     <!-- .glb形式のモデル画像をアップロード -->
                     <input type="file" id="mdlimage" name="mdlimage" accept=".glb" required>
                 </div>
-                <div class="form-group">
-                    <label for="patt">パターンファイル（.patt）:</label>
+                <div class="pattfile">
+                    <label for="patt">パターンファイル（.patt）</label>
                     <!-- .patt形式のパターンファイルをアップロード -->
                     <input type="file" id="patt" name="patt" accept=".patt" required>
                 </div>
-                <div class="form-group">
-                    <label for="mkimage">マーカー画像:</label>
+                <div class="mkimage">
+                    <label for="mkimage">マーカー画像</label>
                     <!-- マーカー画像をアップロード -->
                     <input type="file" id="mkimage" name="mkimage" accept="image/*" required>
                 </div>
 
+                <div class="sound">
+                    <label for="sound">音声ファイル（.mp3）</label>
+                    <!-- 音声ファイルをアップロード -->
+                    <input type="file" id="sound" name="sound" accept=".mp3">
+                </div>
+                <div class="text">
+                    <label for="subtitles">字幕ファイル（.txt）</label>
+                    <!-- 字幕ファイルをアップロード -->
+                    <input type="file" id="subtitles" name="subtitles" accept=".txt">
+                </div>
+
                 <!-- オプション：音声ファイルと字幕ファイル -->
-                <div class="form-group">
-                    <label for="languagename">言語選択:</label>
+                <div class="language">
+                    <label for="languagename">言語選択</label>
                     <!-- 言語を選択するドロップダウンメニュー -->
                     <select id="languagename" name="languagename">
                         <option value="日本語">日本語</option>
@@ -75,21 +96,9 @@
                         <option value="中国語">中国語</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="sound">音声ファイル（.mp3）:</label>
-                    <!-- 音声ファイルをアップロード -->
-                    <input type="file" id="sound" name="sound" accept=".mp3">
-                </div>
-                <div class="form-group">
-                    <label for="subtitles">字幕ファイル（.txt）:</label>
-                    <!-- 字幕ファイルをアップロード -->
-                    <input type="file" id="subtitles" name="subtitles" accept=".txt">
-                </div>
 
-                <div class="form-group">
-                    <!-- 登録ボタン -->
-                    <button type="submit" id="submit-button">新規登録</button>
-                </div>
+                <!-- 登録ボタン -->
+                <button class="keep" type="submit" id="submit-button">新規登録</button>
             </form>
         </div>
     </main>
@@ -133,6 +142,24 @@
                 }
             });
         });
+
+        // URLパラメータまたはローカルストレージからadminnameを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        let adminname = urlParams.get('adminname');
+
+        // adminnameがURLパラメータにある場合はローカルストレージに保存
+        if (adminname) {
+            localStorage.setItem('adminname', adminname);
+        } else {
+            // URLパラメータがない場合はローカルストレージから取得
+            adminname = localStorage.getItem('adminname');
+        }
+
+        // adminnameが存在する場合にページに表示
+        if (adminname) {
+            document.querySelector('header p').textContent = `ユーザー名: ${adminname}`;
+        }
     </script>
 </body>
+
 </html>

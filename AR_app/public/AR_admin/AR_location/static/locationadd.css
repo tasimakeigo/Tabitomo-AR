@@ -57,47 +57,6 @@ ul {
     padding-left: 0;
 }
 
-/* メイン */
-
-main {
-    flex-grow: 1;
-    margin-top: 70px;
-}
-
-.location {
-    margin-left: 250px;
-    margin-top: 50px;
-}
-
-.location li {
-    position: relative;
-    padding-left: 20px;
-    margin: 10px;
-}
-
-.location li::before {
-    content: '・';
-    position: absolute;
-    left: 0;
-    color: #333;
-    font-size: 1.2em;
-    transition: color 0.3s ease;
-}
-
-.location li:hover::before {
-    color: rgb(110, 255, 183);
-}
-
-.locationid {
-    width: 80%;
-    overflow: hidden;
-    background-color: #ffffff;
-    position: relative;
-    padding: 5px 0;
-    text-decoration: none;
-    color: #333;
-}
-
 /* サイドバー */
 .sideber {
     position: fixed;
@@ -124,12 +83,12 @@ main {
 /* サイドバー内のリンクの基本スタイル */
 .sideber-container a {
     width: 80%;
+    /* text-align: center; */
     overflow: hidden;
     background-color: #ffffff;
     position: relative;
     padding: 5px 0;
     border-bottom: 1px solid #333;
-
 }
 
 .sideber-container button {
@@ -159,30 +118,106 @@ main {
     left: 0;
 }
 
-/* リンク内のボタンのスタイルも変更 */
 .sideber-container a:hover button {
     color: #000;
 }
 
-/* ボタン */
-/* 新規登録ボタンのスタイル */
-.new-register-container {
-    padding-left: 200px;
-    /* padding: 10px 20px;
-    ボタンと画面の境界とのスペース */
+/* メイン */
+main {
+    flex-grow: 1;
+    margin-top: 70px;
 }
 
-#new-register-btn {
+.form-container {
+    margin-left: 250px;
+    width: 80%;
+    max-width: 800px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    margin-top: 20px;
+}
+
+.form-container label {
+    display: flex;
+    justify-content: space-between;
     padding: 10px 20px;
-    font-size: 16px;
-    background-color: #ffffff;
-    color: #333;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-right: 15px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
-#new-register-btn:hover {
+.form-container div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.locationname,
+.mdlname {
+    float: left;
+    width: 40%;
+}
+
+/* ボタン */
+/* ファイルを選択 */
+input[type='file'] {
+    width: 24rem;
+}
+
+::file-selector-button,
+::-webkit-file-upload-button {
+    border: none;
+    padding: 0.25rem 1rem;
+    margin-right: 1rem;
+    background-color: transparent;
+    border-bottom: 1px solid #333;
+}
+
+::file-selector-button:hover,
+::-webkit-file-upload-button:hover {
+    /* border-bottom: 2px solid transparent; */
+    background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+/* 保存 */
+.keep {
+    position: relative;
+    writing-mode: horizontal-tb;
+    text-align: center;
+    white-space: nowrap;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    border-bottom: 1px solid #333;
+    margin-bottom: 50px;
+}
+
+.keep:hover {
     background-color: #ededed;
+    border-color: transparent;
+}
+
+.keep::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    background: transparent;
+}
+
+.keep:hover::after {
+    background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
 }
