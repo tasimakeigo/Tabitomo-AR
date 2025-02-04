@@ -37,14 +37,14 @@
         <div class="soundeditform">
             <form id="edit-sound-form" enctype="multipart/form-data">
                 <div class="nowlanguage">
-                    <label for="currentlanguagename">現在の<br>言語名</label>
-                    <h2 id="currentlanguagename" style="display:inline;"></h2> <!-- 言語名を表示 -->
+                    <label for="currentlanguagename">現在の言語名</label>
+                    <p id="currentlanguagename" style="display:inline;"></p> <!-- 言語名を表示 -->
                     <input type="text" id="currentlanguagename-input" name="currentlanguagename" readonly
                         style="display:none;"> <!-- 非表示のinput -->
                 </div>
 
                 <div class="newlanguage">
-                    <label for="languagename">編集後の<br>言語名</label>
+                    <label for="languagename">編集後の言語名</label>
                     <select id="languagename" name="languagename">
                         <!-- サーバーから動的にリストを取得 -->
                     </select>
@@ -84,6 +84,11 @@
                     const oldlanguagename = urlParams.get('languagename');
                     const oldmdlsound = urlParams.get('mdlsound');
 
+                    if (oldlanguagename) {
+                        document.getElementById('currentlanguagename').textContent = oldlanguagename;
+                        document.getElementById('currentlanguagename-input').value = oldlanguagename;
+                    }
+
                     fetch(`/soundlist/languages?mdlsound=${oldmdlsound}`)
                         .then(response => response.json())
                         .then(data => {
@@ -108,23 +113,6 @@
                         .catch(error => {
                             console.error('言語リストの取得に失敗しました:', error);
                             alert('言語リストの取得に失敗しました。');
-                        });
-
-                    // ファイル内容の読み込み
-                    fetch(`/soundlist/edit?mdltext=${oldmdltext}&soundfile=${oldsoundfile}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            // 現在のファイル名と内容を表示
-                            document.getElementById('currentsoundfile').textContent = oldsoundfile;
-                            document.getElementById('soundcontent').value = data.content;
-                            document.getElementById('currentlanguagename').textContent = oldlanguagename;
-                            // 非表示のinputに値を設定
-                            document.getElementById('currentlanguagename-input').value = oldlanguagename;
-                            document.getElementById('soundfile').value = oldsoundfile;
-                        })
-                        .catch(error => {
-                            console.error('ファイルの内容取得に失敗しました:', error);
-                            alert('ファイルの内容取得に失敗しました。');
                         });
 
 
