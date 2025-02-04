@@ -53,10 +53,6 @@
 
     </main>
 
-    <footer>
-        <p>© 2025 管理者システム</p>
-    </footer>
-
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         let adminname = urlParams.get('adminname');
@@ -100,12 +96,12 @@
                     },
                     body: JSON.stringify({ name: adminname })
                 })
-                .then(response => response.json())
-                .then(data => {
-                    alert('削除しました。');
-                    window.location.href = '/AR_admin/AR_login/login.html'; // ログイン画面にリダイレクト
-                })
-                .catch(error => console.error('Error setting delete flag:', error));
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('削除しました。');
+                        window.location.href = '/AR_admin/AR_login/login.html'; // ログイン画面にリダイレクト
+                    })
+                    .catch(error => console.error('Error setting delete flag:', error));
             }
         });
     </script>
