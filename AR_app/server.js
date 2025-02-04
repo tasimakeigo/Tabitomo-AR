@@ -19,6 +19,7 @@ const locationaddRoutes = require('./routes/locationaddRoutes');
 const locationeditRoutes = require('./routes/locationeditRoutes');
 const modelsRoutes = require('./routes/modelsRoutes');
 const multiAR = require('./routes/multiAR');
+const get_locations = require('./routes/get_locations');
 
 // ボディパーサー設定 (POSTデータを受け取るため)
 app.use(express.urlencoded({ extended: true }));  // URLエンコードされたデータの処理
@@ -43,6 +44,7 @@ app.use('/locationadd', locationaddRoutes);
 app.use('/locationedit', locationeditRoutes);
 app.use('/modelsRoutes', modelsRoutes);
 app.use('/multiAR', multiAR);
+app.use('/api', get_locations);
 
 // サーバーの起動
 const PORT = 8080;

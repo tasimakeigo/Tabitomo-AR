@@ -75,8 +75,6 @@ router.post('/admins/update', async (req, res) => {
 
     try {
 
-
-
         // 名前またはパスワードが変更された場合のみ更新
         const updateQuery = `UPDATE admin SET name = $1, password = $2 WHERE name = $3 RETURNING *`;
         const updatedResult = await connection.query(updateQuery, [name, password, currentname]);
