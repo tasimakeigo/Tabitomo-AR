@@ -153,6 +153,25 @@ main {
     border-spacing: 0 15px;
 }
 
+.userinfo label {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-right: 15px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.userinfo div {
+    display: flex;
+    align-items: center;
+}
+
 /* ボタン */
 .edit {
     position: relative;
