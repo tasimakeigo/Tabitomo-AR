@@ -58,6 +58,7 @@ ul {
 }
 
 /* メイン */
+
 main {
     flex-grow: 1;
     margin-top: 70px;
@@ -65,6 +66,7 @@ main {
 
 .location {
     margin-left: 250px;
+    margin-top: 50px;
 }
 
 .location li {
@@ -122,12 +124,12 @@ main {
 /* サイドバー内のリンクの基本スタイル */
 .sideber-container a {
     width: 80%;
-    /* text-align: center; */
     overflow: hidden;
     background-color: #ffffff;
     position: relative;
     padding: 5px 0;
     border-bottom: 1px solid #333;
+
 }
 
 .sideber-container button {
@@ -157,43 +159,30 @@ main {
     left: 0;
 }
 
+/* リンク内のボタンのスタイルも変更 */
 .sideber-container a:hover button {
     color: #000;
 }
 
 /* ボタン */
 /* 新規登録ボタンのスタイル */
+.new-register-container {
+    padding-left: 200px;
+    /* padding: 10px 20px;
+    ボタンと画面の境界とのスペース */
+}
+
 #new-register-btn {
-    margin-left: 250px;
-    margin-top: 20px;
-    position: relative;
-    writing-mode: horizontal-tb;
-    text-align: center;
-    white-space: nowrap;
-    padding: 8px 12px;
-    cursor: pointer;
-    background-color: transparent;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #333;
     border: none;
-    text-decoration: none;
-    border-bottom: 1px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 #new-register-btn:hover {
     background-color: #ededed;
-    border-color: transparent;
-}
-
-#new-register-btn::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    background: transparent;
-}
-
-#new-register-btn:hover::after {
-    background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
 }

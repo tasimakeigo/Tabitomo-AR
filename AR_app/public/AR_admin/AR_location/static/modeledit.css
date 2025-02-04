@@ -57,45 +57,6 @@ ul {
     padding-left: 0;
 }
 
-/* メイン */
-main {
-    flex-grow: 1;
-    margin-top: 70px;
-}
-
-.location {
-    margin-left: 250px;
-}
-
-.location li {
-    position: relative;
-    padding-left: 20px;
-    margin: 10px;
-}
-
-.location li::before {
-    content: '・';
-    position: absolute;
-    left: 0;
-    color: #333;
-    font-size: 1.2em;
-    transition: color 0.3s ease;
-}
-
-.location li:hover::before {
-    color: rgb(110, 255, 183);
-}
-
-.locationid {
-    width: 80%;
-    overflow: hidden;
-    background-color: #ffffff;
-    position: relative;
-    padding: 5px 0;
-    text-decoration: none;
-    color: #333;
-}
-
 /* サイドバー */
 .sideber {
     position: fixed;
@@ -161,11 +122,74 @@ main {
     color: #000;
 }
 
-/* ボタン */
-/* 新規登録ボタンのスタイル */
-#new-register-btn {
+/* メイン */
+main {
+    flex-grow: 1;
+    margin-top: 70px;
+}
+
+.edit-form {
     margin-left: 250px;
+    width: 80%;
+    max-width: 800px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
     margin-top: 20px;
+}
+
+.edit-form label {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-right: 15px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-form div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.locationname,
+.mdlname {
+    float: left;
+    width: 40%;
+}
+
+
+/* ボタン */
+/* ファイルを選択 */
+input[type='file'] {
+    width: 600px;
+}
+
+::file-selector-button,
+::-webkit-file-upload-button {
+    border: none;
+    padding: 0.25rem 1rem;
+    margin-right: 1rem;
+    background-color: transparent;
+    border-bottom: 1px solid #333;
+}
+
+::file-selector-button:hover,
+::-webkit-file-upload-button:hover {
+    /* border-bottom: 2px solid transparent; */
+    background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+/* 更新 */
+.edit {
     position: relative;
     writing-mode: horizontal-tb;
     text-align: center;
@@ -178,12 +202,12 @@ main {
     border-bottom: 1px solid #333;
 }
 
-#new-register-btn:hover {
+.edit:hover {
     background-color: #ededed;
     border-color: transparent;
 }
 
-#new-register-btn::after {
+.edit::after {
     content: '';
     display: block;
     width: 100%;
@@ -194,6 +218,6 @@ main {
     background: transparent;
 }
 
-#new-register-btn:hover::after {
+.edit:hover::after {
     background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
 }
