@@ -9,7 +9,23 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 const locationDetails = document.getElementById('location-details');
-                let detailsHtml = `<h2>場所: ${locationname}</h2><p>ID: ${locationid}</p><p>住所: ${address}</p>`;
+                let detailsHtml = `
+
+                    <div class="locationname">
+                        <h2>場所: ${locationname}</h2>
+                    </div>
+
+                    <div class="locationid">
+                        <p>ID</p>
+                        ${locationid}
+                    </div>
+
+                    <div class="address">
+                        <p>住所</p>
+                        ${address}
+                    </div>
+                        
+                    `;
 
                 const models = {};
 
@@ -37,23 +53,58 @@ document.addEventListener('DOMContentLoaded', function () {
                 for (const mdlid in models) {
                     const model = models[mdlid];
                     detailsHtml += `
-                        <p>
-                            <strong>モデル名:</strong> ${model.mdlname}<br>
-                            <strong>モデルID:</strong> ${model.mdlid}<br>
-                            <strong>3Dモデル:</strong>${model.mdlname}<br>
-                            <button class="viewer-btn" data-mdlimage="${model.mdlimage}">3Dモデル表示</button><br>
-                            <strong>マーカー名:</strong> ${model.mkname}<br>
-                            <strong>パターン:</strong> ${model.patt}<br>
-                            <strong>マーカー画像:</strong> <img src="/Content/markerimage/${model.mkimage}" alt="${model.mkimage}" width="200"><br>
-                            <strong><a href="../../AR_admin/AR_napisy/napisylist.html?mdltext=${model.mdltext}">音声ファイル</a></strong><br>
-                            ${model.soundfiles.length > 0 ? model.soundfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}<br>
-                            <strong><a href="../../AR_admin/AR_sound/soundlist.html?mdlsound=${model.mdlsound}">テキストファイル</a></strong><br>
-                            ${model.textfiles.length > 0 ? model.textfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}
-                        </p>
+                            <div class="mdlname">
+                                <label for="mdlname">モデル名</label>
+                                ${model.mdlname}
+                            </div>
+
+                            <div class="mdlid">
+                                <label for="mdlid">モデルID</label>
+                                ${model.mdlid}
+                            </div>
+
+                            <div class="mdl">
+                                <div class="Dmdl">
+                                    <label for="3Dmdl">3Dモデル</label>
+                                    ${model.mdlname}
+                                </div>
+
+                                <div class="mdlimage">
+                                    <button class="viewer-btn" data-mdlimage="${model.mdlimage}">3Dモデル表示</button><br>
+                                </div>
+                            </div>
+
+                            <div class="mkname">
+                                <label for="mkname">マーカー名</label>
+                                ${model.mkname}
+                            </div>
+
+                            <div class="patt">
+                                <label for="patt">パターン</label>
+                                ${model.patt}
+                            </div>
+
+                            <div class="mkimage">
+                                <label for="mkimage">マーカ画像</label>
+                                <img src="/Content/markerimage/${model.mkimage}" alt="${model.mkimage}" width="200">
+                            </div>
+
+                            <div class="list">
+                                <div class="soundfile">
+                                    <a class="link" href="../../AR_admin/AR_napisy/napisylist.html?mdltext=${model.mdltext}"><button>字幕ファイル</button></a></br>
+                                    ${model.textfiles.length > 0 ? model.textfiles.map(file => `<span class="textli">${file}</span><br>`).join('') : 'なし'}
+                                </div>
+                                <div class="textfile">
+                                    <a class="link" href="../../AR_admin/AR_sound/soundlist.html?mdlsound=${model.mdlsound}"><button>音声ファイル</button></a></br>
+                                    ${model.soundfiles.length > 0 ? model.soundfiles.map(file => `<span class="textli">${file}</span><br>`).join('') : 'なし'}
+                                </div>
+                            </div>
                         <button class="edit-btn" data-mdlid="${mdlid}">編集</button>
                         <button class="delete-btn" data-mdlid="${mdlid}">削除</button>
                     `;
                 }
+
+                // テキスト、音声逆
 
                 locationDetails.innerHTML = detailsHtml;
                 // 編集・削除ボタンのイベントリスナー
