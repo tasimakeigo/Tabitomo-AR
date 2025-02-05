@@ -1,41 +1,76 @@
 const express = require('express');
+const axios = require('axios');  // Geocoding API用
 const router = express.Router();
 const connection = require('../config');  // データベース接続
-const axios = require('axios');  // HTTPリクエストを送るために使用
 
-// /get_locationsエンドポイントで住所を取得
-router.get('/get_locations', async (req, res) => {
-    // SQLクエリでlocationテーブルから住所を取得
-    const query = 'SELECT locationname, address FROM location';
-
+// Geocoding.jp APIで住所を座標に変換する関数
+async function getCoordinates(address) {
     try {
-        // データベースから情報を取得
-        const result = await connection.query(query);
+        const url = `https://www.geocoding.jp/api/?q=${encodeURIComponent(address)}`;
+        const response = await axios.get(url, { timeout: 5000 }); // 5秒のタイムアウト
+        const xml = response.data;
 
-        // 住所を基に緯度・経度を取得
-        const locationsWithCoordinates = await Promise.all(result.rows.map(async (location) => {
-            const { locationname, address } = location;
+        // XMLをパース
+        const latMatch = xml.match(/<lat>(.*?)<\/lat>/);
+        const lonMatch = xml.match(/<lng>(.*?)<\/lng>/);
 
-            // OpenStreetMap APIを使って住所から緯度・経度を取得
-            const geocodeUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&addressdetails=1`;
-            const response = await axios.get(geocodeUrl);
-
-            const latitude = response.data[0]?.lat;
-            const longitude = response.data[0]?.lon;
-
+        if (latMatch && lonMatch) {
             return {
-                locationNAME: locationname,
-                address: address,
-                latitude: latitude,
-                longitude: longitude
+                latitude: parseFloat(latMatch[1]),
+                longitude: parseFloat(lonMatch[1])
             };
-        }));
-
-        // 取得したデータをJSON形式で返却
-        res.json(locationsWithCoordinates);
+        } else {
+            console.warn(`座標取得失敗: ${address}`);
+            return null;
+        }
     } catch (error) {
-        console.error('エラー:', error);
-        res.status(500).json({ error: 'データベースから情報を取得できませんでした' });
+        console.error(`Geocoding API エラー: ${address}`, error.message);
+        return null;
+    }
+}
+
+// 10秒ごとのリクエスト制限用
+let lastRequestTime = 0;
+
+// /get_locationsエンドポイント
+router.get('/get_locations', async (req, res) => {
+    try {
+        const query = 'SELECT locationid,locationname, address FROM location';  // locationテーブルから住所を取得
+
+        // データベースから情報を取得
+        connection.query(query, async (err, result) => {
+            if (err) {
+                console.error('データベースエラー:', err);
+                return res.status(500).json({ error: 'データベースから情報を取得できませんでした' });
+            }
+
+            const locations = [];
+
+            for (const location of result.rows) {
+                const now = Date.now();
+                if (now - lastRequestTime < 10000) { // 10秒待機
+                    await new Promise(resolve => setTimeout(resolve, 10000 - (now - lastRequestTime)));
+                }
+
+                lastRequestTime = Date.now(); // リクエスト時刻を更新
+
+                const coords = await getCoordinates(location.address);
+                if (coords) {
+                    locations.push({
+                        locationid: location.locationid,
+                        locationNAME: location.locationname,
+                        address: location.address,
+                        latitude: coords.latitude,
+                        longitude: coords.longitude
+                    });
+                }
+            }
+
+            res.json(locations);
+        });
+    } catch (error) {
+        console.error('サーバーエラー:', error);
+        res.status(500).json({ error: 'データ取得中にエラーが発生しました' });
     }
 });
 
