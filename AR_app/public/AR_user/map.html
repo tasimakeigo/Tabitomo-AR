@@ -6,20 +6,8 @@
     <title>マップ管理</title>
     <link rel="stylesheet" href="static/admin.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <style>
-        /* スマホでも全画面表示 */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-        }
-        #map {
-            height: 100vh;
-            width: 100vw;
-        }
-    </style>
+    <link rel="stylesheet" href="static/map.css">
+
 </head>
 <body>
     <main>
@@ -54,9 +42,14 @@
                 // すべてのマーカーを追加
                 data.forEach(location => {
                     if (location.latitude && location.longitude) {
+                        const googleMapsURL = `https://www.google.com/maps?q=${encodeURIComponent(location.address)}`;
+
                         L.marker([location.latitude, location.longitude])
                             .addTo(map)
-                            .bindPopup(`<b>${location.locationNAME}</b><br>${location.address}`);
+                            .bindPopup(`
+                                <b><a href="${googleMapsURL}" target="_blank">${location.locationNAME}</a></b><br>
+                                ${location.address}
+                            `);
                     } else {
                         console.warn(`座標なし: ${location.address}`);
                     }
