@@ -21,8 +21,11 @@ router.post('/userlogin', (req, res) => {
             return res.status(401).send('認証に失敗しました');
         }
 
-        const user = results.rows[0];
 
+        const user = results.rows[0];
+        if (user.delflag === true) {
+            return res.status(400).json({ message: 'このアカウントは削除されました' });
+        }
         // パスワードの照合
         try {
             const match = await bcrypt.compare(password, user.password);
@@ -45,22 +48,23 @@ router.post('/userlogin', (req, res) => {
 });
 
 
-router.get("/check-username", async (req, res) => {
-    const { username } = req.query;
-    if (!username) {
-        return res.status(400).json({ error: "ユーザー名が入力されていません" });
-    }
-
+// ユーザー名の重複チェック
+router.post('/check-username', async (req, res) => {
+    const { username } = req.body;
     try {
-        const result = await connection.query("SELECT COUNT(*) FROM users WHERE name = $1", [username]);
-        const exists = result.rows[0].count > 0;
-        res.json({ exists });
-    } catch (error) {
-        console.error("エラー:", error);
-        res.status(500).json({ error: "サーバーエラーが発生しました" });
+      const result = await connection.query('SELECT * FROM users WHERE name = $1', [username]);
+      if (result.rows.length > 0) {
+        return res.json({ available: false });
+      } else {
+        return res.json({ available: true });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('サーバーエラー');
     }
-});
-
+  });
+  
+  
 // 新規管理者登録エンドポイント
 router.post('/newUser', async (req, res) => {
     const { username, password, passwordConfirm, languagename } = req.body;

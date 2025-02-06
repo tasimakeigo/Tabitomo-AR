@@ -63,7 +63,7 @@
                 if (data.status === 'success') {
                     alert('アカウントが削除されました');
                     localStorage.removeItem('username');
-                    window.location.href = '../logout.html';
+                    window.location.href = '../login.html';
                 } else {
                     alert('削除に失敗しました: ' + data.message);
                 }
