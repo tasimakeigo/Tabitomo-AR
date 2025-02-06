@@ -44,6 +44,23 @@ router.post('/userlogin', (req, res) => {
     });
 });
 
+
+router.get("/check-username", async (req, res) => {
+    const { username } = req.query;
+    if (!username) {
+        return res.status(400).json({ error: "ユーザー名が入力されていません" });
+    }
+
+    try {
+        const result = await connection.query("SELECT COUNT(*) FROM users WHERE name = $1", [username]);
+        const exists = result.rows[0].count > 0;
+        res.json({ exists });
+    } catch (error) {
+        console.error("エラー:", error);
+        res.status(500).json({ error: "サーバーエラーが発生しました" });
+    }
+});
+
 // 新規管理者登録エンドポイント
 router.post('/newUser', async (req, res) => {
     const { username, password, passwordConfirm, languagename } = req.body;
@@ -106,24 +123,52 @@ router.post('/updatelanguage', (req, res) => {
     });
 });
  
-// ユーザー名変更エンドポイント
-router.post('/updateusername', (req, res) => {
+// ユーザー名変更エンドポイント（重複チェック追加）
+router.post('/updateusername', async (req, res) => {
     const { username, newusername } = req.body;
- 
-    const query = 'UPDATE users SET name = $1 WHERE name = $2';
-    connection.query(query, [newusername, username], (err, result) => {
-        if (err) {
-            console.error('データベースエラー:', err);
-            return res.status(500).send('サーバーエラー');
+
+    try {
+        // 新しいユーザー名の重複チェック
+        const checkUserQuery = 'SELECT * FROM users WHERE name = $1';
+        const checkResult = await connection.query(checkUserQuery, [newusername]);
+        if (checkResult.rows.length > 0) {
+            return res.status(400).send('このユーザー名は既に使用されています');
         }
- 
+
+        // ユーザー名を更新
+        const query = 'UPDATE users SET name = $1 WHERE name = $2';
+        const result = await connection.query(query, [newusername, username]);
+
         if (result.rowCount > 0) {
             res.status(200).send({ status: 'success' });
         } else {
             res.status(404).send({ status: 'fail', message: 'ユーザーが見つかりません' });
         }
-    });
+    } catch (err) {
+        console.error('データベースエラー:', err);
+        res.status(500).send('サーバーエラー');
+    }
 });
+
+// アカウント削除（delflagをtrueに更新）
+router.post('/deleteaccount', async (req, res) => {
+    const { username } = req.body;
+
+    try {
+        const query = 'UPDATE users SET delflag = true WHERE name = $1';
+        const result = await connection.query(query, [username]);
+
+        if (result.rowCount > 0) {
+            res.status(200).send({ status: 'success', message: 'アカウントが削除されました' });
+        } else {
+            res.status(404).send({ status: 'fail', message: 'ユーザーが見つかりません' });
+        }
+    } catch (err) {
+        console.error('データベースエラー:', err);
+        res.status(500).send('サーバーエラー');
+    }
+});
+
  
 // パスワード変更エンドポイント
 router.post('/changepassword', async (req, res) => {
