@@ -9,7 +9,7 @@ header {
     width: 100%;
     background-color: #ededed;
     padding: 10px 20px;
-    border-bottom: 2px solid #ffffff;
+    border-bottom: 0.5px solid #ccc;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     height: 70px;
@@ -36,6 +36,7 @@ header a {
     color: #333;
     text-decoration: none;
     font-size: 1em;
+    font-weight: bold;
 }
 
 header p {
