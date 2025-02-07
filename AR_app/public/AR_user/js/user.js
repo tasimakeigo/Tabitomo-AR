@@ -90,6 +90,14 @@ document.getElementById('login-form')?.addEventListener('submit', function (even
 
             // URLパラメーターを組み立ててリダイレクト
             window.location.href = `/AR_user/home.html?username=${encodeURIComponent(username)}&userid=${encodeURIComponent(userid)}&languagename=${encodeURIComponent(languagename)}`;
+        } else if (xhr.status === 400) {
+            // アカウント削除された場合
+            const response = JSON.parse(xhr.responseText);
+            if (response.message === 'このアカウントは削除されました') {
+                alert('このアカウントは削除されています。');
+            } else {
+                alert('ログイン失敗: ユーザー名またはパスワードが間違っています');
+            }
         } else {
             alert('ログイン失敗: ユーザー名またはパスワードが間違っています');
         }
@@ -97,6 +105,7 @@ document.getElementById('login-form')?.addEventListener('submit', function (even
 
     xhr.send(`username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`);
 });
+
 
 // マイページ: 言語選択ボタンの生成
 document.addEventListener("DOMContentLoaded", function () {
