@@ -100,7 +100,7 @@ document.getElementById('login-form')?.addEventListener('submit', function (even
 
 // マイページ: 言語選択ボタンの生成
 document.addEventListener("DOMContentLoaded", function () {
-    const languages = ["日本語", "英語", "中国語", "フランス語", "韓国語"];
+    const languages = ["日本語", "英語", "中国語", "韓国語"];
     const container = document.querySelector(".language-select");
     if (container) {
         container.innerHTML = ""; // 初期内容をクリア
