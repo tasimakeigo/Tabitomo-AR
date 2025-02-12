@@ -27,8 +27,8 @@
             <a href="language.html" class="btn-square-toy">言語変更</a>
             <a href="rename.html" class="btn-square-toy">名前変更</a>
             <a href="changepassword.html" class="btn-square-toy">パスワード変更</a>
-            <a href="ashiato.html" class="btn-square-toy">※作成中-あしあと-</a>
-            <a href="collection.html" class="btn-square-toy">コレクション></a>
+            <a href="" class="btn-square-toy" id="delete-account">アカウント削除</a>
+            <a href="collection.html" class="btn-square-toy">コレクション</a>
         </div>
         <a href="../home.html" class="back-button">戻る</a>
     </div>
@@ -50,7 +50,10 @@
     if (username) {
         document.querySelector('header p').textContent = `ユーザー名: ${username}`;
     }
-
+        // ログインしていない場合、ログイン画面へリダイレクト
+        if (!username || !userid || !languagename) {
+            window.location.href = '../login.html';  // ログイン画面にリダイレクト
+        }
     // アカウント削除ボタン処理
     document.getElementById('delete-account').addEventListener('click', async () => {
         if (confirm('本当にアカウントを削除しますか？')) {
