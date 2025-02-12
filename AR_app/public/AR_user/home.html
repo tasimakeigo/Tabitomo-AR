@@ -1,3 +1,4 @@
+<!-- home.html -->
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -14,17 +15,17 @@
         <h1>ホーム</h1>
         <ul>
             <li>
-                <p>ユーザー名: </p>
+                <p id="username-display">ユーザー名: </p>
             </li>
             <li>
                 <p><a href="logout.html">ログアウト</a></p>
-            <li>
+            </li>
         </ul>
     </header>
 
     <div class="content">
         <div class="button-container">
-            <a href="map.html" class="btn-square-toy">マップ</ARea></a>
+            <a href="map.html" class="btn-square-toy">マップ</a>
             <a id="ar-button" href="multi_AR.html" class="btn-square-toy">AR</a>
             <a href="mypage/mypage.html" class="btn-square-toy">マイページ</a>
         </div>
@@ -34,39 +35,34 @@
         <p>© 2024 たびとも</p>
     </footer>
 
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // ローカルストレージからユーザー情報を取得
+        const username = localStorage.getItem('username');
+        const userid = localStorage.getItem('userid');
+        const languagename = localStorage.getItem('languagename');
+
+        // ユーザー名を表示
+        const headerP = document.getElementById("username-display");
+        if (username && headerP) {
+            headerP.textContent = `ユーザー名: ${username}`;
+        }
+
+        // ログインしていない場合、ログイン画面へリダイレクト
+        if (!username || !userid || !languagename) {
+            window.location.href = 'login.html';  // ログイン画面にリダイレクト
+        }
+
+        // ARボタンのURLに userid と languagename を追加
+        if (languagename && userid) {
+            const arButton = document.getElementById('ar-button');
+            if (arButton) {
+                arButton.href = `multi_AR.html?userid=${encodeURIComponent(userid)}&languagename=${encodeURIComponent(languagename)}`;
+            }
+        }
+    });
+    </script>
+
 </body>
-<script>
-    // URLパラメータからusername、userid、languagenameを取得
-    const urlParams = new URLSearchParams(window.location.search);
-    let username = urlParams.get('username');
-    let userid = urlParams.get('userid');
-    let languagename = urlParams.get('languagename');
-
-    // adminnameがURLパラメータにある場合はローカルストレージに保存
-    if (username) {
-        localStorage.setItem('username', username);
-    } else {
-        // URLパラメータがない場合はローカルストレージから取得
-        username = localStorage.getItem('username');
-    }
-    // languagenameがURLパラメータにある場合はローカルストレージに保存
-    if (languagename) {
-        localStorage.setItem('languagename', languagename);
-    } else {
-        // URLパラメータがない場合はローカルストレージから取得
-        languagename = localStorage.getItem('languagename');
-    }
-    // adminnameが存在する場合にページに表示
-    if (username) {
-        document.querySelector('header p').textContent = `ユーザー名: ${username}`;
-    }
-
-    // ARボタンのURLにuseridとlanguagenameを追加
-    if (languagename) {
-        const arButton = document.getElementById('ar-button');
-        arButton.href = `multi_AR.html?languagename=${encodeURIComponent(languagename)}`;
-    }
-</script>
-
 
 </html>

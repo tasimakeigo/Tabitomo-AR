@@ -88,8 +88,13 @@ document.getElementById('login-form')?.addEventListener('submit', function (even
             const userid = response.userid;
             const languagename = response.languagename;
 
-            // URLパラメーターを組み立ててリダイレクト
-            window.location.href = `/AR_user/home.html?username=${encodeURIComponent(username)}&userid=${encodeURIComponent(userid)}&languagename=${encodeURIComponent(languagename)}`;
+            // ローカルストレージにデータを保存
+            localStorage.setItem('username', username);
+            localStorage.setItem('userid', userid);
+            localStorage.setItem('languagename', languagename);
+
+            // ホーム画面にリダイレクト
+            window.location.href = '/AR_user/home.html';
         } else if (xhr.status === 400) {
             // アカウント削除された場合
             const response = JSON.parse(xhr.responseText);
