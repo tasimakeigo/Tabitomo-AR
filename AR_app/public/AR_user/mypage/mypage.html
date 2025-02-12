@@ -50,7 +50,10 @@
     if (username) {
         document.querySelector('header p').textContent = `ユーザー名: ${username}`;
     }
-
+        // ログインしていない場合、ログイン画面へリダイレクト
+        if (!username || !userid || !languagename) {
+            window.location.href = '../login.html';  // ログイン画面にリダイレクト
+        }
     // アカウント削除ボタン処理
     document.getElementById('delete-account').addEventListener('click', async () => {
         if (confirm('本当にアカウントを削除しますか？')) {
