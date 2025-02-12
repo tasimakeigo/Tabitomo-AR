@@ -54,7 +54,7 @@
         document.querySelector('header p').textContent = `ユーザー名: ${username}`;
     }
     // ログインしていない場合、ログイン画面へリダイレクト
-    if (!username || !userid || !languagename) {
+    if (!username) {
         window.location.href = '../login.html';  // ログイン画面にリダイレクト
     }
     // アカウント削除ボタン処理
