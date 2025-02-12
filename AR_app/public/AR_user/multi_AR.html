@@ -66,9 +66,9 @@
            renderer="logarithmicDepthBuffer: true;" 
            arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; sourceWidth: 1280; sourceHeight: 720;" 
            embedded>
-
+    
     <a-assets></a-assets>
-    <a-camera position="0 1.6 5" scale="1 1 1"></a-camera>
+    <a-camera position="0 0 0" scale="1 1 1"></a-camera>
 
   </a-scene>
 
@@ -90,6 +90,18 @@
     let subtitles = [];
     let currentSubtitleIndex = 0;
     let subtitleTimeout;
+
+    // ビューのサイズを動的に取得し、ARコンテンツのスケーリングと位置調整を行う
+    function adjustViewport() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      // カメラの視野に合わせてARコンテンツの位置を調整
+      const camera = document.querySelector('a-camera');
+      camera.setAttribute('position', `0 0 ${Math.max(width, height) / 3}`);
+    }
+
+    window.addEventListener('resize', adjustViewport);
 
     // マーカー情報を非同期で取得
     async function loadMarkersData() {
@@ -114,7 +126,7 @@
       errorContainer.style.display = 'block';
       setTimeout(() => {
         errorContainer.style.display = 'none';
-      }, 3000);
+      }, 5000);
     }
 
     // 個々のマーカー情報を読み込む
@@ -142,6 +154,7 @@
         addMarkerEvents(markerElement, marker);
       } catch (error) {
         console.error(`マーカー読み込みエラー: ${marker.id}`, error);
+        showError(`マーカー読み込みエラー: ${marker.id}`);
       }
     }
 
@@ -156,8 +169,8 @@
     function createModelEntity(marker) {
       const modelEntity = document.createElement('a-entity');
       modelEntity.setAttribute('gltf-model', `#model-${marker.id}`);
-      modelEntity.setAttribute('scale', '0.5 0.5 0.5');
-      modelEntity.setAttribute('position', '0 0.1 0');
+      modelEntity.setAttribute('scale', '1 1 1');
+      modelEntity.setAttribute('position', '0 0 0');
       return modelEntity;
     }
 
@@ -178,9 +191,11 @@
     async function fetchSubtitle(url) {
       try {
         const response = await fetch(url);
+        if (!response.ok) throw new Error('字幕ファイルの読み込みに失敗しました');
         return await response.text();
       } catch (error) {
         console.error('字幕ファイルの読み込みに失敗しました', error);
+        showError('字幕ファイルの読み込みに失敗しました');
         return '';
       }
     }
