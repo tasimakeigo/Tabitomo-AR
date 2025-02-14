@@ -38,6 +38,11 @@
                         autocomplete="new-password">
                 </div>
 
+                <div id="show-password">
+                    <input type="checkbox" id="checkbox" onclick="togglePassword()">
+                    <label for="checkbox" onclick="" id="checkboxlabel">パスワード表示</onclick>
+                </div>
+
                 <!-- 言語選択 -->
                 <div class="form-group">
                     <label for="languagename">言語選択</label>
@@ -51,7 +56,8 @@
                 </div>
 
                 <!-- 登録ボタン -->
-                <button class="confirm-button" type="submit" id="submit-button" disabled>登録内容確認</button> <!-- ボタンを初期状態で無効化 -->
+                <button class="confirm-button" type="submit" id="submit-button" disabled>登録内容確認</button>
+                <!-- ボタンを初期状態で無効化 -->
             </form>
             <div class="back-button">
                 <a href="login.html">
@@ -63,7 +69,7 @@
 
     <script>
         // ユーザー名の重複チェック
-        document.getElementById('username').addEventListener('blur', async function() {
+        document.getElementById('username').addEventListener('blur', async function () {
             const username = this.value;
             const response = await fetch('/api/check-username', {
                 method: 'POST',
@@ -72,10 +78,10 @@
                 },
                 body: JSON.stringify({ username })
             });
-    
+
             const data = await response.json();
             const usernameError = document.getElementById('username-error');
-            
+
             if (!data.available) {
                 // ユーザー名が重複している場合
                 usernameError.textContent = 'そのユーザー名は既に使用されています。';
@@ -87,7 +93,7 @@
             }
         });
     </script>
-        <script src="js/user.js" defer></script>
+    <script src="js/user.js" defer></script>
 
 </body>
 
