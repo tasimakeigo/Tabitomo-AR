@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Multi Marker AR</title>
+  <title>スマホ対応 Multi Marker AR</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://ar-js-org.github.io/AR.js/aframe/build/aframe-ar.js"></script>
   <style>
@@ -11,29 +11,39 @@
       margin: 0;
       overflow: hidden;
     }
-
     #ui-container {
       position: absolute;
       top: 10px;
       left: 10px;
-      color: white;
       z-index: 10;
+      display: flex;
+      gap: 10px;
     }
-
+    button {
+      font-size: 16px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+    }
+    button:active {
+      background: rgba(255, 255, 255, 0.3);
+    }
     #subtitles-container {
       position: absolute;
       bottom: 50px;
       left: 50%;
       transform: translateX(-50%);
       color: white;
-      font-size: 24px;
+      font-size: 5vw;
       background: rgba(0, 0, 0, 0.7);
       padding: 10px;
       border-radius: 5px;
       text-align: center;
       display: none;
     }
-
     #error-container {
       position: absolute;
       top: 50%;
@@ -48,28 +58,15 @@
       font-size: 18px;
       z-index: 100;
     }
-
-    @media (max-width: 768px) {
-      #subtitles-container {
-        font-size: 18px;
-      }
-      #ui-container {
-        top: 20px;
-        left: 20px;
-      }
-    }
   </style>
 </head>
-
 <body>
   <a-scene vr-mode-ui="enabled: false;" loading-screen="enabled: false;" 
-           renderer="logarithmicDepthBuffer: true;" 
-           arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; sourceWidth: 1280; sourceHeight: 720;" 
-           embedded>
-    
+           renderer="logarithmicDepthBuffer: true; antialias: true; alpha: true;"
+           arjs="trackingMethod: best; sourceType: webcam;" 
+           embedded gesture-detector>
     <a-assets></a-assets>
-    <a-camera position="0 0 0" scale="1 1 1"></a-camera>
-
+    <a-entity id="main-camera" camera position="0 0 10"></a-entity>
   </a-scene>
 
   <div id="ui-container">
@@ -91,45 +88,28 @@
     let currentSubtitleIndex = 0;
     let subtitleTimeout;
 
-    // ビューのサイズを動的に取得し、ARコンテンツのスケーリングと位置調整を行う
-    function adjustViewport() {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-
-      // カメラの視野に合わせてARコンテンツの位置を調整
-      const camera = document.querySelector('a-camera');
-      camera.setAttribute('position', `0 0 ${Math.max(width, height) / 3}`);
+    // エラーメッセージの表示
+    function showError(message) {
+      const errorContainer = document.getElementById('error-container');
+      errorContainer.textContent = message;
+      errorContainer.style.display = 'block';
+      setTimeout(() => errorContainer.style.display = 'none', 5000);
     }
 
-    window.addEventListener('resize', adjustViewport);
-
-    // マーカー情報を非同期で取得
+    // マーカー情報を取得
     async function loadMarkersData() {
       try {
         const response = await fetch(`/multiAR?languagename=${languagename}`);
         if (!response.ok) throw new Error('マーカー情報の読み込みに失敗しました');
         const markers = await response.json();
-
-        for (const marker of markers) {
-          await loadMarker(marker);
-        }
+        await Promise.all(markers.map(loadMarker));
       } catch (error) {
         console.error(error);
         showError('マーカー情報の読み込みに失敗しました。');
       }
     }
 
-    // エラーメッセージ表示
-    function showError(message) {
-      const errorContainer = document.getElementById('error-container');
-      errorContainer.textContent = message;
-      errorContainer.style.display = 'block';
-      setTimeout(() => {
-        errorContainer.style.display = 'none';
-      }, 5000);
-    }
-
-    // 個々のマーカー情報を読み込む
+    // マーカーの読み込み
     async function loadMarker(marker) {
       try {
         const assetItem = document.createElement('a-asset-item');
@@ -141,14 +121,8 @@
         const modelEntity = createModelEntity(marker);
         markerElement.appendChild(modelEntity);
 
-        if (marker.audio) {
-          createAudioElement(marker);
-        }
-
-        if (marker.subtitle) {
-          const subtitleText = await fetchSubtitle(marker.subtitle);
-          subtitles = parseSubtitles(subtitleText);
-        }
+        if (marker.audio) createAudioElement(marker);
+        if (marker.subtitle) subtitles = parseSubtitles(await fetchSubtitle(marker.subtitle));
 
         document.querySelector('a-scene').appendChild(markerElement);
         addMarkerEvents(markerElement, marker);
@@ -158,6 +132,7 @@
       }
     }
 
+    // マーカー要素の作成
     function createMarkerElement(marker) {
       const markerElement = document.createElement('a-marker');
       markerElement.setAttribute('id', marker.id);
@@ -166,14 +141,17 @@
       return markerElement;
     }
 
+    // モデル要素の作成
     function createModelEntity(marker) {
       const modelEntity = document.createElement('a-entity');
       modelEntity.setAttribute('gltf-model', `#model-${marker.id}`);
       modelEntity.setAttribute('scale', '1 1 1');
       modelEntity.setAttribute('position', '0 0 0');
+      modelEntity.setAttribute('rotation', '0 0 0');
       return modelEntity;
     }
 
+    // 音声要素の作成
     function createAudioElement(marker) {
       const audioElement = document.createElement('audio');
       audioElement.setAttribute('src', marker.audio);
@@ -181,90 +159,64 @@
       document.body.appendChild(audioElement);
     }
 
-    function parseSubtitles(subtitleText) {
-      return subtitleText.split('\n').map(line => ({
-        text: line.trim(),
-        duration: Math.max(line.length * 100, 2000)
-      }));
-    }
-
+    // 字幕ファイルの取得
     async function fetchSubtitle(url) {
       try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error('字幕ファイルの読み込みに失敗しました');
+        if (!response.ok) throw new Error();
         return await response.text();
-      } catch (error) {
-        console.error('字幕ファイルの読み込みに失敗しました', error);
+      } catch {
         showError('字幕ファイルの読み込みに失敗しました');
         return '';
       }
     }
 
+    // 字幕の解析
+    function parseSubtitles(text) {
+      return text.split('\n').map(line => ({
+        text: line.trim(),
+        duration: Math.max(line.length * 100, 2000)
+      }));
+    }
+
+    // マーカーイベントの追加
     function addMarkerEvents(markerElement, marker) {
       markerElement.addEventListener('markerFound', () => {
-        if (audioEnabled && marker.audio) {
-          const audio = document.getElementById(marker.audioId);
-          if (audio) audio.play();
-        }
-        if (subtitlesVisible && subtitles.length > 0) {
-          showSubtitle();
-        }
+        if (audioEnabled && marker.audio) document.getElementById(marker.audioId)?.play();
+        if (subtitlesVisible && subtitles.length > 0) showSubtitle();
       });
 
       markerElement.addEventListener('markerLost', () => {
-        if (marker.audio) {
-          const audio = document.getElementById(marker.audioId);
-          if (audio) {
-            audio.pause();
-            audio.currentTime = 0;
-          }
-        }
+        document.getElementById(marker.audioId)?.pause();
         clearTimeout(subtitleTimeout);
         document.querySelector('#subtitles-container').style.display = 'none';
         currentSubtitleIndex = 0;
       });
     }
 
+    // 字幕の表示
     function showSubtitle() {
-      if (currentSubtitleIndex < subtitles.length) {
-        const subtitleData = subtitles[currentSubtitleIndex];
-        const subtitleElement = document.querySelector('#subtitles-container');
-        subtitleElement.textContent = subtitleData.text;
-        subtitleElement.style.display = 'block';
+      if (currentSubtitleIndex >= subtitles.length) return;
+      const subtitleElement = document.querySelector('#subtitles-container');
+      subtitleElement.textContent = subtitles[currentSubtitleIndex].text;
+      subtitleElement.style.display = 'block';
 
+      subtitleTimeout = setTimeout(() => {
+        subtitleElement.style.display = 'none';
         currentSubtitleIndex++;
-        subtitleTimeout = setTimeout(() => {
-          subtitleElement.style.display = 'none';
-          showSubtitle();
-        }, subtitleData.duration);
-      }
+        showSubtitle();
+      }, subtitles[currentSubtitleIndex].duration);
     }
 
-    function toggleState(elementId, state, onText, offText) {
-      state = !state;
-      document.getElementById(elementId).textContent = state ? onText : offText;
-      return state;
-    }
-
+    // ボタン操作
+    document.getElementById('back').addEventListener('click', () => window.location.href = document.referrer);
     document.getElementById('toggle-subtitles').addEventListener('click', () => {
-      subtitlesVisible = toggleState('toggle-subtitles', subtitlesVisible, '字幕オフ', '字幕オン');
-      document.querySelector('#subtitles-container').style.display = subtitlesVisible ? 'block' : 'none';
+      subtitlesVisible = !subtitlesVisible;
+      document.getElementById('toggle-subtitles').textContent = subtitlesVisible ? '字幕オフ' : '字幕オン';
     });
-
     document.getElementById('toggle-audio').addEventListener('click', () => {
-      audioEnabled = toggleState('toggle-audio', audioEnabled, '音声オフ', '音声オン');
-      const audioElements = document.querySelectorAll('audio');
-      audioElements.forEach(audio => {
-        if (audioEnabled) {
-          audio.play();
-        } else {
-          audio.pause();
-        }
-      });
-    });
-
-    document.getElementById('back').addEventListener('click', () => {
-      window.history.back();
+      audioEnabled = !audioEnabled;
+      document.getElementById('toggle-audio').textContent = audioEnabled ? '音声オフ' : '音声オン';
     });
 
     loadMarkersData();
