@@ -15,7 +15,7 @@
         <video id="header-video" autoplay loop muted>
             <source src="../rogo/op-4.mp4" type="video/mp4">
         </video>
-        <h1>ホーム</h1>
+        <h1>マイページ</h1>
         <ul>
             <li>
                 <p id="username-display">ユーザー名: </p>
@@ -58,29 +58,59 @@
         window.location.href = '../login.html';  // ログイン画面にリダイレクト
     }
     // アカウント削除ボタン処理
-    document.getElementById('delete-account').addEventListener('click', async () => {
-        if (confirm('本当にアカウントを削除しますか？')) {
-            try {
-                const response = await fetch('/api/deleteaccount', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username })
-                });
+    // document.getElementById('delete-account').addEventListener('click', async () => {
+    //     if (confirm('本当にアカウントを削除しますか？')) {
+    //         try {
+    //             const response = await fetch('/api/deleteaccount', {
+    //                 method: 'POST',
+    //                 headers: { 'Content-Type': 'application/json' },
+    //                 body: JSON.stringify({ username })
+    //             });
 
-                const data = await response.json();
-                if (data.status === 'success') {
-                    alert('アカウントが削除されました');
-                    localStorage.removeItem('username');
-                    window.location.href = '../login.html';
-                } else {
-                    alert('削除に失敗しました: ' + data.message);
+    //             const data = await response.json();
+    //             if (data.status === 'success') {
+    //                 alert('アカウントが削除されました');
+    //                 localStorage.removeItem('username');
+    //                 window.location.href = '../login.html';
+    //             } else {
+    //                 alert('削除に失敗しました: ' + data.message);
+    //             }
+    //         } catch (err) {
+    //             console.error('エラー:', err);
+    //             alert('サーバーエラーが発生しました');
+    //         }
+    //     }
+    // });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteButton = document.getElementById("delete-account");
+        if (deleteButton) {
+            deleteButton.addEventListener("click", async () => {
+                if (confirm("本当にアカウントを削除しますか？")) {
+                    try {
+                        const response = await fetch("/api/deleteaccount", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ username }),
+                        });
+
+                        const data = await response.json();
+                        if (data.status === "success") {
+                            alert("アカウントが削除されました");
+                            localStorage.removeItem("username");
+                            window.location.href = "../login.html";
+                        } else {
+                            alert("削除に失敗しました: " + data.message);
+                        }
+                    } catch (err) {
+                        console.error("エラー:", err);
+                        alert("サーバーエラーが発生しました");
+                    }
                 }
-            } catch (err) {
-                console.error('エラー:', err);
-                alert('サーバーエラーが発生しました');
-            }
+            });
         }
     });
+
 </script>
 
 </html>

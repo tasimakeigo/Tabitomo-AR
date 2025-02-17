@@ -15,8 +15,12 @@
     <header>
         <h1>マイページ</h1>
         <ul>
-            <li><p id="username-display"></p></li> <!-- ユーザー名表示用 -->
-            <li><p><a href="../logout.html">ログアウト</a></p></li>
+            <li>
+                <p id="username-display"></p>
+            </li> <!-- ユーザー名表示用 -->
+            <li>
+                <p><a href="../logout.html">ログアウト</a></p>
+            </li>
         </ul>
     </header>
 
@@ -56,7 +60,7 @@
     if (username) {
         // ヘッダー内に表示
         document.getElementById('username-display').textContent = `name: ${username}`;
-        
+
         // 現在の名前に表示
         document.getElementById('current-name').textContent = username;
     } else {
