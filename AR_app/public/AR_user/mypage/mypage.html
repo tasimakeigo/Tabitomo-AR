@@ -83,37 +83,9 @@
                     }
                 } catch (err) {
                     console.error('エラー:', err);
-                    alert('サーバーエラーが発生しました');
                 }
             }
         });
-    });
-
-    // アカウント削除ボタン処理
-    // document.getElementById('delete-account').addEventListener('click', async () => {
-    //     if (confirm('本当にアカウントを削除しますか？')) {
-    //         try {
-    //             const response = await fetch('/api/deleteaccount', {
-    //                 method: 'POST',
-    //                 headers: { 'Content-Type': 'application/json' },
-    //                 body: JSON.stringify({ username })
-    //             });
-
-    //             const data = await response.json();
-    //             if (data.status === 'success') {
-    //                 alert('アカウントが削除されました');
-    //                 localStorage.removeItem('username');
-    //                 window.location.href = '../login.html';
-    //             } else {
-    //                 alert('削除に失敗しました: ' + data.message);
-    //             }
-    //         } catch (err) {
-    //             console.error('エラー:', err);
-    //             alert('サーバーエラーが発生しました');
-    //         }
-    //     }
-    // });
-
 </script>
 
 </html>
