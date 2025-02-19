@@ -107,13 +107,6 @@ header ul {
     text-shadow: -1px -1px rgba(249, 1, 1, 0.44), 1px 1px rgba(0, 0, 0, 0.38);
 }
 
-/* .button-container .btn-square-toy:active {
-    押したとき
-    border-bottom: solid 2px #42e913;
-    box-shadow: none;
-    text-shadow: -1px -1px rgba(255, 255, 255, 0.3), 1px 1px rgba(0, 0, 0, 0.3);
-} */
-
 /* Footer styling */
 footer {
     position: fixed;
