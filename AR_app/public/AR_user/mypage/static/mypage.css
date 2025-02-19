@@ -74,8 +74,9 @@ header ul {
 }
 
 /* ボタンスタイル */
+
+
 .button-container .btn-square-toy {
-    display: block;
     width: 50%;
     /* ボタンの幅を統一 */
     max-width: 200px;
@@ -85,13 +86,8 @@ header ul {
     font-size: 1em;
     align-items: center;
     /* 縦方向の中央揃え */
-    justify-content: center;
-    /* 横方向の中央揃え */
     text-align: center;
     /* 文字の中央揃え */
-}
-
-.button-container .btn-square-toy {
     position: relative;
     display: inline-block;
     padding: 0.8em 3em;
@@ -117,7 +113,6 @@ footer {
     background: transparent;
     /* 背景を透明に */
 }
-
 
 /* Back button styling */
 .button-container .back-button {

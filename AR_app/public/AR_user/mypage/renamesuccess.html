@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/mypage.css">
+    <link rel="stylesheet" href="static/name.css">
     <script src="../js/user.js"></script>
 
     <title>マイページ</title>
@@ -13,17 +13,28 @@
 <body>
 
     <header>
+        <video id="header-video" autoplay loop muted>
+            <source src="../rogo/op-4.mp4" type="video/mp4">
+        </video>
         <h1>マイページ</h1>
         <ul>
-            <li><p>name: </p></li> <!-- ユーザー名表示用 -->
-            <li><p><a href="../logout.html">ログアウト</a></p></li>
+            <li>
+                <p id="username-display"></p>
+            </li>
+            <li>
+                <p><a href="../logout.html">ログアウト</a></p>
+            </li>
         </ul>
     </header>
 
     <div class="content">
-        <h3>名前の変更が完了しました。</h3>
-    
-        <a href="../home.html" class="back-button">戻る</a>
+        <div class="name-change-succses">
+            <h3>名前の変更が完了しました。</h3>
+        </div>
+
+        <div class="back">
+            <a href="../home.html" class="back-button">戻る</a>
+        </div>
     </div>
 
     <footer>
@@ -34,7 +45,7 @@
         // URLパラメータまたはローカルストレージからadminnameを取得
         const urlParams2 = new URLSearchParams(window.location.search);
         let username = urlParams2.get('username');
-    
+
         // adminnameがURLパラメータにある場合はローカルストレージに保存
         if (username) {
             localStorage.setItem('username', username);
@@ -42,15 +53,18 @@
             // URLパラメータがない場合はローカルストレージから取得
             username = localStorage.getItem('username');
         }
-    
+
         // adminnameが存在する場合にページに表示
         if (username) {
             document.querySelector('header p').textContent = `name: ${username}`;
         }
+
+        // 背景画像を表示するための要素を作成
+        const backgroundElement = document.createElement('div');
+        backgroundElement.id = 'background';
+        document.body.appendChild(backgroundElement);
     </script>
 
 </body>
 
 </html>
-
-

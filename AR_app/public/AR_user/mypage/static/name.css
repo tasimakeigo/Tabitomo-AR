@@ -80,21 +80,24 @@ header ul {
     margin-left: 30%;
     margin-right: 30%;
     margin-top: 20px;
-    text-decoration: none;
     background: #0063d4;
     /*背景色*/
-    color: #ffffff;
-    /*=背景色*/
     box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2);
     border-bottom: solid 2px #118e9e;
     border-radius: 4px;
     text-shadow: -1px -1px rgba(249, 1, 1, 0.44), 1px 1px rgba(0, 0, 0, 0.38);
 }
 
+.back a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
 .change-name-button {
     display: flex;
     justify-content: center;
     /* ボタンを中央配置 */
+    padding-bottom: 10px;
 }
 
 .name-change-section {
@@ -102,9 +105,31 @@ header ul {
     background-color: rgba(237, 237, 237, 0.7);
 }
 
+.name-change-section p {
+    padding-left: 30px;
+}
+
+.name-change-section label {
+    padding-left: 30px;
+}
+
 .name-change-section h2 {
     text-align: center;
+    padding-top: 10px;
 }
+
+.name-change-succses {
+    margin-top: 350px;
+    background-color: rgba(237, 237, 237, 0.7);
+}
+
+.name-change-succses h3 {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin-top: 250px;
+}
+
 
 .new-name {
     display: flex;
