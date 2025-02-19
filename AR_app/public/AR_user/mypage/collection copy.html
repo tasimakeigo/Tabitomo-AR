@@ -4,28 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/collection.css">
     <title>6x6 フィギュア画像配置</title>
     <style>
+        /* 全体の設定 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        /* ラッパー要素の設定 */
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            /* 縦方向に要素を並べる */
+            align-items: center;
+            /* 中央揃え */
+        }
+
+        /* グリッドの設定 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            /* 6列 */
+            grid-template-rows: repeat(4, 100px);
+            /* 6行 */
+            gap: 5px;
+            /* セルの間隔 */
+            padding: 10px;
+            background-color: #e0e0e0;
+            border: 2px solid #333;
+        }
+
+        /* セルのデザイン */
+        .grid-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        /* 画像のデザイン */
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 画像をセル内でカバー */
+        }
+
+        /* 戻るボタンのスタイル */
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #a1a1a1;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 
 <body>
-    <header>
-        <video id="header-video" autoplay loop muted>
-            <source src="../rogo/op-4.mp4" type="video/mp4">
-        </video>
-        <h1>コレクション</h1>
-        <ul>
-            <li>
-                <p id="username-display">ユーザー名: </p>
-            </li>
-            <li>
-                <p><a href="../logout.html">ログアウト</a></p>
-            </li>
-        </ul>
-    </header>
-
     <div class="wrapper">
         <div class="grid-container">
             <div class="grid-item"><a href="figure/image1.html"><img src="image/saru.png" alt="フィギュア1"></a></div>
@@ -57,37 +107,8 @@
             <div class="grid-item"><a href="figure/image1 copy 15.html"><img src="image/saru.png" alt="フィギュア1"></a>
             </div>
         </div>
-        <div class="back">
-            <a href="mypage.html" class="back-button">戻る</a>
-        </div>
+        <a href="mypage.html"><button class="back-button">戻る</button></a>
     </div>
-
-    <footer>
-        <p>© 2024 たびとも</p>
-    </footer>
 </body>
-<script>
-    // URLパラメータまたはローカルストレージからadminnameを取得
-    const urlParams2 = new URLSearchParams(window.location.search);
-    let username = urlParams2.get('username');
-
-    // adminnameがURLパラメータにある場合はローカルストレージに保存
-    if (username) {
-        localStorage.setItem('username', username);
-    } else {
-        // URLパラメータがない場合はローカルストレージから取得
-        username = localStorage.getItem('username');
-    }
-
-    // adminnameが存在する場合にページに表示
-    if (username) {
-        document.querySelector('header p').textContent = ` ${username}`;
-    }
-
-    // 背景画像を表示するための要素を作成
-    const backgroundElement = document.createElement('div');
-    backgroundElement.id = 'background';
-    document.body.appendChild(backgroundElement);
-</script>
 
 </html>
