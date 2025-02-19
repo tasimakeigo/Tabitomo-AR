@@ -1,4 +1,22 @@
-/* 共通スタイル */
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../backgroundimage/siro.jpg");
+    /* 背景画像を設定 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: -1;
+    /* 他のコンテンツの後ろに配置 */
+    opacity: 1;
+    /* 透明度を1にして表示 */
+}
+
+/* ボディのスタイルは変更しない */
 body {
     display: flex;
     justify-content: center;
@@ -6,7 +24,6 @@ body {
     min-height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
     flex-direction: column;
 }
 
@@ -14,8 +31,15 @@ main {
     flex-grow: 1;
 }
 
-/* login.html */
-.login {
+.content {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 20px;
+    background-color: rgba(237, 237, 237, 0.7);
+
+}
+
+.loging {
     display: flex;
     flex-direction: column;
     /* 縦方向に配置 */
@@ -23,7 +47,6 @@ main {
     justify-content: center;
     min-height: 100vh;
     /* 画面全体の中央に配置 */
-    background-color: #f5f5f5;
 }
 
 .app-title {
@@ -34,25 +57,18 @@ main {
 
 .app-title h1 {
     font-size: 28px;
-    /* margin-bottom: 20px; */
     text-align: center;
 }
 
 .login-screen {
-    /* width: auto;
-    padding: 20px; */
     text-align: center;
-    /* border: 1px solid #333;
-    border-radius: 15px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 .login-screen input {
     height: 28px;
 }
 
-#show-password {
+.show-password {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -73,19 +89,18 @@ main {
 }
 
 .login-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    padding: 0.8em 3em;
+    padding-bottom: 0.5em;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-bottom: 10px;
+    background: #0063d4;
+    /*背景色*/
+    color: #ffffff;
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    border-bottom: solid 2px #118e9e;
     border-radius: 4px;
-    font-size: 16px;
-    margin-right: 10px;
-    transition: transform .2s;
-
-    &:active {
-        transform: scale(.95);
-    }
+    text-shadow: -1px -1px rgba(249, 1, 1, 0.44), 1px 1px rgba(0, 0, 0, 0.38);
 }
 
 .control-group label {
@@ -98,14 +113,4 @@ main {
 
 .button-group button {
     margin-right: 10px;
-    transition: transform .2s;
-
-    &:active {
-        transform: scale(.95);
-    }
-}
-
-.button-group a {
-    text-decoration: none;
-    /* 下線を消す */
 }

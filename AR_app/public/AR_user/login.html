@@ -11,51 +11,59 @@
 </head>
 
 <body>
-    <div class="login">
-        <div class="app-title">
-            <h1>ログイン</h1>
-        </div>
-        <div class="login-screen">
-            <form id="login-form" class="login-form">
-                <div class="control-group">
-                    <label for="login-pass">ユーザー名</label>
-                    <input type="text" class="login-field" value="" placeholder="ユーザー名を入力" id="login-name"
-                        name="username" required>
-                    <!-- <label class="login-field-icon fui-user" for="login-name"></label> -->
-                </div>
+    <div class="content">
+        <div class="login">
+            <div class="app-title">
+                <h1>ログイン</h1>
+            </div>
+            <div class="login-screen">
+                <form id="login-form" class="login-form">
+                    <div class="control-group">
+                        <label for="login-pass">ユーザー名</label>
+                        <input type="text" class="login-field" value="" placeholder="ユーザー名を入力" id="login-name"
+                            name="username" required>
+                        <!-- <label class="login-field-icon fui-user" for="login-name"></label> -->
+                    </div>
 
-                <div class="control-group">
-                    <label for="login-pass">パスワード</label>
-                    <input type="password" class="login-field" value="" placeholder="パスワードを入力" id="login-pass"
-                        name="password" required>
-                    <!-- <label class="login-field-icon fui-lock" for="login-pass"></label> -->
-                </div>
-                <div id="show-password">
-                    <input type="checkbox" id="checkbox" onclick="togglePassword()">
-                    <label for="checkbox" onclick="" id="checkboxlabel">パスワード表示</onclick>
-                </div>
-                <button class="login-button" type="submit">Login</button>
-            </form>
+                    <div class="control-group">
+                        <label for="login-pass">パスワード</label>
+                        <input type="password" class="login-field" value="" placeholder="パスワードを入力" id="login-pass"
+                            name="password" required>
+                        <!-- <label class="login-field-icon fui-lock" for="login-pass"></label> -->
+                    </div>
+                    <div class="show-password">
+                        <input type="checkbox" id="checkbox" onclick="togglePassword()">
+                        <label for="checkbox" onclick="" id="checkboxlabel">パスワード表示</onclick>
+                    </div>
+                    <button class="login-button" type="submit">Login</button>
+                </form>
 
-            <div class="button-group">
-                <a class="new-url" href="new.html">
-                    <button>新規登録</button>
-                </a>
-                <a class="select-url" href="selectaccount.html">
-                    <button>戻る</button>
-                </a>
+                <div class="button-group">
+                    <a class="new-url" href="new.html">
+                        <button>新規登録</button>
+                    </a>
+                    <a class="select-url" href="selectaccount.html">
+                        <button>戻る</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
     <!-- login.html -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // localStorageにユーザー情報が保存されていたら、ホーム画面へリダイレクト
-        if (localStorage.getItem('username') && localStorage.getItem('userid') && localStorage.getItem('languagename')) {
-            window.location.href = 'home.html';  // ホーム画面へリダイレクト
-        }
-    });
-</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // localStorageにユーザー情報が保存されていたら、ホーム画面へリダイレクト
+            if (localStorage.getItem('username') && localStorage.getItem('userid') && localStorage.getItem('languagename')) {
+                window.location.href = 'home.html';  // ホーム画面へリダイレクト
+            }
+        });
+
+        // 背景画像を表示するための要素を作成
+        const backgroundElement = document.createElement('div');
+        backgroundElement.id = 'background';
+        document.body.appendChild(backgroundElement);
+
+    </script>
 
 </body>
 
