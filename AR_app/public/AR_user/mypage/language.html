@@ -13,6 +13,9 @@
 <body>
 
     <header>
+        <video id="header-video" autoplay loop muted>
+            <source src="../rogo/op-4.mp4" type="video/mp4">
+        </video>
         <h1>言語変更</h1>
         <ul>
             <li>
@@ -58,8 +61,13 @@
 
     // adminnameが存在する場合にページに表示
     if (username) {
-        document.querySelector('header p').textContent = `name: ${username}`;
+        document.querySelector('header p').textContent = ` ${username}`;
     }
+
+    // 背景画像を表示するための要素を作成
+    const backgroundElement = document.createElement('div');
+    backgroundElement.id = 'background';
+    document.body.appendChild(backgroundElement);
 </script>
 
 </html>
