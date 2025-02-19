@@ -11,39 +11,27 @@
 
 <body>
 
-    <header>
-        <video id="header-video" autoplay loop muted>
-            <source src="rogo/op-4.mp4" type="video/mp4">
-        </video>
-        <h1>ホーム</h1>
-        <ul>
-            <li>
-                <p id="username-display">ユーザー名: </p>
-            </li>
-            <li>
-                <p><a href="logout.html">ログアウト</a></p>
-            </li>
-        </ul>
-    </header>
-
     <main>
-        <div class="logout-container">
-            <h2>ログアウトしました。</h2>
+        <div class="content">
+            <div class="logout-container">
+                <h3>ログアウトしました。</h3>
+            </div>
             <div class="logout-info">
                 <a href="login.html" class="btn btn--orange">ログイン画面へ</a>
             </div>
         </div>
     </main>
 
-    <footer>
-        <p>© 2024 たびとも</p>
-    </footer>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // ローカルストレージをクリア
             localStorage.clear();
         });
+
+        // 背景画像を表示するための要素を作成
+        const backgroundElement = document.createElement('div');
+        backgroundElement.id = 'background';
+        document.body.appendChild(backgroundElement);
     </script>
 
 </body>
