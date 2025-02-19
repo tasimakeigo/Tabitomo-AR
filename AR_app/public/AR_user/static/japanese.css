@@ -1,4 +1,22 @@
-/* 共通スタイル */
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../backgroundimage/siro.jpg");
+    /* 背景画像を設定 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: -1;
+    /* 他のコンテンツの後ろに配置 */
+    opacity: 1;
+    /* 透明度を1にして表示 */
+}
+
+/* ボディのスタイルは変更しない */
 body {
     display: flex;
     justify-content: center;
@@ -11,15 +29,37 @@ body {
 }
 
 .row {
-    display: flex;
-    /* 横並びにする */
-    justify-content: center;
-    /* ボタンを中央寄せ */
-    gap: 10px;
-    /* ボタン間の間隔 */
-    margin: 10px 0;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 95px;
+    padding-bottom: 0px;
+    padding-top: 120px;
+    text-align: center;
+    padding-top: 10px;
 }
 
-.row button {
-    height: 26px;
+.row a button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* ボタンを中央配置 */
+    padding: 0.8em 2em;
+    padding-bottom: 0.5em;
+    margin-top: 20px;
+    background: #0063d4;
+    /*背景色*/
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    border-bottom: solid 2px #118e9e;
+    border-radius: 4px;
+    text-shadow: -1px -1px rgba(249, 1, 1, 0.44), 1px 1px rgba(0, 0, 0, 0.38);
+    color: #ffffff;
+}
+
+.row a {
+    text-decoration: none;
+}
+
+.back-url {
+    text-align: center;
+    padding-top: 10px;
 }

@@ -6,22 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規登録</title>
     <link rel="stylesheet" href="static/new.css">
-    <!-- フォント推奨: Noto Sans JP -->
 </head>
 
 <body>
 
-    <header>
-        <h1>新規登録</h1>
-    </header>
-
-    <main>
+    <div class="content">
+        <div class="app-title">
+            <h1>新規登録</h1>
+        </div>
         <div class="registration-container">
             <form id="registration-form" method="post">
                 <!-- ユーザー名 -->
                 <div class="form-group">
                     <label for="username">ユーザー名</label>
                     <input type="text" id="username" name="username" placeholder="ユーザー名を入力" required>
+                    <div id="username-error" style="color: red;"></div> <!-- ユーザー名エラーメッセージ -->
                 </div>
 
                 <!-- パスワード -->
@@ -56,18 +55,51 @@
                 </div>
 
                 <!-- 登録ボタン -->
-                <button class="confirm-button" type="submit">登録内容確認</button>
+                <button class="confirm-button" type="submit" id="submit-button" disabled>登録内容確認</button>
+                <!-- ボタンを初期状態で無効化 -->
             </form>
             <div class="back-button">
                 <a href="selectaccount.html">
                     <button>戻る</button>
                 </a>
             </div>
+
         </div>
-    </main>
 
-    <script src="js/user.js" defer></script>
+        <script>
+            // ユーザー名の重複チェック
+            document.getElementById('username').addEventListener('blur', async function () {
+                const username = this.value;
+                const response = await fetch('/api/check-username', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username })
+                });
 
+                const data = await response.json();
+                const usernameError = document.getElementById('username-error');
+
+                if (!data.available) {
+                    // ユーザー名が重複している場合
+                    usernameError.textContent = 'そのユーザー名は既に使用されています。';
+                    document.getElementById('submit-button').disabled = true; // 登録ボタンを無効化
+                } else {
+                    // ユーザー名が重複していない場合
+                    usernameError.textContent = '';
+                    document.getElementById('submit-button').disabled = false; // 登録ボタンを有効化
+                }
+            });
+
+            // 背景画像を表示するための要素を作成
+            const backgroundElement = document.createElement('div');
+            backgroundElement.id = 'background';
+            document.body.appendChild(backgroundElement);
+
+        </script>
+        <script src="js/user.js" defer></script>
+    </div>
 </body>
 
 </html>

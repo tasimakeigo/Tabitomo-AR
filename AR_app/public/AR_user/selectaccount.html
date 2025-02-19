@@ -10,17 +10,17 @@
 
 <body>
 
-    <h2>アカウント選択</h2>
-
-    <div class="row">
-        <div class="login-url">
-            <a href="login.html"> <button>ログイン</button></a>
-        </div>
-        <div class="newaccount-url">
-            <a href="newaccount.html"><button>新規登録</button></a>
-        </div>
-        <div class="guest-url">
-            <a href="japanese.html"><button>ゲストログイン</button></a>
+    <div class="content">
+        <div class="row">
+            <div class="login-url">
+                <a href="login.html"> <button>ログイン</button></a>
+            </div>
+            <div class="newaccount-url">
+                <a href="newaccount.html"><button>新規登録</button></a>
+            </div>
+            <div class="guest-url">
+                <a href="japanese.html"><button>ゲストログイン</button></a>
+            </div>
         </div>
         <div class="back-url">
             <a href="language.html">
@@ -28,7 +28,13 @@
             </a>
         </div>
     </div>
-
 </body>
+
+<script>
+    // 背景画像を表示するための要素を作成
+    const backgroundElement = document.createElement('div');
+    backgroundElement.id = 'background';
+    document.body.appendChild(backgroundElement);
+</script>
 
 </html>
