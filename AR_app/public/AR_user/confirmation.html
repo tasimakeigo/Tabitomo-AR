@@ -9,13 +9,12 @@
 </head>
 
 <body>
-
-    <header>
-    </header>
-
-    <main>
+    <div class="content">
         <div class="confirmation">
-            <h1>新規登録内容確認</h1>
+            <div class="app-title">
+                <h1>新規登録内容確認</h1>
+            </div>
+
             <div class="confirmation-container">
                 <p>ユーザー名: <span id="confirm-username"></span></p>
                 <p>パスワード: <span id="confirm-password"></span></p> <!-- パスワードを伏せる -->
@@ -29,10 +28,17 @@
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <script src="js/user.js" defer></script> <!-- 変更したJavaScriptを読み込み -->
 
 </body>
+
+<script>
+    // 背景画像を表示するための要素を作成
+    const backgroundElement = document.createElement('div');
+    backgroundElement.id = 'background';
+    document.body.appendChild(backgroundElement);
+</script>
 
 </html>
