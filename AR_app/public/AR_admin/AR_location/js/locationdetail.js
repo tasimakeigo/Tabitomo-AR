@@ -16,13 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
 
                     <div class="locationid">
-                        <p>ID</p>
-                        ${locationid}
+                        <p>ID: ${locationid}</p>
                     </div>
 
                     <div class="address">
-                        <p>住所</p>
-                        ${address}
+                        <p>住所: ${address}</p>
                     </div>
                         
                     `;
@@ -53,21 +51,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 for (const mdlid in models) {
                     const model = models[mdlid];
                     detailsHtml += `
-                        <p>
-                            <strong>モデル名:</strong> ${model.mdlname}<br>
-                            <strong>モデルID:</strong> ${model.mdlid}<br>
-                            <strong>3Dモデル:</strong>${model.mdlname}<br>
-                            <button class="viewer-btn" data-mdlimage="${model.mdlimage}">3Dモデル表示</button><br>
-                            <strong>マーカー名:</strong> ${model.mkname}<br>
-                            <strong>パターン:</strong> ${model.patt}<br>
-                            <strong>マーカー画像:</strong> <img src="/Content/markerimage/${model.mkimage}" alt="${model.mkimage}" width="200"><br>
-                            <strong><a href="../../AR_admin/AR_sound/soundlist.html?mdlsound=${model.mdlsound}">音声ファイル</a></strong><br>
-                            ${model.soundfiles.length > 0 ? model.soundfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}<br>
-                            <strong><a href="../../AR_admin/AR_napisy/napisylist.html?mdltext=${model.mdltext}">テキストファイル</a></strong><br>
-                            ${model.textfiles.length > 0 ? model.textfiles.map(file => `<span>${file}</span><br>`).join('') : 'なし'}
-                        </p>
                         <button class="edit-btn" data-mdlid="${mdlid}">編集</button>
-                        <button class="delete-btn" data-mdlid="${mdlid}">削除</button>
+                        <button class="delete-btn" data-mdlid="${mdlid}">削除</button><br>
+                        <p class="model-info">
+                            <strong>モデル名: <span>${model.mdlname}</span></strong><br>
+                            <strong>モデルID: <span>${model.mdlid}</span></strong><br>
+                            <strong>3Dモデル: <span>${model.mdlname}</span></strong><br>
+                            <button class="viewer-btn" data-mdlimage="${model.mdlimage}">3Dモデル表示</button><br>
+                            <strong>マーカー名: <span>${model.mkname}</span></strong><br>
+                            <strong>パターン: <span>${model.patt}</span></strong><br>
+                            <strong>マーカー画像</strong><img src="/Content/markerimage/${model.mkimage}" alt="${model.mkimage}" width="200"><br>
+                        </p>
+                        <div class="files-list">
+                            <div class="file-group">
+                                <strong><a href="../../AR_admin/AR_sound/soundlist.html?mdlsound=${model.mdlsound}">音声ファイル</a></strong><br>
+                                ${model.soundfiles.length > 0 ? model.soundfiles.map(file => `<span>${file}</span><br>`).join('') : '<span>なし</span>'}
+                            </div>
+                            <div class="file-group">
+                                <strong><a href="../../AR_admin/AR_napisy/napisylist.html?mdltext=${model.mdltext}">テキストファイル</a></strong><br>
+                                ${model.textfiles.length > 0 ? model.textfiles.map(file => `<span>${file}</span><br>`).join('') : '<span>なし</span>'}
+                            </div>
+                        </div>
+
                     `;
                 }
 

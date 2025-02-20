@@ -63,7 +63,7 @@ main {
     margin-top: 70px;
 }
 
-.container {
+#location-details {
     margin-left: 250px;
     width: 80%;
     max-width: 800px;
@@ -72,7 +72,7 @@ main {
     margin-top: 20px;
 }
 
-.container label {
+.container label, .container p {
     display: flex;
     justify-content: space-between;
     padding: 10px 20px;
@@ -81,9 +81,6 @@ main {
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-right: 15px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
 }
 
 .napisyeditform h2 {
@@ -91,79 +88,51 @@ main {
     font-weight: normal;
 }
 
-.container p {
+/* モデル情報の表示（最適化版） */
+.model-info {
     display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
-    font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-right: 15px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
+    margin-top: 20px;
 }
 
-.container div {
-    /* display: flex; */
-    align-items: center;
-    margin-bottom: 15px;
+.model-info img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
-.locationid,
-.address {
+.model-info div {
     display: flex;
-    width: 40%;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.locationid {
-    float: right;
+.model-info strong {
+    font-weight: bold;
 }
 
-.mdlname,
-.mdlid {
-    display: flex;
-    width: 40%;
+.model-info button {
+    padding: 10px;
+    font-size: 1em;
+    background-color: #ededed;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.mdlname {
-    float: right;
+.model-info button:hover {
+    background-color: #d9d9d9;
 }
 
-.Dmdl {
-    display: flex;
-    width: 40%;
-}
-
-.mdl {
-    display: flex;
-}
-
-.mkname {
-    display: flex;
-    width: 40%;
-}
-
-.patt {
-    display: flex;
-    width: 70%;
-}
-
-.mkimage {
-    display: flex;
-    width: 50%;
-}
-
-.list {
-    display: flex;
-}
-
-.soundfile {
-    margin-right: 100px;
-}
-
-/* サイドバー */
+/* その他のスタイル */
 .sideber {
     position: fixed;
     left: 0;
@@ -175,7 +144,6 @@ main {
     border-bottom: 1px solid #333;
 }
 
-/* サイドバー内のコンテンツ */
 .sideber-container {
     display: flex;
     flex-direction: column;
@@ -185,11 +153,8 @@ main {
     gap: 15px;
 }
 
-/* その他のスタイル */
-/* サイドバー内のリンクの基本スタイル */
 .sideber-container a {
     width: 80%;
-    /* text-align: center; */
     overflow: hidden;
     background-color: #ffffff;
     position: relative;
@@ -209,7 +174,6 @@ main {
 
 .sideber-container a:hover {
     background-color: #ededed;
-    border-color: transparent;
 }
 
 .sideber-container a:hover::after {
@@ -228,97 +192,102 @@ main {
     color: #000;
 }
 
-/* ボタン */
-.viewer-btn,
-.edit-btn,
-.delete-btn {
-    position: relative;
-    writing-mode: horizontal-tb;
-    text-align: center;
-    white-space: nowrap;
-    padding: 8px 12px;
-    cursor: pointer;
-    background-color: transparent;
+/* 編集・削除ボタンの最適化 */
+button {
+    padding: 10px 20px;
+    font-size: 1em;
     border: none;
-    text-decoration: none;
-    border-bottom: 1px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block;
+    margin: 5px 10px;
 }
 
+/* 編集ボタン */
 .edit-btn {
-    margin-right: 20px;
+    background-color: #4264b4;
+    color: white;
 }
 
-.viewer-btn:hover,
-.edit-btn:hover,
+.edit-btn:hover {
+    background-color: #42b457;
+    transform: scale(1.05); /* ホバー時に少し拡大 */
+}
+
+/* 削除ボタン */
+.delete-btn {
+    background-color: #4264b4;
+    color: white;
+}
+
 .delete-btn:hover {
-    background-color: #ededed;
-    border-color: transparent;
+    background-color: #e53935;
+    transform: scale(1.05); /* ホバー時に少し拡大 */
 }
 
-.viewer-btn::after,
-.edit-btn::after,
-.delete-btn::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    background: transparent;
+/* ボタンを横並びに配置 */
+button + button {
+    margin-left: 10px; /* ボタン間の間隔 */
 }
 
-.viewer-btn:hover::after,
-.edit-btn:hover::after,
-.delete-btn:hover::after {
-    background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
+/* ボタンのレスポンシブ対応 */
+@media screen and (max-width: 768px) {
+    button {
+        width: 100%; /* モバイルではボタンを横幅いっぱいに */
+        margin: 5px 0; /* ボタン間隔を調整 */
+    }
 }
 
+/* ファイルリストのスタイル改善 */
+.files-list {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* 音声ファイルとテキストファイル間に隙間を作成 */
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin: 20px 0;
+}
 
-.textfile a,
-.soundfile a {
-    width: 80%;
-    /* text-align: center; */
-    overflow: hidden;
-    background-color: #ffffff;
-    position: relative;
-    padding: 5px 0;
-    border-bottom: 1px solid #333;
+.file-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 各ファイルの隙間 */
+    width: 45%; /* 音声ファイルとテキストファイルが横並びになるよう調整 */
+}
+
+.file-group strong {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+}
+
+.file-group a {
+    color: #007bff;
     text-decoration: none;
-    color: #333;
 }
 
-.textfile button,
-.soundfile button {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    background-color: transparent;
-    color: #333;
-    border: none;
-    cursor: pointer;
+.file-group a:hover {
+    text-decoration: underline;
 }
 
-.textfile a:hover,
-.soundfile a:hover {
-    background-color: #ededed;
-    border-color: transparent;
+.file-group span {
+    font-size: 0.9em;
+    color: #555;
 }
 
-.textfile a:hover::after,
-.soundfile a:hover::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
-    transition: all 0.3s ease-in-out;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.file-group span + span {
+    margin-top: 5px;
 }
 
-.textfile a:hover button,
-.soundfile a:hover button {
-    color: #000;
+@media screen and (max-width: 768px) {
+    /* スマートフォンや小さい画面での表示 */
+    .files-list {
+        flex-direction: column; /* 縦並びに変更 */
+        align-items: flex-start;
+    }
+
+    .file-group {
+        width: 100%; /* 横幅100% */
+    }
 }

@@ -8,12 +8,40 @@
     <link rel="stylesheet" href="static/admin.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="static/map.css">
+    <style>
+        /* マップが画面全体を覆うように設定 */
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
 
+        /* 戻るボタンのスタイル（右上に固定） */
+        #backButton {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000; /* ボタンがマップより前面に表示されるように */
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明の背景 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #backButton:hover {
+            background-color: rgba(0, 0, 0, 0.8); /* ホバー時の背景色 */
+        }
+    </style>
 </head>
 
 <body>
     <main>
         <div id="map"></div>
+        
+        <!-- 戻るボタン -->
+        <button id="backButton" onclick="goBack()">戻る</button>
     </main>
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -62,6 +90,11 @@
         }
 
         fetchMapData();
+
+        // 戻るボタンの動作
+        function goBack() {
+            window.history.back();
+        }
     </script>
 
 </body>

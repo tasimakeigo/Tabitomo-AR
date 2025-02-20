@@ -115,6 +115,7 @@ button:hover {
     border-bottom: 1px solid #333;
 }
 
+/* サイドバー内のコンテンツ */
 .sideber-container {
     display: flex;
     flex-direction: column;
@@ -124,8 +125,11 @@ button:hover {
     gap: 15px;
 }
 
+/* その他のスタイル */
+/* サイドバー内のリンクの基本スタイル */
 .sideber-container a {
     width: 80%;
+    /* text-align: center; */
     overflow: hidden;
     background-color: #ffffff;
     position: relative;
@@ -145,6 +149,7 @@ button:hover {
 
 .sideber-container a:hover {
     background-color: #ededed;
+    border-color: transparent;
 }
 
 .sideber-container a:hover::after {
@@ -153,10 +158,17 @@ button:hover {
     width: 100%;
     height: 2px;
     background: linear-gradient(82.3deg, rgb(110, 255, 183) 10.8%, rgb(0, 80, 172) 94.3%);
+    transition: all 0.3s ease-in-out;
     position: absolute;
     bottom: 0;
     left: 0;
 }
+
+.sideber-container a:hover button {
+    color: #000;
+}
+
+
 
 /* フッター */
 footer {
