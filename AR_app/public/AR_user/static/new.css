@@ -55,9 +55,10 @@ body {
 }
 
 .confirm-button {
+    width: 50%;
     padding: 0.8em 1em;
     padding-bottom: 0.5em;
-    margin-left: 30%;
+    margin-left: 25%;
     margin-right: 30%;
     margin-bottom: 10px;
     background: #0063d4;

@@ -160,6 +160,13 @@ footer {
     padding: 10px;
 }
 
+.change {
+    background-color: rgba(237, 237, 237, 0.7);
+    padding-bottom: 3px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
 .change-success {
     display: flex;
     justify-content: center;
@@ -167,7 +174,10 @@ footer {
     text-align: center;
     /* テキストを中央揃え */
     margin-top: 250px;
-    background-color: rgba(237, 237, 237, 0.7);
+}
+
+.change-success h2 {
+    margin-bottom: 0px;
 }
 
 /* ボディのスタイルは変更しない */

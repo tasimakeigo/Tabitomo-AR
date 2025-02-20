@@ -10,25 +10,31 @@
 
 <body>
 
-    <h2>Select Language</h2>
-    <div class="button-container1">
-        <div class="row">
+    <div class="content">
+        <div class="language">
             <div class="japanese">
                 <a href="selectaccount.html"><button>日本語</button></a>
             </div>
             <div class="english">
-                <button>English</button>
+                <a><button>English</button></a>
             </div>
             <div class="korea">
-                <button>한국</button>
+                <a><button>한국</button></a>
             </div>
             <div class="china">
-                <button>中国語</button>
+                <a><button>中国語</button></a>
             </div>
         </div>
 
     </div>
 
 </body>
+
+<script>
+    // 背景画像を表示するための要素を作成
+    const backgroundElement = document.createElement('div');
+    backgroundElement.id = 'background';
+    document.body.appendChild(backgroundElement);
+</script>
 
 </html>
